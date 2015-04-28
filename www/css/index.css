@@ -1,0 +1,330 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+* {
+    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+}
+
+body {
+    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+    background-color:#E4E4E4;
+    background-image:linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
+    background-image:-webkit-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
+    background-image:-ms-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
+    background-image:-webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #A7A7A7),
+        color-stop(0.51, #E4E4E4)
+    );
+    background-attachment:fixed;
+    height:100%;
+    margin:0px;
+    padding:0px;
+    width:100%;
+}
+
+h1 {
+    font-size:24px;
+    font-weight:normal;
+    margin:0px;
+    overflow:visible;
+    padding:0px;
+    text-align:center;
+}
+
+.event {
+    border-radius:4px;
+    -webkit-border-radius:4px;
+    color:#FFFFFF;
+    font-size:12px;
+    margin:0px 30px;
+    padding:2px 0px;
+}
+
+.event.listening {
+    background-color:#333333;
+    display:block;
+}
+
+.event.received {
+    background-color:#4B946A;
+    display:none;
+}
+
+.ui-listview .ui-li-aside {
+    top: 0.6em;
+    left: 1.5em;
+    text-align: left;
+}
+
+.ui-listview>li h2 {
+    margin: 1em 0 0;
+}
+
+.ui-listview>li p {
+    margin: 0.4em 0 0;
+}
+
+@keyframes fade {
+    from { opacity: 1.0; }
+    50% { opacity: 0.4; }
+    to { opacity: 1.0; }
+}
+ 
+@-webkit-keyframes fade {
+    from { opacity: 1.0; }
+    50% { opacity: 0.4; }
+    to { opacity: 1.0; }
+}
+ 
+.blink {
+    animation:fade 3000ms infinite;
+    -webkit-animation:fade 3000ms infinite;
+}
+
+.ui-input-text {
+    border: none;
+}
+
+#menuInicial table {
+    margin: 0 auto;
+}
+
+#menuInicial table td {
+    width: 50%;
+}
+
+a.btn-inicial {
+    width: 100%;
+    height: 146px;
+    display: block;
+    margin-bottom: 25px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 0.8em;
+    text-shadow: none;
+}
+
+a.btn-inicial span.ic {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 16px;
+    display: block;
+}
+
+.header {
+    height: 45px;
+    padding: 0px;
+    overflow: hidden;
+}
+
+.header a {
+    margin-bottom: 3px;
+    padding: 0px;
+    width: 55px;
+    height: 45px;
+    display: block;
+    background: none !important;
+    background-color: transparent !important;
+    border: none;
+    border-radius: 0px !important;
+    border-left: 1px solid #CCC !important;
+    box-shadow: none !important;
+}
+
+.header a.f-left {
+    border: none !important;
+    border-right: 1px solid #CCC !important;
+}
+
+.header a span {
+    width: 39px;
+    height: 38px;
+    display: block;
+    margin: 0 auto;
+}
+
+.footer {
+    height: 45px;
+    border: none;
+    background: rgba(41, 73, 125, 0.6) !important;
+    padding: 0px;
+    overflow: hidden;
+}
+
+.footer a {
+    margin-top: 3px;
+    padding: 0px;
+    width: 55px;
+    height: 45px;
+    display: block;
+    background: none !important;
+    background-color: transparent !important;
+    border: none;
+    border-radius: 0px !important;
+    border-left: 1px solid #CCC;
+}
+
+.footer a.f-right {
+    float: right;
+}
+
+.footer a.f-left {
+    float: left;
+    border: none;
+    border-right: 1px solid #CCC;
+}
+
+.footer a span {
+    width: 39px;
+    height: 38px;
+    display: block;
+    margin: 0 auto;
+}
+
+.closeMenu a span{
+    position: absolute;
+    top: 2px;
+    right: 0px;
+    width: 39px;
+    height: 38px;
+    display: inline-block;
+    margin: 0 auto;
+}
+
+#likeComent {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    margin-top: 4px;
+    padding: 6px 0px 6px 0px;
+    background-color: #FFF;
+    border-bottom: 1px solid #CCC;
+}
+
+#likeComent a {
+    position: relative;
+    float: left;
+    width: 50px;
+    height: 50px;
+    display: block;
+    background-color: #7B8EAE !important;
+    border-left: none !important;
+    border-radius: 50% !important;
+    margin-left: 19px;
+    margin-right: 19px;
+    text-decoration: none;
+}
+
+#likeComent a:hover, #likeComent a.active {
+    background-color: #29497D !important;
+}
+
+#likeComent a span.ic {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 39px;
+    height: 38px;
+    display: inline-block;
+}
+
+#likeComent a span.qtd {
+    position: relative;
+    top: 17px;
+    right: -54px;    
+}
+
+#searchCallback {
+    position: relative;
+    width: 100%;
+    margin-top: 4px;
+    background-color: #FFF;
+    border-bottom: 1px solid #CCC;
+}
+
+#searchCallback .ui-field-contain {
+    padding: 10px 0;
+}
+
+#searchCallback .ui-field-contain .ui-input-search {
+    margin: 0;
+}
+
+#searchCallback .ui-field-contain a.ui-input-clear {
+    width: 38px;
+    height: 30px;
+}
+
+.slider .slide {
+    background-color: #000;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: 50%;
+}
+
+.fileinput-button {
+    position: relative;
+    overflow: hidden;
+    float: left;
+    margin-right: 4px;
+}
+
+.fileinput-button input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    transform: translate(-300px, 0) scale(4);
+    font-size: 23px;
+    direction: ltr;
+    cursor: pointer;
+}
+
+/**
+* Styles to fix the new iOS 7 transparent status bar
+*/
+#ios7statusbar {
+    width:100%;
+    height:20px;
+    background-color:white;
+    position:fixed;
+    z-index:10000;
+}
+
+body.ios7 .ui-page, body.ios7 .ui-header, body.ios7 .ui-pane, body.ios7 .ui-panel {
+    margin-top: 20px;
+}
+
+@media screen and (max-width : 240px) {
+    
+    #menuInicial {
+        padding: 20px 5px !important;
+    }
+    
+    a.btn-inicial span.ic {
+        margin: 5px !important;
+    }
+    
+}

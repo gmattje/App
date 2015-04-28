@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="initial-scale=1" />
+        <link rel="stylesheet" href="jquerymobile/css/themes/softplan.css" />
+        <link rel="stylesheet" href="jquerymobile/css/themes/jquery.mobile.icons.min.css" />
+        <link rel="stylesheet" href="jquerymobile/jquery.mobile.structure-1.4.2.min.css" />
+        <link rel="stylesheet" href="js/glide/glide.css" />
+        <link rel="stylesheet" href="css/index.css" />
+        <script src="js/jquery-1.9.1.min.js"></script>
+        <script src="jquerymobile/jquery.mobile-1.4.2.min.js"></script>     
+        <script src="js/he.js"></script>
+        <title>Softplan in</title>
+    </head>
+    <body>
+       
+        <!-- Inicial -->
+        <div class="app" data-role="page" data-theme="a" id="inicial" style="background-image: url(img/background.jpg); background-position: 100% 140%; background-repeat: no-repeat; background-size: 100%; background-color: #FFF;">
+            
+            <div style="margin-top: 10%; text-align: center;">
+                <img src="img/logoSoftplan.png" style="max-width: 100%;"/><br/>
+            </div>    
+                
+            <div id="loginInicial" role="main" class="ui-content" style="padding: 20px; text-align: center; color: #000038; background-color: rgba(255, 255, 255, 0.6);">
+                <h5>Utilize os mesmos dados de acesso aos serviços internos da Softplan.</h5>
+                <h6 style="color: red; display: none;" id="dados_incorretos">Os dados de login e senha no aplicativo não conferem. Insira novamente seus dados.</h6>
+                <h6 style="color: red; display: none;" id="falhas_login">CUIDADO! Você já tem duas ou mais falhas de login, seu usuário poderá ser bloqueado.</h6>
+                <form action="#" method="post" onsubmit="app.fazerLogin(); return false;">
+                    <input id="login" type="text" name="login" placeholder="LOGIN" value="" style="border: none; background-color: #E9E9E9; border-radius: 0px; color: #000;">
+                    <input id="senha" type="password" name="senha" placeholder="SENHA" value="" style="border: none; background-color: #E9E9E9; border-radius: 0px; color: #000;">
+                    <button id="btnLogin" class="ui-btn ui-corner-all ui-mini" style="background-color: #628DBA; color: #FFF; border-radius: 0px;">ENTRAR</button>
+                </form>
+            </div>
+            
+        </div>
+        
+        <!-- Inicial -->
+        <div class="app" data-role="page" data-theme="a" id="menuPrincipal" style="background-image: url(img/background.jpg); background-position: 100% 140%; background-repeat: no-repeat; background-size: 100%; background-color: #FFF;">
+        
+            <div style="margin-top: 10%; text-align: center;">
+                <img src="img/logoSoftplan.png" style="max-width: 100%;"/><br/>
+            </div>           
+            
+            <div id="menuInicial" role="main" class="ui-content" style="padding: 20px 20px 0px 20px; background-color: rgba(255, 255, 255, 0.8);">
+                <table>
+                    <tr>
+                        <td>
+                            <a href="#" onclick="app.abreSoftnews();" class="btn-inicial ic-softnews">
+                                <span class="ic">
+                                    <img src="img/ic-inicial-softnews.svg" width="100%"/>
+                                </span>
+                                SOFTNEWS
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" onclick="app.abreCarona('todos');" class="btn-inicial ic-carona">
+                                <span class="ic">
+                                    <img src="img/ic-inicial-carona.svg" width="100%"/>
+                                </span>
+                                CARONA AMIGA
+                            </a>
+                        </td>
+                    </tr> 
+                    <tr>
+                        <td>
+                            <a href="#" onclick="app.abreManualRS();" class="btn-inicial ic-manual">
+                                <span class="ic">
+                                    <img src="img/ic-inicial-manual-rede-social.svg" width="100%"/>
+                                </span>
+                                MANUAL REDES SOCIAIS
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" onclick="app.abreMural();" class="btn-inicial ic-mural">
+                                <span class="ic">
+                                    <img src="img/ic-inicial-mural.svg" width="100%"/>
+                                </span>
+                                MURAL
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <a href="#" onclick="app.abreCallback('CRT');" class="btn-inicial ic-callback">
+                                CALLBACK
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+                <a href="#" class="f-right ic-config" onclick="app.abreConfigs();">
+                    <span class="ic">
+                        <img src="img/ic-span-engine.svg" width="100%"/>
+                    </span>
+                </a>
+            </div>
+            
+        </div>    
+        
+        <!-- Softnews -->
+        <div id="menuSoftnews" data-role="panel" data-position="right" data-position-fixed="true" data-theme="b" data-display="overlay" class="ui-responsive-panel">
+            <div class="ui-panel-inner">
+                <ul data-role="listview" data-theme="b">
+                    <li class="closeMenu" data-corners='false' data-icon='false'>
+                        <a href='#' data-rel='close' style="text-align: center; background-color: #606060;">
+                            MENU 
+                            <span class="ic">
+                                <img src="img/ic-span-menu.svg" width="100%"/>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+                <ul id="ulCatsSoftnews" data-role="listview" data-theme="b" style="margin-top: 14px;"></ul>
+            </div>
+        </div>
+        
+        <div class="app" data-role="page" data-theme="a" id="softnews">
+            
+            <div class="header" data-role="header" data-position="fixed" data-tap-toggle="false">
+                <a href="#" id="btnRefreshSoftnewsDisable" class="f-left ui-btn-left">
+                    <span class="ic">
+                        <img src="img/ic-span-refresh-disable.svg" width="100%"/>
+                    </span>
+                </a>
+                <a href="#" id="btnRefreshSoftnews" class="f-left ui-btn-left" onclick="app.abreSoftnews(true);" style="display: none;">
+                    <span class="ic">
+                        <img src="img/ic-span-refresh-active.svg" width="100%"/>
+                    </span>
+                </a>
+		<h1>Softnews</h1>
+                <a href="#menuSoftnews" class="f-right ic-menu ui-btn-right" data-rel="back" data-direction="reverse">
+                    <span class="ic">
+                        <img src="img/ic-span-menu.svg" width="100%"/>
+                    </span>
+                </a>
+            </div>
+            
+            <div class="slider">
+                <ul id="ulDestaquesSoftnews" class="slides"></ul>
+            </div>
+            
+            <div role="main" class="ui-content">
+                
+                <ul id="ulNoticiasEditorialSoftnews" data-role="listview" data-theme="a"></ul>
+                
+            </div>
+            
+            <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+                <a href="#" class="f-left ic-back" data-rel="back" data-direction="reverse">
+                    <span class="ic">
+                        <img src="img/ic-span-back.svg" width="100%"/>
+                    </span>
+                </a>
+                <a href="#" class="f-right ic-config" onclick="app.abreConfigs();">
+                    <span class="ic">
+                        <img src="img/ic-span-engine.svg" width="100%"/>
+                    </span>
+                </a>
+                <a href="#" class="f-right ic-home" onclick="app.abreMenuInicial();">
+                    <span class="ic">
+                        <img src="img/ic-span-home.svg" width="100%"/>
+                    </span>
+                </a>
+            </div>
+            
+        </div>
+        
+        <div class="app" data-role="page" data-theme="a" id="softnewsCategoria">
+            
+            <div class="header" data-role="header" data-position="fixed" data-tap-toggle="false">
+		<h1>Softnews</h1>
+                <a href="#menuSoftnews" class="f-right ic-menu ui-btn-right" data-rel="back" data-direction="reverse">
+                    <span class="ic">
+                        <img src="img/ic-span-menu.svg" width="100%"/>
+                    </span>
+                </a>
+            </div>
+            
+            <div role="main" class="ui-content">
+                <ul id="ulNoticiasCategoria" data-role="listview" data-theme="a"></ul>
+                <a href="#" id="maisNoticias" data-role="button" style="margin-top: 32px;">Carregar Mais Notícias...</a>
+            </div>
+            
+            <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+                <a href="#" class="f-left ic-back" data-rel="back" data-direction="reverse">
+                    <span class="ic">
+                        <img src="img/ic-span-back.svg" width="100%"/>
+                    </span>
+                </a>
+                <a href="#" class="f-right ic-config" onclick="app.abreConfigs();">
+                    <span class="ic">
+                        <img src="img/ic-span-engine.svg" width="100%"/>
+                    </span>
+                </a>
+                <a href="#" class="f-right ic-home" onclick="app.abreMenuInicial();">
+                    <span class="ic">
+                        <img src="img/ic-span-home.svg" width="100%"/>
+                    </span>
+                </a>
+            </div>
+            
+        </div>
+        
+        <div class="app" data-role="page" data-theme="a" id="softnewsNoticia">
+            
+            <div class="header" data-role="header" data-position="fixed" data-tap-toggle="false" style="overflow:initial;">
+		<h1>Notícia</h1>
+                <a href="#menuSoftnews" class="f-right ic-menu ui-btn-right" data-rel="back" data-direction="reverse" style="height: 42px;">
+                    <span class="ic">
+                        <img src="img/ic-span-menu.svg" width="100%"/>
+                    </span>
+                </a>
+                <div id="likeComent">
+                    <div style="margin: 0 auto; width: 178px;">
+                        <a id="toCurtir" href="#" data-icon="heart">
+                            <span class="ic">
+                                <img src="img/ic-span-like.svg" width="100%"/>
+                            </span>
+                            <span id="curtir" class="qtd"></span>
+                        </a>
+                        <a id="toComentarios" href="#" data-icon="comment">
+                            <span class="ic">
+                                <img src="img/ic-span-comment.svg" width="100%"/>
+                            </span>
+                            <span id="comentar" class="qtd"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div role="main" class="ui-content" style="padding-top: 5.5em;">
+                <p id="dados_noticia" style="margin: 0px !important; color: #666 !important; font-size: 9pt !important;"></p>
+                <h1 id="titulo_noticia" style="text-align: left; margin-top: 0px !important; color: #000038 !important;"></h1>
+                <p id="conteudo_noticia"></p>
+            </div>
+            
+            <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+                <a href="#" class="f-left ic-back" data-rel="back" data-direction="reverse">
+                    <span class="ic">
+                        <img src="img/ic-span-back.svg" width="100%"/>
+                    </span>
+                </a>
+                <a href="#" class="f-right ic-config" onclick="app.abreConfigs();">
+                    <span class="ic">
+                        <img src="img/ic-span-engine.svg" width="100%"/>
+                    </span>
+                </a>
+                <a href="#" class="f-right ic-home" onclick="app.abreMenuInicial();">
+                    <span class="ic">
+                        <img src="img/ic-span-home.svg" width="100%"/>
+                    </span>
+                </a>
+            </div>
+            
+            <div id="comentarios" data-role="popup" class="ui-content" data-overlay-theme="a" data-theme="a">
+                <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+                <h3 style="margin-top: 0px !important;">Comentários</h3>
+                <ul style="margin-top: 0px !important; margin-bottom: 0px !important;" id="ulComentariosSoftnews" data-role="listview" data-divider-theme="c"></ul>
+                <h3>Comente:</h3>
+                <textarea cols="40" rows="8" name="comentario" id="textareaComentario" style="border: 1px solid #E6E6E6;"></textarea>
+                <button id="enviarComent" class="ui-btn ui-corner-all ui-mini">Enviar</button>
+            </div>
+            
+        </div>
+        
+        <!-- Carona Amiga -->
+        <div id="menuCarona" data-role="panel" data-position="right" data-position-fixed="true" data-theme="b" data-display="overlay" class="ui-responsive-panel">
+            <div class="ui-panel-inner">
+                <ul data-role="listview" data-theme="b">
+                    <li class="closeMenu" data-corners='false' data-icon='false'>
+                        <a href='#' data-rel='close' style="text-align: center; background-color: #606060;">
+                            MENU 
+                            <span class="ic">
+                                <img src="img/ic-span-menu.svg" width="100%"/>
+                            </span>
+                        </a>
+                    </li>
+                    <li data-icon='false'><a href="#" onclick="app.abreCarona('todos'); $('.ui-responsive-panel').panel('close');">Home Carona</a></li>
+                    <li data-icon='false'><a href="#" onclick="app.carregaDadosPessoais(); $('.ui-responsive-panel').panel('close');">Meu perfil</a></li>
+                    <li data-icon='false'><a href="#" onclick="app.carregaTutorialCarona(true); $('.ui-responsive-panel').panel('close');">Tutorial</a></li>
+                    <li data-icon='false'><a href="#" onclick="app.politicaDeUsoCarona(); $('.ui-responsive-panel').panel('close');">Política de uso</a></li>
+                    <li class="closeMenu" data-corners='false' data-icon='false'>
+                        <a href='#' style="text-align: center; background-color: #606060;">
+                            FILTRO MAPA
+                            <span class="ic">
+                                <img src="img/ic-span-filter.svg" width="100%"/>
+                            </span>
+                        </a>
+                    </li>
+                    <li data-icon='false'><a href="#" onclick="app.abreCarona('todos'); $('.ui-responsive-panel').panel('close');">Mostrar todos cadastrados</a></li>
+                    <li data-icon='false'><a href="#" onclick="app.abreCarona('oferece'); $('.ui-responsive-panel').panel('close');">Apenas ofertantes</a></li>
+                    <li data-icon='false'><a href="#" onclick="app.abreCarona('solicita'); $('.ui-responsive-panel').panel('close');">Apenas solicitantes</a></li>
+                </ul>
+            </div>    
+        </div>
+        
+        <div class="app" data-role="page" data-theme="a" id="carona">
+            
+            <div class="header" data-role="header" data-position="fixed" data-tap-toggle="false">
+                <a href="#" id="btnConseguiCarona" class="f-left ic-consegui-carona ui-btn-left" onclick="app.informaConseguiCarona();" style="display: none;"><span class="ic"></span></a>
+                <a href="#" id="btnLotacao" class="f-left ic-lotado ui-btn-left" onclick="app.informaLotacao();" style="display: none;"><span class="ic"></span></a>
+		<h1>Carona Amiga</h1>
+                <a href="#menuCarona" class="f-right ic-menu ui-btn-right" data-rel="back" data-direction="reverse">
+                    <span class="ic">
+                        <img src="img/ic-span-menu.svg" width="100%"/>
+                    </span>
+                </a>
+            </div>
+            
+            <div role="main" class="ui-content">
+            </div>
+            
+            <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+                <a href="#" class="f-left ic-back" data-rel="back" data-direction="reverse">
+                    <span class="ic">
+                        <img src="img/ic-span-back.svg" width="100%"/>
+                    </span>
+                </a>
+                <a href="#" class="f-right ic-config" onclick="app.abreConfigs();">
+                    <span class="ic">
+                        <img src="img/ic-span-engine.svg" width="100%"/>
+                    </span>
+                </a>
+                <a href="#" class="f-right ic-home" onclick="app.abreMenuInicial();">
+                    <span class="ic">
+                        <img src="img/ic-span-home.svg" width="100%"/>
+                    </span>
+                </a>
+            </div>
+            
+        </div>
+        
+        <div class="app" data-role="page" data-rel="dialog" data-theme="b" id="caronaInscrito">
+            
+            <div data-role="header">
+                <h1></h1>
+            </div>
+            
+            <div id="content" data-role="content"></div>
+            
+        </div>
+        
+        <div class="app" data-role="page" data-rel="dialog" data-theme="b" id="politica">
+            
+            <div data-role="header">
+                <h1>Política de uso</h1>
+            </div>
+            
+            <div id="content" data-role="content">
+                <h3>Objetivo</h3>
+                <p>Esta política é direcionada aos colaboradores da Softplan e tem por objetivo definir regras e procedimentos para o uso do site Carona Amiga.</p>
+                <h3>Conceito</h3>
+                <p>Carona Amiga é um site desenvolvido pela Softplan para uso interno dos seus colaboradores em que é permitido se cadastrar para solicitar ou oferecer carona.</p>
+                <h3>Regras e Procedimentos</h3>
+                <ul>
+                    <li>O colaborador deve acessar o site carona.softplan.com.br com o seu usuário e senha de rede;</li>
+                    <li>Em seguida, se cadastrar em "Oferece Carona" ou "Solicite Carona";</li>
+                    <li>O colaborador que se cadastrar em "Oferece Carona", deve preencher os dados no site e passar no DHO para retirar a identificação do carro (adesivo);</li>
+                    <li>O adesivo deve estar colado no para-brisa dianteiro, parte de baixo e no lado do carona;</li>
+                    <li>O colaborador que se cadastrar em "Solicite Carona" só precisa preencher os dados no site;</li>
+                    <li>Caso o colaborador não queira mais fazer parte do programa deve se descadastrar no próprio site clicando no seu nome no canto superior direito da tela. Após, deverá entregar no DHO o adesivo de indicação do programa (mesmo que danificado);</li>
+                    <li>O colaborador que já tiver com o carro lotado ou com carona deve indicar clicando no ícone correspondente. Evitando assim, que pessoas entrem em contato sem necessidade.</li>
+                </ul>
+                <div class="alert alert-warning">Caso o colaborador erre a senha por três vezes o login poderá ser bloqueado. Para desbloquear deverá entrar em contato com a Infra.</div>
+                <h3>Responsabilidades</h3>
+                <strong>Desenvolvimento Humano e Organizacional</strong>
+                <ul>
+                    <li>Todas as ações de gerenciamento do programa são de responsabilidade do DHO;</li>
+                    <li>O gerenciamento do site;</li>
+                    <li>A entrega dos ADESIVOS para os colaboradores que se cadastrarem em "Oferece Carona";</li>
+                    <li>A exclusão dos colaboradores que saírem da empresa e/ou do programa.</li>
+                </ul>
+                <strong>Colaborador</strong>
+                <ul>
+                    <li>A utilização o site dentro das políticas de segurança da informação da empresa é de responsabilidade do colaborador;</li>
+                    <li>O uso do programa de forma consciente e o sigilo das informações contidas no site, (informações pessoais, horário de saída e chegada, dados do carro, etc);</li>
+                    <li>A utilização das informações fornecidas para uso exclusivo da finalidade do programa.</li>
+                </ul>
+                <h3>Exceções</h3>
+                <p>Não existem exceções.</p>
+                <h3>Descumprimento da política</h3>
+                <p>O desrespeito desta política acarretará em sanções administrativas cabíveis de acordo com a gravidade da ocorrência e das consequências geradas.</p>
+            </div>
+            
+        </div>
+        
+        <div class="app" data-role="page" data-theme="a" id="tutorialCarona">
+            
+            <div class="header" data-role="header" data-position="fixed" data-tap-toggle="false">
+                <h1>Tutorial Carona</h1>
+                <a href="#menuCarona" id="btnMenuTut" class="f-right ic-menu ui-btn-right" data-rel="back" data-direction="reverse">
+                    <span class="ic">
+                        <img src="img/ic-span-menu.svg" width="100%"/>
+                    </span>
+                </a>
+            </div>
+            
+            <div class="slider">
+                <ul id="ulTutorialCarona" class="slides tutorial" data-role="listview" data-theme="a"></ul>
+            </div>
+            
+            <div role="main" class="ui-content" style="padding: 0px 1em 0px 1em; margin-top: -10px;">
+                <button class="ui-btn ui-corner-all ui-mini" onclick="app.abreCarona('todos');" style="background-color: #628DBA; color: #FFF; border-radius: 0px;">COMEÇAR</button>
+            </div>
+            
+            <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+                <a href="#" class="f-left ic-back" data-rel="back" data-direction="reverse">
+                    <span class="ic">
+                        <img src="img/ic-span-back.svg" width="100%"/>
+                    </span>
+                </a>
+                <a href="#" class="f-right ic-config" onclick="app.abreConfigs();">
+                    <span class="ic">
+                        <img src="img/ic-span-engine.svg" width="100%"/>
+                    </span>
+                </a>
+                <a href="#" class="f-right ic-home" onclick="app.abreMenuInicial();">
+                    <span class="ic">
+                        <img src="img/ic-span-home.svg" width="100%"/>
+                    </span>
+                </a>
+            </div>
+                        
+        </div>
+        
+        <div class="app" data-role="page" data-theme="a" id="dadosCarona">
+            
+            <div class="header" data-role="header" data-position="fixed" data-tap-toggle="false">
+                <a href="#" class="f-left ic-back ui-btn-left" data-rel="back" data-direction="reverse">
+                    <span class="ic">
+                        <img src="img/ic-span-back.svg" width="100%"/>
+                    </span>
+                </a>
+                <h1>Meu Perfil</h1>
+                <a href="#menuCarona" class="f-right ic-menu ui-btn-right" data-rel="back" data-direction="reverse">
+                    <span class="ic">
+                        <img src="img/ic-span-menu.svg" width="100%"/>
+                    </span>
+                </a>
+            </div>
+            
+            <div role="main" class="ui-content" style="background-color: #E6E6E6;">
+                <p style="margin: 0px;"><span id="nomePerfil" style="font-weight: bolder;"></span>, você gostaria de:</p>
+            </div>            
+             
+            <div role="main" class="ui-content">
+                <fieldset data-role="controlgroup">
+                    <input type="radio" name="tipo" id="solicita" value="solicita" onclick="app.numVagasShow(false);">
+                    <label for="solicita">Solicitar carona</label>
+                    <input type="radio" name="tipo" id="oferece" value="oferece" onclick="app.numVagasShow(true);">
+                    <label for="oferece">Oferecer carona</label>
+                </fieldset>
+            </div>
+            
+            <div id="inputNumVagas">
+                <div role="main" class="ui-content" style="background-color: #E6E6E6;">
+                    <p style="margin: 0px;">Seu automóvel:</p>
+                </div>
+                <div role="main" class="ui-content">
+                    <label for="num_vagas">Número de vagas:</label>
+                    <select id="num_vagas" name="num_vagas">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    <label for="automovel">Automóvel Modelo, Cor, Placa:</label>
+                    <input id="automovel" type="text" name="automovel" value="" style="border: 1px solid #E6E6E6;">
+                </div>
+            </div>
+            
+            <div role="main" class="ui-content" style="background-color: #E6E6E6;">
+                <p style="margin: 0px;">Seu endereço:</p>
+            </div>
+            
+            <div id="endereco" role="main" class="ui-content">
+                <label for="logradouro">Logradouro:</label>
+                <input id="logradouro" type="text" name="logradouro" value="" onfocus="app.limpaEndereco();" style="border: 1px solid #E6E6E6;">
+                <div id="enderecoCompleto" style="display: none;">
+                    <label for="numero">Nº:</label>
+                    <input id="numero" type="text" name="numero" value="" style="border: 1px solid #E6E6E6;">
+                    <label for="uf">Estado:</label>
+                    <select id="uf" name="uf"></select>
+                    <label for="cidade">Cidade:</label>
+                    <select id="cidade" name="cidade" ></select>
+                </div>
+                <button class="ui-btn ui-corner-all ui-mini" onclick="app.latLongEndereco();">Salvar endereço</button>
+                <input id="latitude" type="hidden" name="latitude" value=""/>
+                <input id="longitude" type="hidden" name="longitude" value=""/>
+            </div>
+            
+            <div role="main" class="ui-content" style="background-color: #E6E6E6;">
+                <p style="margin: 0px;">Dados pessoais:</p>
+            </div>
+            
+            <div role="main" class="ui-content">
+                <label for="alocado">Que unidade você está alocado?</label>
+                <select id="alocado" name="alocado">
+                    <option value="florianopolis">Florianópolis</option>
+                    <option value="sao paulo">São Paulo</option>
+                    <option value="palhoca">Palhoça</option>
+                </select>
+                <label for="horario_entrada">Que horas você entra na empresa?</label>
+                <select id="horario_entrada" name="horario_entrada">
+                    <option value="07:00">07:00</option>
+                    <option value="07:30">07:30</option>
+                    <option value="08:00">08:00</option>
+                    <option value="08:30">08:30</option>
+                    <option value="09:00">09:00</option>
+                </select>
+                <label for="horario_saida">Que horas você sai da empresa?</label>
+                <select id="horario_saida" name="horario_saida">
+                    <option value="17:00">17:00</option>
+                    <option value="17:30">17:30</option>
+                    <option value="18:00">18:00</option>
+                    <option value="18:30">18:30</option>
+                    <option value="19:00">19:00</option>
+                </select>
+                <label for="ramal">Número de seu ramal na empresa:</label>
+                <input id="ramal" type="text" name="ramal" class="maskRamal" value="" style="border: 1px solid #E6E6E6;">
+                <label for="telefone">Número de seu telefone:</label>
+                <input id="telefone" type="text" name="telefone" class="maskTelefone" value="" style="border: 1px solid #E6E6E6;">
+            </div>
+            
+            <div role="main" class="ui-content" style="background-color: #E6E6E6;">
+                <p style="margin: 0px;">Observações:</p>
+            </div>
+            
+            <div role="main" class="ui-content">
+                <textarea id="observacoes" name="observacoes" style="border: 1px solid #E6E6E6;"></textarea>
+            </div>
+            
+            <div role="main" class="ui-content">
+                <p>Ao se cadastrar você está de acordo com a <a href="#" onclick="app.politicaDeUsoCarona();">Política de uso</a></p>
+                <button class="ui-btn ui-corner-all ui-mini" onclick="app.gravaDadosPessoais();" style="background-color: #628DBA; color: #FFF; border-radius: 0px;">SALVAR</button>
+                <button class="ui-btn ui-corner-all ui-mini" onclick="app.gravaDescadastroCarona();" style="background-color: #CCCCCC; color: #FFF; border-radius: 0px;">DESABILITAR PERFIL</button>
+            </div>
+            
+        </div>
+        
+        <!-- Manual Redes Sociais -->
+        <div class="app" data-role="page" data-theme="a" id="manual">
+            
+            <div id="menuManual" data-role="panel" data-position="right" data-position-fixed="true" data-theme="b" data-display="overlay" class="ui-responsive-panel">
+                <div class="ui-panel-inner">
+                    <ul data-role="listview" data-theme="b">
+                        <li class="closeMenu" data-corners='false' data-icon='false'>
+                            <a href='#' data-rel='close' style="text-align: center; background-color: #606060;">
+                                MENU 
+                                <span class="ic">
+                                    <img src="img/ic-span-menu.svg" width="100%"/>
+                                </span>
+                            </a>
+                        </li>
+                        <li data-icon='false'><a href="#" onclick="app.ManualRSParte('mrs-introducao');">Introdução</a></li>
+                        <li data-icon='false'><a href="#" onclick="app.ManualRSParte('mrs-nossasredes');">Nossas Redes Sociais</a></li>
+                        <li data-icon='false'><a href="#" onclick="app.ManualRSParte('mrs-boaspraticas');">Boas Práticas</a></li>
+                        <li data-icon='false'><a href="#" onclick="app.ManualRSParte('mrs-consideracoes');">Considerações Finais</a></li>
+                    </ul>
+                </div>    
+            </div>
+            
+            <div class="header" data-role="header" data-position="fixed" data-tap-toggle="false">
+		<h1>Manual</h1>
+                <a href="#menuManual" class="f-right ic-menu ui-btn-right" data-rel="back" data-direction="reverse">
+                    <span class="ic">
+                        <img src="img/ic-span-menu.svg" width="100%"/>
+                    </span>
+                </a>
+            </div>
+            
+            <div role="main" class="ui-content">
+                <h2 style="color: #000038 !important;">MANUAL DE CONDUTA NAS REDES SOCIAIS</h2>
+                <img src="img/mrs1.jpg" style="max-width: 100%;"/>
+                <p>
+                    <strong>Propósito:</strong><br/>
+                    Esse manual tem como objetivo orientar você, colaborador da Softplan, a fazer uso das Redes Sociais da melhor maneira, sem causar danos para a sua imagem nem a  de nossa empresa.
+                </p>
+                <hr/>
+                <h3 id="mrs-introducao" style="color: #000038 !important;">INTRODUÇÃO</h3>
+                <div class="ui-grid-a ui-responsive">
+                    <div class="ui-block-a">
+                        <div class="ui-body" style="padding: 0.5em !important;">
+                            <p style="font-style: italic !important; color: #000038 !important; background-color: #B7C9D3 !important; padding: 10px !important;">
+                                "Muitas vezes, publicar determinado conteúdo em uma rede social é como falar em praça pública."
+                            </p>                    
+                            <p>
+                                As redes sociais estão aí e são muitas. Algumas são mais populares, outras focadas em assuntos específicos.
+                                De tempos em tempos, novas ferramentas surgem e se tornam “a queridinha” do momento. As ultrapassadas morrem,
+                                são desativadas e perfis muitas vezes são abandonados.
+                            </p>
+                            <p>
+                                Mas a participação em uma rede social merece cuidado. A atenção com o que se escreve na internet deve ser redobrada.
+                                Muitas vezes, publicar determinado conteúdo em uma rede social é como falar em praça pública. E mesmo se você postou
+                                um conteúdo e depois o deletou, isso não garante que ele deixará de existir. A internet é veloz. Alguém pode ter copiado,
+                                compartilhado com outras pessoas, que, por sua vez, fizeram o mesmo com outras e assim por diante. O alcance da rede
+                                mundial é muito grande!
+                            </p> 
+                            <p>
+                                Você já deve ter notado que, antes um território sem lei, a cada dia a internet vem conquistando seu espaço. Agora muitos
+                                países já possuem uma legislação específica. E, nestes casos, o conteúdo de uma página pode servir até mesmo como prova
+                                documental em um processo jurídico. O fenômeno virou “papo de gente grande”. E o que queremos é aproveitar o que ela tem de melhor.
+                            </p>
+                            <p>
+                               Em teoria, Rede Social é um grupo de pessoas ou empresas conectadas através da internet e com um interesse comum.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="ui-block-b">
+                        <div class="ui-body" style="padding: 0.5em !important;">
+                            <p>
+                                Visa basicamente a troca de informações, a ampliação das amizades ou relacionamentos profissionais, promover o reencontro
+                                de pessoas, o compartilhamento de ideias e outros assuntos como forma de entretenimento. 
+                             </p>
+                             <p>
+                                Estima-se, segundo o Centro de Estudo sobre as Tecnologias da Informação e da Comunicação (Cetic.br), que o Brasil
+                                tenha 80,9 milhões de usuários de internet. Um outro estudo da ComStore,  líder global em medições e análises digitais,
+                                diz que 90,8% de usuários da internet acessam as redes sociais. A ComStore diz ainda que esses sites capturam a maior
+                                porcentagem do tempo dos usuários de internet no Brasil, com 36% na média. 
+                             </p>
+                             <p>
+                                 Mas você deve estar se perguntando: “se o perfil é pessoal, por que um Manual de Boas Práticas disponibilizado pela empresa
+                                 em que trabalho”? A resposta é simples: quando um usuário informa seu local de trabalho em seu perfil, estes passam a ter,
+                                 invariavelmente, também um teor profissional. O que significa que, a partir deste momento, há algumas práticas simples que
+                                 devem ser seguidas.
+                             </p>
+                             <p>
+                                 Nosso objetivo com esse Manual de Conduta é ajudar você a se comportar da melhor maneira possível nessas Redes Sociais,
+                                 seja qual for a sua escolhida. Além disso, queremos ter você ao nosso lado em nossas redes, representando e nos orgulhando
+                                 de nosso maior patrimônio: nossos colaboradores.
+                             </p>
+                             <p style="font-style: italic !important; color: #000038 !important; background-color: #B7C9D3 !important; padding: 10px !important;">
+                                 "Se o perfil é pessoal, por que um Manual de Boas Práticas disponibilizado pela empresa em que trabalho?"
+                             </p>
+                         </div>
+                    </div>
+                </div>
+                <hr/>
+                <h3 id="mrs-nossasredes" style="color: #000038 !important;">NOSSAS REDES SOCIAIS</h3>
+                <img src="img/mrs2.jpg" style="max-width: 100%;"/>
+                <p class="texto">
+                    Para começar, vamos conferir as redes sociais onde estamos inseridos e apresentar um breve resumo sobre o conceito de cada
+                    uma delas. Antes disso, é bom lembrar que, por motivos de segurança, a empresa não permite que elas sejam acessadas do
+                    ambiente de trabalho, em horário de expediente. Isso não significa que você não possa fazê-lo em seus momentos de lazer.
+                    Afinal, esperamos que a leitura de seu conteúdo não seja uma obrigação profissional e sim um prazer pessoal.
+                </p>
+                <div class="ui-grid-a ui-responsive" style="word-wrap: break-word !important;">
+                    <div class="ui-block-a">
+                        <div class="ui-body" style="padding: 0.5em !important;">
+                            <h4>FACEBOOK</h4>
+                            <p>
+                                É a maior plataforma de rede social no mundo na atualidade. Funciona da mesma maneira que sua antecessora, o Orkut.
+                                Surgiu em 2004, originalmente foi criada de maneira restrita para os alunos do Harvard College. Depois foi, aos poucos,
+                                sendo aberta a empresários por meio de convites.
+                            </p>
+                            <p>
+                                Nosso endereço no facebook (curta nossa fan page) é:<br/> 
+                                <a href='#' onclick="app.carregaNavegador($(this), 'http://www.facebook.com/softplanonline', '_system');">http://www.facebook.com/softplanonline</a>
+                            </p>
+                            <h4>YOUTUBE</h4>
+                            <p>
+                                É um site de compartilhamento de vídeos enviados pelos usuários através da internet. A ideia é idêntica a da televisão,
+                                em que há vários canais disponíveis. A diferença é que esses canais são criados pelos próprios usuários, que podem compartilhar
+                                vídeos sobre os mais variados temas.
+                            </p>
+                            <p>
+                                Nosso canal no youtube (Acompanhe nosso canal) é:<br/> 
+                                <a href='#' onclick="app.carregaNavegador($(this), 'http://www.youtube.com/SoftplanPoligraph', '_system');">http://www.youtube.com/SoftplanPoligraph</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="ui-block-b">
+                        <div class="ui-body" style="padding: 0.5em !important;">
+                            <h4>TWITTER</h4>
+                            <p>
+                                A grande característica do Twitter é definida pela sua simplicidade. Por ser baseado em mensagens curtas, a transmissão
+                                é rápida e objetiva. Chamado de microblog, se baseia em um espaço de 140 caracteres em que o usuário posta o conteúdo de
+                                sua preferência.
+                            </p>
+                            <p>
+                                Nosso endereço no twitter (siga nosso perfil) é:<br/>
+                                <a href='#' onclick="app.carregaNavegador($(this), 'https://twitter.com/softplanonline', '_system');">https://twitter.com/softplanonline</a>
+                            </p>
+                            <h4>LINKEDIN</h4>
+                            <p>
+                                O LinkedIn é uma rede social para contatos profissionais. Seu perfil é composto por informações básicas,
+                                histórico profissional/escolar e habilidades profissionais. 
+                            </p>
+                            <p>
+                                Nosso endereço no linkedin (Acompanhe nosso perfil) é:<br/>
+                                <a href="#" onclick="app.carregaNavegador($(this), 'http://www.linkedin.com/company/670986?trk=tyah', '_system');">http://www.linkedin.com/company/670986?trk=tyah</a> 
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <h3 id="mrs-boaspraticas" style="color: #000038 !important;">BOAS PRÁTICAS</h3>
+                <img src="img/mrs3.jpg" style="max-width: 100%;"/>
+                <p>
+                    A seguir você vai conferir algumas orientações que poderão ajudá-lo no uso das redes sociais, para que tenha uma participação
+                    adequada e proveitosa. Vale lembrar que essas dicas são válidas não somente no mundo corporativo, mas também na vida pessoal.
+                </p>
+                <p>
+                    A partir de agora, quando você for acessar as redes sociais do seu celular, tablet, notebook, PC, TV ou rádio do carro
+                    (nossa, a internet está em todo lugar) pense nessas dicas!
+                </p>
+                <h4>1 - INFORMAÇÕES PESSOAIS E PERFIL</h4>
+                <ul>
+                    <li>Não crie perfis falsos nem esconda sua identidade nas redes sociais.</li>
+                    <li>Quando for se cadastrar em uma rede social, crie uma identidade própria. Não utilize nomes que o liguem à empresa, como por exemplo: Maria_Softplan. </li>
+                    <li>É permitido e desejável que você mencione em seu perfil que trabalha ou faz estágio na Softplan.</li>
+                    <li>Use senhas diferentes para o trabalho e para as contas de rede social. Senhas fortes são importantes para que sua conta não seja clonada. Não aumente o risco usando a mesma senha para a sua rede corporativa.</li>
+                    <li>Use senhas que só você tenha conhecimento e troque-as perio­dicamente. Utilize uma senha diferente para cada site e evite uti­lizar itens óbvios, como nomes próprios, datas importantes e outros.</li>
+                    <li>Ao sair de uma rede social, sempre faça log off. Isso evita que qualquer pessoa mal intencionada possa publicar conteúdo por meio de sua página ou modificar as informações de seu perfil na tentativa de difamar ou fazer brincadeiras indiscretas.</li>
+                    <li> Lembre-se que não é permitido aos colaboradores da Softplan, abrir contas nas redes sociais usando o e-mail institucional da empresa.</li>
+                </ul>
+                <h4>2 - MENÇÕES À SOFTPLAN</h4>
+                <ul>
+                    <li>Qualquer informação postada em redes sociais é de total responsa­bilidade do colaborador, ficando a empresa isenta de responder civil ou criminalmente pelos danos causados por ele, salvo quando a postagem for autorizada formalmente (por escrito) pela empresa.</li>
+                    <li>Respeite os valores da empresa. Conheça e vivencie sua missão, sua visão e seus valores. O seu com­portamento nas redes sociais deverá refletir todos eles.</li>
+                    <li>Seus seguidores/ amigos vão confundir o seu “eu” pessoal com o seu “eu” profissional. Você pode não ser o porta voz oficial do seu local de trabalho, mas, a partir do momento que torná-lo público, será visto pelos demais usuários como alguém que fala em nome da empresa. Por isso evite postar qualquer coisa que possa gerar danos à organização em que atua.</li>
+                    <li>Separe os assuntos pessoais dos profissionais. Não participe de conversas especulativas e/ou sobre posiciona­mentos de sua empresa. Não compartilhe boatos e rumores sobre a Softplan.</li>
+                    <li>Não comente assuntos confidenciais que você tenha tomado conhecimento devido à natureza do seu trabalho.</li>
+                    <li>Ao falar sobre seu trabalho, atente para que não sejam divul­gadas informações de uso interno ou confidencial e rotinas de trabalho, em função do risco de quebra de sigilo profissional.</li>
+                    <li>Não exponha problemas profissionais em conversas abertas. Cuidado com comentários implícitos ou explícitos que sejam ofensivos e passíveis vínculos com a empresa.</li>
+                    <li>Não faça comentários ofensivos ou agressivos sobre empresas concorren­tes, parceiros de negócios ou colegas de trabalho.</li>
+                    <li>Não compartilhe piadas internas, nem divulgue fotos de seu am­biente de trabalho ou de colegas sem a devida permissão. Lembre-se que fotos e men­sagens podem ser apagadas, mas isso não significa que elas desaparecerão da rede.</li>
+                    <li>Jamais publique uma informação sobre a qual você não tem conhecimento ou certeza.</li>
+                    <li>Nunca publique conteúdos, comentários ou informações relacionados a estratégias, mercado, clientes, fornecedores, faturamento ou lucratividade da Softplan.</li>
+                    <li>Fale em nome da Softplan somente se for designado para isso. Se não estiver autorizado a fazê-lo, busque direcionar a comunicação para o responsável por aquele assunto.</li>
+                    <li>Se identificar uma polêmica ou crítica envolvendo as atividades da Softplan, informe a área de Marketing. Não se envolva em discussões para as quais não tenha informação técnica ou se não for autorizado a fazê-lo.</li>
+                    <li>Não formalize contratos ou propostas através das redes sociais.</li>
+                    <li>Deixe a divulgação de novos produtos da empresa para a área responsável.</li>
+                    <li>Regras básicas de boa convivência e de educação adotadas dentro da empresa são válidas para ambientes online também. Respeite para ser respeitado e trate o outro como você gostaria de ser tratado.</li>
+                    <li>Valorize os perfis oficiais da Softplan e interaja com eles. Se gostou, clique no botão “curtir”, e recomende a leitura para quem tem interesse no tema, especialmente aqueles que querem trabalhar conosco.</li>
+                    <li>Você não deixa de ser um colaborador da Softplan quando utiliza as mídias sociais com propósitos pessoais. Evite publicar conteúdo ofensivo, que tenha conotação sexual, racial ou religiosa.</li>
+                    <li>As comunidades das quais você faz parte podem ser vistas por seus amigos. Portanto, evite participar de comunidades tais quais “Eu odeio meu chefe”, “Minha empresa é muito chata” ou “Não gosto de acordar cedo”. Mesmo que seja verdade, isso pode gerar problemas para você.</li>
+                    <li>Não crie perfis ou comunidades que façam menção à Softplan ou a alguma de suas Unidades de Negócio sem estar autorizado formalmente pela empresa.</li>
+                    <li>Não é permitido usar a logomarca da Softplan ou de seus produtos em perfis pessoais ou profissionais sem autorização formal emitida pelo Marketing da empresa. Lembre-se que as marcas são ativos da empresa e seu uso não autorizado constitui crime.</li>
+                    <li>Comunique a área de Marketing da Softplan sobre a divulgação indevida de informações relevantes para a empresa, especialmente se considerá-las sigilosas.</li>
+                    <li>Se você tem críticas à estrutura ou a processos da Softplan, discuta e resolva essa questão internamente. Procure seu chefe imediato e converse com ele. Ou se assim preferir, entre em contato com o DHO.</li>
+                </ul>
+                <h4>3 - LÍNGUA PORTUGUESA</h4>
+                <ul>
+                    <li>Cuide para que seus textos sejam escritos corretamente, sem erros de ortografia ou de concordância, e evite o excesso de abreviações. A linguagem das redes é mais informal, mas um português ruim denota desconhecimento ou falta de zelo.</li>
+                    <li>Evite gírias e linguagem imprópria. Prefira o uso de uma linguagem simples, mas correta.</li>
+                    <li>Jamais use palavras grosseiras e cuide para que sua participação, escrevendo ou  comentando, nunca contenha qualquer tipo de discriminação quanto a raça, credo, orientação sexual, posição social ou qualquer outra forma de preconceito.</li>
+                </ul>
+                <h4>4 - GERANDO CONTEÚDO NA INTERNET</h4>
+                <ul>
+                    <li>Ao assumir a postura de gerador de conteúdos nas Redes Sociais, tome cuidado para não infringir direitos autorais e de propriedade intelectual.</li>
+                    <li>Na internet, você é uma pessoa pública. Sempre que postar algo nas redes sociais, entenda que o conteúdo da sua mensagem será visto por colegas, chefes, clientes, fornecedores, parceiros de negócio, amigos e familiares.</li>
+                    <li>Nunca poste nada que possa ser usado contra você na esfera profissional.</li>
+                    <li>Isso não significa que você não possa ter opinião! Nunca deixe de ser você. Como qualquer cidadão, você é livre para pensar e se expressar da forma que desejar. Mas, como qualquer pessoa pública deve fazê-lo, lembre-se o que você postar provavelmente trará consequências, sejam estas positivas ou negativas.</li>
+                    <li>Pense no que você compartilha e com quem. Não é aconselhável postar na web qualquer coisa que você não gostaria de ver em um jornal. Toda informação divulgada na internet passa a ser de domínio público e, desde que citada a fonte, pode ser replicada em qualquer outro veículo.</li>
+                    <li>É falsa a impressão de que nas mídias sociais é permitido falar de tudo, de qualquer maneira, sobre qualquer pessoa ou empresa, sem haver consequências ou penalidades. Participar das redes sociais é um ato de caráter público.  Você será responsável por tudo o que publicar, assim como é pelo que faz no dia-a-dia, com uma importante diferença: geralmente não há provas do que você fala em uma mesa de bar, mas na internet tudo fica registrado.</li>
+                    <li>Nunca responda de forma grosseira, mesmo que usem de grosseria contra você. Pessoas inteligentes privilegiam os argumentos contra a falta deles. Quando a pessoa não merecer sua atenção por falta de modos, simplesmente a ignore.</li>
+                    <li>Evite escrever demais em um único post. Os textos para internet devem ser curtos e objetivos. Escolha títulos atraentes e inicie o texto de forma a mantê-lo interessante.</li>
+                    <li>Assuntos delicados e polêmicos devem ser tratados em particular. Existe uma máxima sobre as redes sociais que diz “se não pode ser dito em público, não pode ser publicado”.</li>
+                    <li>Você está em um ambiente público e falar demais pode ser um risco. Evite fazer comentários sobre sua vida profissional, compra de bens, datas de viagens, promoções profissionais e ende­reços. Expor demais seus dados pode ser perigoso.</li>
+                    <li>Evite a publicação de fotos de qualquer autoria que comprometam ou potencialmente prejudiquem sua imagem ou de sua empresa.</li>
+                </ul>
+                <hr/>
+                <h3 id="mrs-consideracoes" style="color: #000038 !important;">CONSIDERAÇÕES FINAIS</h3>
+                <img src="img/mrs4.jpg" style="max-width: 100%;"/>
+                <p>
+                    Temos uma máxima que não deve ser esquecida: “todos têm, e devem continuar tendo, liberdade de opinião”. No entanto,
+                    esta liberdade deve ser usada com bom senso. Imagine um executivo de contas de uma rede de televisão que fala mal dos
+                    programas da emissora. Em tese, por seu perfil particular, teria liberdade para fazê-lo. Na prática, geraria
+                    consequências muito negativas para ele e também para a empresa. Por isso dizemos que estar em uma Rede Social e assumir
+                    o perfil de uma pessoa pública é um grande desafio.
+                </p>
+                <p>
+                    Ah! Lembra daquela história de vida real e virtual? Já está mais que provado que não existe mais essa separação.
+                    Agora tudo faz parte da vida real.
+                </p>
+                <p>
+                    Boa sorte! E aproveite tudo de bom que as redes sociais podem oferecer a você.
+                </p>
+                <h4>FICOU COM DÚVIDAS?</h4>
+                <p>
+                    É possível que você se depare com alguma situação ou comentário diante do qual não saiba como proceder. Nesses casos,
+                    busque orientação com a área de Marketing da Softplan através do e-mail <a href="mailto:marketing@softplan.com.br">marketing@softplan.com.br</a> ou do ramal 8080.
+                </p>
+            </div>    
+            
+            <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+                <a href="#" class="f-left ic-back" data-rel="back" data-direction="reverse">
+                    <span class="ic">
+                        <img src="img/ic-span-back.svg" width="100%"/>
+                    </span>
+                </a>
+                <a href="#" class="f-right ic-config" onclick="app.abreConfigs();">
+                    <span class="ic">
+                        <img src="img/ic-span-engine.svg" width="100%"/>
+                    </span>
+                </a>
+                <a href="#" class="f-right ic-home" onclick="app.abreMenuInicial();">
+                    <span class="ic">
+                        <img src="img/ic-span-home.svg" width="100%"/>
+                    </span>
+                </a>
+            </div>
+            
+        </div>    
+        
+        <!-- Mural -->
+        <div id="menuMural" data-role="panel" data-position="right" data-position-fixed="true" data-theme="b" data-display="overlay" class="ui-responsive-panel">
+            <div class="ui-panel-inner">
+                <ul data-role="listview" data-theme="b">
+                    <li class="closeMenu" data-corners='false' data-icon='false'>
+                        <a href='#' data-rel='close' style="text-align: center; background-color: #606060;">
+                            MENU 
+                            <span class="ic">
+                                <img src="img/ic-span-menu.svg" width="100%"/>
+                            </span>
+                        </a>
+                    </li>
+                    <li data-icon='false'><a href="#" onclick="app.abreMural(); $('.ui-responsive-panel').panel('close');">Home Mural</a></li>
+                    <li data-icon='false'><a href="#" onclick="app.adicionarEditarAnuncio(); $('.ui-responsive-panel').panel('close');">Inserir Anúncio</a></li>
+                    <li data-icon='false'><a href="#" onclick="app.carregaMeusAnuncios(); $('.ui-responsive-panel').panel('close');">Meus Anúncios</a></li>
+                    <li data-icon='false'><a href="#" onclick="app.politicaDeUsoMural(); $('.ui-responsive-panel').panel('close');">Política de uso</a></li>
+                </ul>
+            </div>    
+        </div>
+        
+        <div class="app" data-role="page" data-theme="a" id="mural">
+            
+            <div class="header" data-role="header" data-position="fixed" data-tap-toggle="false">
+                <a href="#" id="btnRefreshMuralDisable" class="f-left ui-btn-left">
+                    <span class="ic">
+                        <img src="img/ic-span-refresh-disable.svg" width="100%"/>
+                    </span>
+                </a>
+                <a href="#" id="btnRefreshMural" class="f-left ui-btn-left" onclick="app.abreMural(true);" style="display: none;">
+                    <span class="ic">
+                        <img src="img/ic-span-refresh-active.svg" width="100%"/>
+                    </span>
+                </a>
+                <h1>Mural</h1>
+                <a href="#menuMural" class="f-right ic-menu ui-btn-right" data-rel="back" data-direction="reverse">
+                    <span class="ic">
+                        <img src="img/ic-span-menu.svg" width="100%"/>
+                    </span>
+                </a>
+            </div>
+            
+            <div role="main" class="ui-content">
+                <ul id="ulMural" data-role="listview" data-theme="a"></ul>
+                <a href="#" id="maisAnuncios" data-role="button" style="display: none; margin-top: 32px;">Carregar Mais Anúncios...</a>
+            </div>
+            
+            <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+                <a href="#" class="f-left ic-back" data-rel="back" data-direction="reverse">
+                    <span class="ic">
+                        <img src="img/ic-span-back.svg" width="100%"/>
+                    </span>
+                </a>
+                <a href="#" class="f-right ic-config" onclick="app.abreConfigs();">
+                    <span class="ic">
+                        <img src="img/ic-span-engine.svg" width="100%"/>
+                    </span>
+                </a>
+                <a href="#" class="f-right ic-home" onclick="app.abreMenuInicial();">
+                    <span class="ic">
+                        <img src="img/ic-span-home.svg" width="100%"/>
+                    </span>
+                </a>
+            </div>
+            
+        </div>
+        
+        <div class="app" data-role="page" data-theme="a" id="muralMeusAnuncios">
+            
+            <div class="header" data-role="header" data-position="fixed" data-tap-toggle="false">
+                <a href="#" id="btnRefreshMeuMuralDisable" class="f-left ui-btn-left">
+                    <span class="ic">
+                        <img src="img/ic-span-refresh-disable.svg" width="100%"/>
+                    </span>
+                </a>
+                <a href="#" id="btnRefreshMeuMural" class="f-left ui-btn-left" onclick="app.carregaMeusAnuncios(true);" style="display: none;">
+                    <span class="ic">
+                        <img src="img/ic-span-refresh-active.svg" width="100%"/>
+                    </span>
+                </a>
+		<h1>Meus Anúncios</h1>
+                <a href="#menuMural" class="f-right ic-menu ui-btn-right" data-rel="back" data-direction="reverse">
+                    <span class="ic">
+                        <img src="img/ic-span-menu.svg" width="100%"/>
+                    </span>
+                </a>
+            </div>
+            
+            <div role="main" class="ui-content">
+                <ul id="ulMeusAnunciosMural" data-role="listview" data-split-icon="edit" data-theme="a"></ul>
+                <div id="semAnuncios" style="padding: 20px; text-align: center;">
+                    <h5>Você não possui anúncios cadastrados.</h5>
+                    <a href="#" onclick="app.adicionarEditarAnuncio();" data-role="button" style="margin-top: 32px;">Inserir Anúncio</a>
+                </div>
+            </div>
+            
+            <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+                <a href="#" class="f-left ic-back" data-rel="back" data-direction="reverse">
+                    <span class="ic">
+                        <img src="img/ic-span-back.svg" width="100%"/>
+                    </span>
+                </a>
+                <a href="#" class="f-right ic-config" onclick="app.abreConfigs();">
+                    <span class="ic">
+                        <img src="img/ic-span-engine.svg" width="100%"/>
+                    </span>
+                </a>
+                <a href="#" class="f-right ic-home" onclick="app.abreMenuInicial();">
+                    <span class="ic">
+                        <img src="img/ic-span-home.svg" width="100%"/>
+                    </span>
+                </a>
+            </div>
+            
+        </div>
+        
+        <div class="app" data-role="page" data-theme="a" id="muralAnuncio">
+            
+            <div class="header" data-role="header" data-position="fixed" data-tap-toggle="false">
+		<h1>Anúncio</h1>
+                <a href="#menuMural" class="f-right ic-menu ui-btn-right" data-rel="back" data-direction="reverse" style="height: 42px;">
+                    <span class="ic">
+                        <img src="img/ic-span-menu.svg" width="100%"/>
+                    </span>
+                </a>
+            </div>
+            
+            <div class="slider">
+                <ul id="ulFotosAnuncio" class="slides"></ul>
+            </div>
+            
+            <div role="main" class="ui-content">
+                <p id="dados_anuncio" style="margin: 0px !important; color: #666 !important; font-size: 9pt !important;"></p>
+                <h1 id="titulo_anuncio" style="text-align: left; margin-top: 0px !important; color: #000038 !important;"></h1>
+                <p id="conteudo_anuncio"></p>
+                <p id="dados_anunciante" style="margin: 0px !important; color: #666 !important; font-size: 9pt !important; padding-top: 15px; border-top: 1px solid;"></p>
+                <a id="enviaEmail" href="#" class="ui-btn ui-corner-all ui-mini" style="background-color: #628DBA; color: #FFF; border-radius: 0px;">ENVIAR E-MAIL</a>
+            </div>
+            
+            <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+                <a href="#" class="f-left ic-back" data-rel="back" data-direction="reverse">
+                    <span class="ic">
+                        <img src="img/ic-span-back.svg" width="100%"/>
+                    </span>
+                </a>
+                <a href="#" class="f-right ic-config" onclick="app.abreConfigs();">
+                    <span class="ic">
+                        <img src="img/ic-span-engine.svg" width="100%"/>
+                    </span>
+                </a>
+                <a href="#" class="f-right ic-home" onclick="app.abreMenuInicial();">
+                    <span class="ic">
+                        <img src="img/ic-span-home.svg" width="100%"/>
+                    </span>
+                </a>
+            </div>
+            
+        </div>
+        
+        <div class="app" data-role="page" data-theme="a" id="cadastroAnuncio">
+            
+            <div class="header" data-role="header" data-position="fixed" data-tap-toggle="false">
+                <a href="#" class="f-left ic-back ui-btn-left" data-rel="back" data-direction="reverse">
+                    <span class="ic">
+                        <img src="img/ic-span-back.svg" width="100%"/>
+                    </span>
+                </a>
+		<h1>Meu Anúncio</h1>
+                <a href="#menuMural" class="f-right ic-menu ui-btn-right" data-rel="back" data-direction="reverse">
+                    <span class="ic">
+                        <img src="img/ic-span-menu.svg" width="100%"/>
+                    </span>
+                </a>
+            </div>
+            
+            <div role="main" class="ui-content" style="background-color: #E6E6E6;">
+                <p style="margin: 0px;"><span id="nomePerfil" style="font-weight: bolder;"></span>, preencha os dados:</p>
+            </div>
+            
+            <div role="main" class="ui-content">
+                <label for="ramal">Número de seu ramal na empresa:</label>
+                <input id="ramal" type="text" name="ramal" class="maskRamal" value="" style="border: 1px solid #E6E6E6;">
+            </div>            
+            
+            <div role="main" class="ui-content" style="background-color: #E6E6E6;">
+                <p style="margin: 0px;">Dados do anúncio:</p>
+            </div>
+            
+            <div role="main" class="ui-content">
+                <label for="categoria">Categoria:</label>
+                <fieldset data-role="controlgroup">
+                    <input type="radio" name="categoria" id="venda" value="venda">
+                    <label for="venda">Venda</label>
+                    <input type="radio" name="categoria" id="compra" value="compra">
+                    <label for="compra">Compra</label>
+                    <input type="radio" name="categoria" id="aluguel" value="aluguel">
+                    <label for="aluguel">Aluguel</label>
+                    <input type="radio" name="categoria" id="indicacao" value="indicacao">
+                    <label for="indicacao">Indicação</label>
+                    <input type="radio" name="categoria" id="outros" value="outros">
+                    <label for="outros">Outros</label>
+                </fieldset>
+                <label for="titulo">Título do anúncio:</label>
+                <input id="titulo" type="text" name="titulo" value="" style="border: 1px solid #E6E6E6;">
+                <label for="detalhes">Detalhes do anúncio:</label>
+                <textarea id="detalhes" name="detalhes" style="border: 1px solid #E6E6E6;"></textarea>
+            </div>
+            
+            <div role="main" class="ui-content" style="background-color: #E6E6E6;">
+                <p style="margin: 0px;">Fotos:</p>
+            </div>
+            
+            <div role="main" class="ui-content">
+                
+                <div id="FotoCadastrada1" class="fotoCadastrada" style="float: left;">
+                    <img src="" style="max-width: 40%;margin-right: 10%;margin-bottom: 5%;float: left;box-sizing: border-box;"/>
+                    <a href="#" data-role="button" data-icon="refresh" data-iconpos="top" data-inline="true" onclick="app.alterarImg($(this), 'inputFoto1');" style="width: 46%;float: left;box-sizing: border-box;">Alterar foto</a>
+                </div>
+                <span id="inputFoto1" class="ui-btn ui-corner-all ui-mini ui-icon-plus ui-btn-icon-left fileinput-button" style="width: 82%;">
+                    <span>Selecione foto 1</span>
+                    <input type="file" accept="image/jpeg" id="foto1" name="foto1" data-role="none" onchange="app.selecionarImg($(this))"/>
+                </span>
+
+                <div id="FotoCadastrada2" class="fotoCadastrada" style="float: left;">
+                    <img src="" style="max-width: 40%;margin-right: 10%;margin-bottom: 5%;float: left;box-sizing: border-box;"/>
+                    <a href="#" data-role="button" data-icon="refresh" data-iconpos="top" data-inline="true" onclick="app.alterarImg($(this), 'inputFoto2');" style="width: 46%;float: left;box-sizing: border-box;">Alterar foto</a>
+                </div>
+                <span id="inputFoto2" class="ui-btn ui-corner-all ui-mini ui-icon-plus ui-btn-icon-left fileinput-button" style="width: 82%;">
+                    <span>Selecione foto 2</span>
+                    <input type="file" accept="image/jpeg" id="foto2" name="foto2" data-role="none" onchange="app.selecionarImg($(this))"/>
+                </span>
+
+                <div id="FotoCadastrada3" class="fotoCadastrada" style="float: left;">
+                    <img src="" style="max-width: 40%;margin-right: 10%;margin-bottom: 5%;float: left;box-sizing: border-box;"/>
+                    <a href="#" data-role="button" data-icon="refresh" data-iconpos="top" data-inline="true" onclick="app.alterarImg($(this), 'inputFoto3');" style="width: 46%;float: left;box-sizing: border-box;">Alterar foto</a>
+                </div>
+                <span id="inputFoto3" class="ui-btn ui-corner-all ui-mini ui-icon-plus ui-btn-icon-left fileinput-button" style="width: 82%;">
+                    <span>Selecione foto 3</span>
+                    <input type="file" accept="image/jpeg" id="foto3" name="foto3" data-role="none" onchange="app.selecionarImg($(this))"/>
+                </span>
+            
+                <div id="FotoCadastrada4" class="fotoCadastrada" style="float: left;">
+                    <img src="" style="max-width: 40%;margin-right: 10%;margin-bottom: 5%;float: left;box-sizing: border-box;"/>
+                    <a href="#" data-role="button" data-icon="refresh" data-iconpos="top" data-inline="true" onclick="app.alterarImg($(this), 'inputFoto4');" style="width: 46%;float: left;box-sizing: border-box;">Alterar foto</a>
+                </div>
+                <span id="inputFoto4" class="ui-btn ui-corner-all ui-mini ui-icon-plus ui-btn-icon-left fileinput-button" style="width: 82%;">
+                    <span>Selecione foto 4</span>
+                    <input type="file" accept="image/jpeg" id="foto4" name="foto4" data-role="none" onchange="app.selecionarImg($(this))"/>
+                </span>
+            </div>
+            
+            <div role="main" class="ui-content">
+                <p>Ao cadastrar/editar você está de acordo com a <a href="#" onclick="app.politicaDeUsoMural();">Política de uso</a></p>
+                <button id="btnSalvarAnuncio" class="ui-btn ui-corner-all ui-mini" onclick="app.gravaDadosAnuncio();" style="background-color: #628DBA; color: #FFF; border-radius: 0px;">SALVAR e PUBLICAR</button>
+                <button id="btnExcluirAnuncio" class="ui-btn ui-corner-all ui-mini" onclick="app.excluiAnuncio();" style="background-color: #BA6262; color: #FFF; border-radius: 0px; display: none;">EXCLUIR ANÚNCIO</button>
+                <a class="ui-btn ui-corner-all ui-mini" href="#" data-rel="back" data-direction="reverse" style="background-color: #CCCCCC; color: #FFF; border-radius: 0px;">CANCELAR</a>
+            </div>
+            
+        </div>
+        
+        <div class="app" data-role="page" data-rel="dialog" data-theme="b" id="politicaMural">
+            
+            <div data-role="header">
+                <h1>Política de uso</h1>
+            </div>
+            
+            <div id="content" data-role="content">
+                <ul>
+                    <li>
+                        O usuário se compromete a não cadastrar informações falsas, inexatas, racistas ou que violem os direitos de propriedade intelectual e industrial;
+                    </li>
+                    <li>
+                        Preferencialmente os itens anunciados deverão ser de uso pessoal, não tendo sido adquiridos ou produzidos com o objetivo principal de (re)venda;
+                    </li>
+                    <li>
+                        Não é permitido postar o mesmo anúncio diversas vezes com o propósito de colocá-los de volta ao topo dos resultados;
+                    </li>
+                    <li>
+                        Não é permitido anúncio de venda ou oferta de produtos, bens ou serviços que sejam proibidos de acordo com as leis brasileiras;
+                    </li>
+                    <li>
+                        Os administradores do Mural reservam-se ao direito exclusivo de decidir se o anúncio se encontra de acordo com estas regras e, se for o caso, excluí-lo;
+                    </li>
+                    <li>
+                        O Mural é um espaço exclusivo para venda de produtos, serviços e indicações de profissionais. Outros assuntos deverão ser tratados fora desse local;
+                    </li>
+                    <li>
+                        Seu anúncio ficará publicado por no máximo 60 dias, quando será automaticamente excluído;
+                    </li>
+                    <li>
+                        A Softplan se isenta de qualquer responsabilidade sobre os conteúdos dos anúncios e suas eventuais negociações;
+                    </li>
+                    <li>
+                        Ao publicar o anúncio você estará, automaticamente, concordando com os termos apresentados acima.
+                    </li>                                   
+                </ul>
+            </div>
+            
+        </div>
+        
+        <!-- CALLBACK -->
+        <div id="menuCallback" data-role="panel" data-position="right" data-position-fixed="true" data-theme="b" data-display="overlay" class="ui-responsive-panel">
+            <div class="ui-panel-inner">
+                <ul data-role="listview" data-theme="b">
+                    <li class="closeMenu" data-corners='false' data-icon='false'>
+                        <a href='#' data-rel='close' style="text-align: center; background-color: #606060;">
+                            MENU 
+                            <span class="ic">
+                                <img src="img/ic-span-menu.svg" width="100%"/>
+                            </span>
+                        </a>
+                    </li>
+                    <li data-icon='false'><a href="#" onclick="app.abreCallback('CRT'); $('.ui-responsive-panel').panel('close');">Ramais (CRT)</a></li>
+                    <li data-icon='false'><a href="#" onclick="app.abreCallback('Agenda'); $('.ui-responsive-panel').panel('close');">Minha Agenda</a></li>
+                    <li data-icon='false'><a href="#" onclick="app.abreCallback('Telefone'); $('.ui-responsive-panel').panel('close');">Ligação Direta</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="app" data-role="page" data-theme="a" id="callback-crt">
+            
+            <div class="header" data-role="header" data-position="fixed" data-tap-toggle="false" style="overflow:initial;">
+                <h1>CRT</h1>
+                <a href="#menuCallback" class="f-right ic-menu ui-btn-right" data-rel="back" data-direction="reverse" style="height: 42px;">
+                    <span class="ic">
+                        <img src="img/ic-span-menu.svg" width="100%"/>
+                    </span>
+                </a>
+                <div id="searchCallback">
+                    <div style="margin: 0 auto; width: 90%;">
+                        <div class="ui-field-contain">
+                            <input type="search" id="inputSearchCallback" value="" placeholder="Procurar..."/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div role="main" class="ui-content" style="padding-top: 75px;">
+                
+                <ul id="ulRamaisCallback" data-role="listview" data-split-icon="plus" data-theme="a" data-split-theme="a"></ul>
+                
+            </div>
+            
+            <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+                <a href="#" class="f-left ic-back" data-rel="back" data-direction="reverse">
+                    <span class="ic">
+                        <img src="img/ic-span-back.svg" width="100%"/>
+                    </span>
+                </a>
+                <a href="#" class="f-right ic-config" onclick="app.abreConfigs();">
+                    <span class="ic">
+                        <img src="img/ic-span-engine.svg" width="100%"/>
+                    </span>
+                </a>
+                <a href="#" class="f-right ic-home" onclick="app.abreMenuInicial();">
+                    <span class="ic">
+                        <img src="img/ic-span-home.svg" width="100%"/>
+                    </span>
+                </a>
+            </div>
+            
+        </div>
+        
+        <div class="app" data-role="page" data-theme="a" id="callback-agenda">
+            
+            <div class="header" data-role="header" data-position="fixed" data-tap-toggle="false" style="overflow:initial;">
+                <h1>Agenda</h1>
+                <a href="#menuCallback" class="f-right ic-menu ui-btn-right" data-rel="back" data-direction="reverse" style="height: 42px;">
+                    <span class="ic">
+                        <img src="img/ic-span-menu.svg" width="100%"/>
+                    </span>
+                </a>
+                <div id="searchCallback">
+                    <div style="margin: 0 auto; width: 90%;">
+                        <div class="ui-field-contain">
+                            <input type="search" id="inputSearchCallback" value="" placeholder="Procurar..."/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div role="main" class="ui-content" style="padding-top: 75px;">
+                
+                <ul id="ulAgendaCallback" data-role="listview" data-split-icon="plus" data-theme="a" data-split-theme="a"></ul>
+                
+            </div>
+            
+            <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+                <a href="#" class="f-left ic-back" data-rel="back" data-direction="reverse">
+                    <span class="ic">
+                        <img src="img/ic-span-back.svg" width="100%"/>
+                    </span>
+                </a>
+                <a href="#" class="f-right ic-config" onclick="app.abreConfigs();">
+                    <span class="ic">
+                        <img src="img/ic-span-engine.svg" width="100%"/>
+                    </span>
+                </a>
+                <a href="#" class="f-right ic-home" onclick="app.abreMenuInicial();">
+                    <span class="ic">
+                        <img src="img/ic-span-home.svg" width="100%"/>
+                    </span>
+                </a>
+            </div>
+            
+        </div>
+        
+        <!-- Configs -->
+        <div class="app" data-role="page" data-theme="a" id="configs">
+            
+            <div class="header" data-role="header" data-position="fixed" data-tap-toggle="false">
+                <h1>Configurações</h1>
+            </div>
+            
+            <div role="main" class="ui-content">
+                
+                <a id="btnLogout" class="ui-btn ui-corner-all ui-mini" onclick="app.fazerLogout();" style="display: none;">SAIR</a>
+                <a class="ui-btn ui-corner-all ui-mini" href="mailto:marketing@softplan.com.br">DÚVIDAS / SUGESTÕES</a>
+                
+            </div>
+            
+            <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+                <a href="#" class="f-left ic-back" data-rel="back" data-direction="reverse">
+                    <span class="ic">
+                        <img src="img/ic-span-back.svg" width="100%"/>
+                    </span>
+                </a>
+            </div>
+            
+        </div>
+        
+        <script type="text/javascript" src="phonegap.js"></script>
+        <script src="js/glide/jquery.glide.min.js"></script>
+        <script src="js/jquery.maskedinput.js"></script>
+        <script src="js/maps.js"></script> <!-- Original: http://maps.googleapis.com/maps/api/js?sensor=false -->
+        <script src="js/gmap3v5.1.1/gmap3.js"></script>
+        <script src="js/cidades-estados.js"></script> <!-- Original: http://cidades-estados-js.googlecode.com/files/cidades-estados-1.2-utf8.js -->
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript">
+            app.initialize();
+        </script>
+    </body>
+</html>
