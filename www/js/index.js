@@ -111,6 +111,9 @@ var app = {
         //    $("body").addClass("ios7");
         //    $('<div>').prependTo('#body').attr('id','ios7statusbar');
         //}
+        $('#callback-crt .ui-content').bind('verticalDistanceThreshold',function(){
+            navigator.notification.alert('TESTE', function(){}, 'Atenção', 'Ok');
+        });
         navigator.splashscreen.hide();
         StatusBar.hide();
     },
@@ -379,6 +382,9 @@ var app = {
             $('#tutorialCarona .ui-content').css('display','none');
             $('#tutorialCarona .footer').css('display','block');
         }
+    },
+    carregaEscolhaCidadeCarona: function(){
+        $.mobile.changePage("#cidadeCarona", { changeHash: false });
     },
     politicaDeUsoCarona: function(){
         $.mobile.changePage("#politica", { role: 'dialog', changeHash: true });
@@ -1838,7 +1844,7 @@ var app = {
         );
         $('#dadosCallbackRamal #ulOpcoes').append(
         "<li>" +   
-        "<a class='ui-btn ui-btn-icon-right ui-icon-mail' href='#Ramal' onclick=\"app.emailCrt('" + email + "')\">" +
+        "<a class='ui-btn ui-btn-icon-right ui-icon-mail' href='mailto:" + email + "'>" +
         "<h2 style='color: #000038 !important;'>" + email + "</h2>" +
         "<p class='ui-li-aside'><strong>E-MAIL</strong></p>" +
         "</a>" +

@@ -302,6 +302,26 @@ a.btn-inicial span.ic {
     cursor: pointer;
 }
 
+#alfabeto {
+    position: fixed;
+    top: 105px;
+    right: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background-color: #FFF;
+    width: 50px;
+    font-size: 8pt;
+}
+
+#alfabeto li {
+    float: left;
+    width: 24px;
+    text-align: center;
+    border-left: 1px solid #CCC;
+    border-bottom: 1px solid #CCC;
+}
+
 /**
 * Styles to fix the new iOS 7 transparent status bar
 */
