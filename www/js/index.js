@@ -19,6 +19,7 @@
 //variáveis gerais
 var urlWebServiceSoftnews = 'https://design.softplan.com.br/webserviceSoftnews';
 var urlWebServiceCarona = 'https://carona.softplan.com.br/webservice';
+var urlWebServiceCallback = 'http://cbsrv.softplan.com.br:443/CallBackWebService/callback';
 var tempoRespostaLimite = 25000; //25 segundos
 var nomeUser = "";
 
@@ -58,6 +59,10 @@ var cidadeAtual = "";
 if(localStorage.getItem('alocado') != null) {
     cidadeAtual = localStorage.getItem('alocado');
 }
+
+//variáveis callback
+var ultimoFiltro = "";
+var timerCrt;
 
 var app = {
     // Application Constructor
@@ -166,7 +171,7 @@ var app = {
     abreMenuInicial: function(){
         $.mobile.changePage("#menuPrincipal", { changeHash: true, transition: 'fade' });        
     },
-    abreCarona: function(tiposPontos){
+    abreCarona: function(cidade, apenasVisualizar, tiposPontos){
         if(localStorage.getItem('tutorialCarona') == null){
             app.carregaTutorialCarona(false);
         } else {
@@ -175,30 +180,56 @@ var app = {
                 tiposPontos = "todos";
             }
             
+            if(cidade !== null){
+                cidadeAtual = cidade;
+            }
+            
             if(cidadeAtual == "") {
                 cidadeAtual = "sao paulo";
             }
             
             switch (cidadeAtual){
                 case 'florianopolis':
+                    var btnSelect  = '.btnCidade.florianopolis';
                     var centerLat  = centLatFlorianopolis;
                     var centerLong = centerLongFlorianopolis;
                     var latCidade  = latFlorianopolis;
                     var longCidade = longFlorianopolis;
                 break;
                 case 'sao paulo':
+                    var btnSelect  = '.btnCidade.saopaulo';
                     var centerLat  = centLatSaoPaulo;
                     var centerLong = centerLongSaoPaulo;
                     var latCidade  = latSaoPaulo;
                     var longCidade = longSaoPaulo;
                 break;
                 case 'palhoca':
+                    var btnSelect  = '.btnCidade.palhoca';
                     var centerLat  = centLatPalhoca;
                     var centerLong = centerLongPalhoca;
                     var latCidade  = latPalhoca;
                     var longCidade = longPalhoca;
                 break;
             }
+            
+            $('.btnCidade span.ic').css('display','none');
+            $(btnSelect + ' span.ic').css('display','block');
+            
+            $('.btnFiltro span.ic').css('display','none');
+            $('.btnFiltro.' + tiposPontos + ' span.ic').css('display','block');
+            
+            if (navigator.userAgent.match(/(iPad.*|iPhone.*|iPod.*)/i)) {
+                var sx = 35;
+                var sy = 55;
+            } else {
+                var sx = 110;
+                var sy = 55;
+            }
+            
+            var iconSoftplan = {
+                url: "img/ic-softplan-mapa.svg",
+                scaledSize: new google.maps.Size(sx, sy)
+            };
             
             app.checkConnection();
             app.loading(true, 'Carregando...');
@@ -214,9 +245,9 @@ var app = {
                     }
                   },
                   marker:{
-                    values:[{latLng:[latCidade, longCidade], options:{icon: "img/ic-softplan-mapa.svg"}}],
+                    values:[{latLng:[latCidade, longCidade], options:{icon: iconSoftplan}}],
                     callback: function(){
-                      app.loadMarkers(tiposPontos);
+                      app.loadMarkers(apenasVisualizar, tiposPontos);
                     },
                     options:{
                       draggable: false
@@ -227,22 +258,38 @@ var app = {
                 //destroy mapa atual
                 $('#carona .ui-content').gmap3('destroy');
                 mapaIniciado = false;
-                app.abreCarona(tiposPontos);
+                app.abreCarona(null, apenasVisualizar, tiposPontos);
             }
         }
     },
     addMarker: function(id, tipo, lat, long){
+         
+        if (navigator.userAgent.match(/(iPad.*|iPhone.*|iPod.*)/i)) {
+            var sx = 35;
+            var sy = 55;
+        } else {
+            var sx = 90;
+            var sy = 45;
+        }       
+                
+        var icone = {
+            url: "img/ic-carona-" + tipo + "-mapa.svg",
+            scaledSize: new google.maps.Size(sx, sy)
+        };
+        
         $("#carona .ui-content").gmap3({
             marker: {
                 latLng:[lat, long],
                 events:{ 
                     click:function(){ app.carregaDadosInscrito(id); }
                 },
-                options:{icon: "img/ic-carona-" + tipo + "-mapa.svg"}
+                options:{
+                    icon: icone
+                }
             }
         });
     },
-    loadMarkers: function(tiposPontos){
+    loadMarkers: function(apenasVisualizar, tiposPontos){
         if(app.checkConnection()){
             app.loading(true, 'Carregando...');
 
@@ -287,10 +334,17 @@ var app = {
                                 $('#btnConseguiCarona span.ic').html('<img src="img/ic-span-solicita.svg" width="100%"/>');
                             }
                             //seta cidade padrão do user
-                            localStorage.setItem('alocado', data.user.alocado);
-                            if(data.user.alocado !== cidadeAtual){
-                                cidadeAtual = data.user.alocado;
-                                app.abreCarona();
+                            if(data.user.status != "0"){
+                                $('.btnPerfilCriado').css('display','block');
+                                $('.btnCriarPerfil').css('display','none');
+                                localStorage.setItem('alocado', data.user.alocado);
+                                if((apenasVisualizar === false) && (data.user.alocado !== cidadeAtual)){
+                                    cidadeAtual = data.user.alocado;
+                                    app.abreCarona(null, false, null);
+                                }
+                            } else {
+                                $('.btnPerfilCriado').css('display','none');
+                                $('.btnCriarPerfil').css('display','block');
                             }
                             if(data.marker.length == null) {
                                 app.addMarker(data.marker.id, data.marker.tipo, data.marker.latitude, data.marker.longitude);
@@ -309,10 +363,11 @@ var app = {
     carregaTutorialCarona: function(tpChangeHash){
         $.mobile.changePage("#tutorialCarona", { changeHash: tpChangeHash });
         $('#ulTutorialCarona').css('height', (app.getDocHeight()-130) + 'px');
-        $('#ulTutorialCarona').append("<li class='slide tutorial'><img src='img/tut-carona-4.jpg'></li>");
+        $('#ulTutorialCarona').append("<li class='slide tutorial'><img src='img/tut-carona-5.jpg'></li>");
         $('#ulTutorialCarona').append("<li class='slide tutorial'><img src='img/tut-carona-1.jpg'></li>");
         $('#ulTutorialCarona').append("<li class='slide tutorial'><img src='img/tut-carona-2.jpg'></li>");
         $('#ulTutorialCarona').append("<li class='slide tutorial'><img src='img/tut-carona-3.jpg'></li>");
+        $('#ulTutorialCarona').append("<li class='slide tutorial'><img src='img/tut-carona-4.jpg'></li>");
         $('#ulTutorialCarona').glide({autoplay: false, animationDuration: 900});
         if(localStorage.getItem('tutorialCarona') == null) {
             localStorage.setItem('tutorialCarona', 1);
@@ -549,7 +604,7 @@ var app = {
                             //seta cidade padrão do user
                             localStorage.setItem('alocado', alocado);
                             cidadeAtual = alocado;
-                            app.abreCarona();
+                            app.abreCarona(null, false, null);
                         }
                     }
                 });
@@ -574,7 +629,7 @@ var app = {
                 success: function(data) {
                     app.loading(false);
                     if(data != null){
-                        app.abreCarona();
+                        app.abreCarona(null, false, null);
                     } else {
                         return app.loginError();
                     }
@@ -600,7 +655,7 @@ var app = {
                         app.loading(false);
                         if((data != null) && (data.lotacao.lotado === '0')){
                             $('#btnLotacao').removeClass('lotado');
-                            app.abreCarona();
+                            app.abreCarona(null, false, null);
                         } else {
                             return app.loginError();
                         }
@@ -622,7 +677,7 @@ var app = {
                         app.loading(false);
                         if((data != null) && (data.lotacao.lotado === '1')){
                             $('#btnLotacao').addClass('lotado');
-                            app.abreCarona();
+                            app.abreCarona(null, false, null);
                         } else {
                             return app.loginError();
                         }
@@ -649,7 +704,7 @@ var app = {
                         app.loading(false);
                         if((data != null) && (data.consegui_carona.consegui === '0')){
                             $('#btnConseguiCarona').removeClass('consegui');
-                            app.abreCarona();
+                            app.abreCarona(null, false, null);
                         } else {
                             return app.loginError();
                         }
@@ -671,7 +726,7 @@ var app = {
                         app.loading(false);
                         if((data != null) && (data.consegui_carona.consegui === '1')){
                             $('#btnConseguiCarona').addClass('consegui');
-                            app.abreCarona();
+                            app.abreCarona(null, false, null);
                         } else {
                             return app.loginError();
                         }
@@ -1675,6 +1730,121 @@ var app = {
     },
     politicaDeUsoMural: function(){
         $.mobile.changePage("#politicaMural", { role: 'dialog', changeHash: true });
+    },
+    abreCallback: function(area, forceRefresh){
+        if(app.checkConnection()){
+            app.loading(true, 'Carregando...');
+            //só faz requisição se ainda não tiver sido feita
+            if(($("#ulRamaisCallback > li").size() < 2) || (forceRefresh == true)) {
+                //limpa ul
+                $('#ulRamaisCallback').empty();
+                //busca ramais
+                $.ajax({
+                    url: urlWebServiceCallback + '/crtContact',
+                    dataType: 'json',
+                    timeout: tempoRespostaLimite,
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        app.loading(false);
+                        if(textStatus==="timeout") {
+                            return app.semRespostaServidor();
+                        }
+                    },
+                    success: function(data) {
+                        if(data == null) {
+                            app.loginError();
+                        } else {
+                            //lendo todo Json ramais
+                            for (i = 1; i < data.length; i++) {
+                                var nome = data[i].nome.toString().toUpperCase();
+                                var projeto = "não cadastrado";
+                                var ramal = "não cadastrado";
+                                var celular = "não cadastrado";
+                                var email = "não cadastrado";
+                                if(data[i].projeto){
+                                    projeto = data[i].projeto.toString().toUpperCase();
+                                }
+                                if(data[i].numero){
+                                    ramal = data[i].numero.toString();
+                                }
+                                if(data[i].celular){
+                                    celular = data[i].celular.toString();
+                                }
+                                if(data[i].email){
+                                    email = data[i].email.toString();
+                                }
+                                $('#ulRamaisCallback').append(
+                                "<li data-icon='false'>" +   
+                                "<a href='#Ramal' onclick=\"app.abreContatoCrt('" + nome + "', '" + projeto + "', '" + ramal + "', '" + celular + "', '" + email + "')\">" +
+                                "<h2 style='color: #000038 !important;'>" + nome + "</h2>" +
+                                "<p class='ui-li-aside'><strong>" + projeto + "</strong></p>" +
+                                "</a>" +
+                                "</li>"
+                                );
+                            }
+                            
+                            $.mobile.changePage("#callback-crt", { changeHash: true });
+                            $('#callback-crt #ulRamaisCallback').listview("refresh");
+                            app.loading(false);
+                        }
+                    }
+                });             
+            } else {
+                $.mobile.changePage("#callback-crt", { changeHash: true });
+                app.loading(false);
+            }
+        }
+    },
+    filtrarCrt: function(termo){
+        if(termo == "") {
+            app.loading(true, 'Limpando filtro...');
+        } else if ((termo != "") && (termo != ultimoFiltro)){ 
+            ultimoFiltro = termo;
+            app.loading(true, 'Filtrando...');
+        }
+        clearTimeout(timerCrt);
+        timerCrt = setTimeout(function validate(){
+            var search = $.trim(termo);
+            var regex = new RegExp(search,'gi');
+            $('#ulRamaisCallback li').find('h2').each(function() {
+                if($(this).text().match(regex) !== null) {
+                    $(this).parent().show();
+                } else {
+                    $(this).parent().hide();
+                }
+            });
+            app.loading(false);
+        },1000);
+    },
+    abreContatoCrt: function(nome, projeto, ramal, celular, email){
+        $.mobile.changePage("#dadosCallbackRamal", { changeHash: true });
+        $("#dadosCallbackRamal #dados h2").html(nome);
+        $("#dadosCallbackRamal #dados span").html(projeto);
+        $('#dadosCallbackRamal #ulOpcoes').empty();
+        $('#dadosCallbackRamal #ulOpcoes').append(
+        "<li>" +   
+        "<a class='ui-btn ui-btn-icon-right ui-icon-phone' href='#Ramal' onclick=\"app.ramalCrt('" + ramal + "')\">" +
+        "<h2 style='color: #000038 !important;'>" + ramal + "</h2>" +
+        "<p class='ui-li-aside'><strong>RAMAL</strong></p>" +
+        "</a>" +
+        "</li>"
+        );
+        $('#dadosCallbackRamal #ulOpcoes').append(
+        "<li>" +   
+        "<a class='ui-btn ui-btn-icon-right ui-icon-phone' href='#Ramal' onclick=\"app.ramalCrt('" + celular + "')\">" +
+        "<h2 style='color: #000038 !important;'>" + celular + "</h2>" +
+        "<p class='ui-li-aside'><strong>CELULAR</strong></p>" +
+        "</a>" +
+        "</li>"
+        );
+        $('#dadosCallbackRamal #ulOpcoes').append(
+        "<li>" +   
+        "<a class='ui-btn ui-btn-icon-right ui-icon-mail' href='#Ramal' onclick=\"app.emailCrt('" + email + "')\">" +
+        "<h2 style='color: #000038 !important;'>" + email + "</h2>" +
+        "<p class='ui-li-aside'><strong>E-MAIL</strong></p>" +
+        "</a>" +
+        "</li>"
+        );
+        $('#dadosCallbackRamal #ulOpcoes').listview("refresh");
     },
     abreConfigs: function(){
         $.mobile.changePage("#configs", { changeHash: true });

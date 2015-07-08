@@ -74,7 +74,7 @@
                             </a>
                         </td>
                         <td>
-                            <a href="#" onclick="app.abreCarona('todos');" class="btn-inicial ic-carona">
+                            <a href="#" onclick="app.abreCarona(null, false, 'todos');" class="btn-inicial ic-carona">
                                 <span class="ic">
                                     <img src="img/ic-inicial-carona.svg" width="100%"/>
                                 </span>
@@ -125,7 +125,7 @@
             <div class="ui-panel-inner">
                 <ul data-role="listview" data-theme="b">
                     <li class="closeMenu" data-corners='false' data-icon='false'>
-                        <a href='#' data-rel='close' style="text-align: center; background-color: #606060;">
+                        <a href='#' data-rel='close' style="background-color: #606060;">
                             MENU 
                             <span class="ic">
                                 <img src="img/ic-span-menu.svg" width="100%"/>
@@ -291,28 +291,82 @@
             <div class="ui-panel-inner">
                 <ul data-role="listview" data-theme="b">
                     <li class="closeMenu" data-corners='false' data-icon='false'>
-                        <a href='#' data-rel='close' style="text-align: center; background-color: #606060;">
+                        <a href='#' data-rel='close' style="background-color: #606060;">
                             MENU 
                             <span class="ic">
                                 <img src="img/ic-span-menu.svg" width="100%"/>
                             </span>
                         </a>
                     </li>
-                    <li data-icon='false'><a href="#" onclick="app.abreCarona('todos'); $('.ui-responsive-panel').panel('close');">Home Carona</a></li>
-                    <li data-icon='false'><a href="#" onclick="app.carregaDadosPessoais(); $('.ui-responsive-panel').panel('close');">Meu perfil</a></li>
+                    <li data-icon='false'><a href="#" onclick="app.abreCarona(null, false, 'todos'); $('.ui-responsive-panel').panel('close');">Home Carona</a></li>
+                    <li data-icon='false' class="btnPerfilCriado"><a href="#" onclick="app.carregaDadosPessoais(); $('.ui-responsive-panel').panel('close');">Meu perfil</a></li>
+                    <li data-icon='false' class="btnCriarPerfil"><a href="#" onclick="app.carregaDadosPessoais(); $('.ui-responsive-panel').panel('close');" style="color: #FFB800;">CRIAR PERFIL</a></li>
                     <li data-icon='false'><a href="#" onclick="app.carregaTutorialCarona(true); $('.ui-responsive-panel').panel('close');">Tutorial</a></li>
                     <li data-icon='false'><a href="#" onclick="app.politicaDeUsoCarona(); $('.ui-responsive-panel').panel('close');">Política de uso</a></li>
                     <li class="closeMenu" data-corners='false' data-icon='false'>
-                        <a href='#' style="text-align: center; background-color: #606060;">
-                            FILTRO MAPA
+                        <a href='#' style="background-color: #606060;">
+                            FILTROS
                             <span class="ic">
                                 <img src="img/ic-span-filter.svg" width="100%"/>
                             </span>
                         </a>
                     </li>
-                    <li data-icon='false'><a href="#" onclick="app.abreCarona('todos'); $('.ui-responsive-panel').panel('close');">Mostrar todos cadastrados</a></li>
-                    <li data-icon='false'><a href="#" onclick="app.abreCarona('oferece'); $('.ui-responsive-panel').panel('close');">Apenas ofertantes</a></li>
-                    <li data-icon='false'><a href="#" onclick="app.abreCarona('solicita'); $('.ui-responsive-panel').panel('close');">Apenas solicitantes</a></li>
+                    <li data-icon='false'>
+                        <a href="#" class="btnFiltro oferece" onclick="app.abreCarona(null, true, 'oferece'); $('.ui-responsive-panel').panel('close');">
+                            Apenas ofertantes
+                            <span class="ic" style="top: 13px; right: 12px; position: absolute;">
+                                <img src="img/ic-span-checked.svg" width="15px"/>
+                            </span>
+                        </a>
+                    </li>
+                    <li data-icon='false'>
+                        <a href="#" class="btnFiltro solicita" onclick="app.abreCarona(null, true, 'solicita'); $('.ui-responsive-panel').panel('close');">
+                            Apenas solicitantes
+                            <span class="ic" style="top: 13px; right: 12px; position: absolute;">
+                                <img src="img/ic-span-checked.svg" width="15px"/>
+                            </span>
+                        </a>
+                    </li>
+                    <li data-icon='false'>
+                        <a href="#" class="btnFiltro todos" onclick="app.abreCarona(null, true, 'todos'); $('.ui-responsive-panel').panel('close');">
+                            Todos cadastrados
+                            <span class="ic" style="top: 13px; right: 12px; position: absolute;">
+                                <img src="img/ic-span-checked.svg" width="15px"/>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="closeMenu" data-corners='false' data-icon='false'>
+                        <a href='#' style="background-color: #606060;">
+                            CIDADES 
+                            <span class="ic">
+                                <img src="img/ic-span-city.svg" width="100%"/>
+                            </span>
+                        </a>
+                    </li>
+                    <li data-icon='false'>
+                        <a href="#" class="btnCidade florianopolis" onclick="app.abreCarona('florianopolis', true, null); $('.ui-responsive-panel').panel('close');">
+                            Florianópolis
+                            <span class="ic" style="top: 13px; right: 12px; position: absolute;">
+                                <img src="img/ic-span-checked.svg" width="15px"/>
+                            </span>
+                        </a>
+                    </li>
+                    <li data-icon='false'>
+                        <a href="#" class="btnCidade palhoca" onclick="app.abreCarona('palhoca', true, null); $('.ui-responsive-panel').panel('close');">
+                            Palhoça
+                            <span class="ic" style="top: 13px; right: 12px; position: absolute;">
+                                <img src="img/ic-span-checked.svg" width="15px"/>
+                            </span>
+                        </a>
+                    </li>
+                    <li data-icon='false'>
+                        <a href="#" class="btnCidade saopaulo" onclick="app.abreCarona('sao paulo', true, null); $('.ui-responsive-panel').panel('close');">
+                            São Paulo
+                            <span class="ic" style="top: 13px; right: 12px; position: absolute;">
+                                <img src="img/ic-span-checked.svg" width="15px"/>
+                            </span>
+                        </a>
+                    </li>
                 </ul>
             </div>    
         </div>
@@ -378,10 +432,7 @@
                 <ul>
                     <li>O colaborador deve acessar o site carona.softplan.com.br com o seu usuário e senha de rede;</li>
                     <li>Em seguida, se cadastrar em "Oferece Carona" ou "Solicite Carona";</li>
-                    <li>O colaborador que se cadastrar em "Oferece Carona", deve preencher os dados no site e passar no DHO para retirar a identificação do carro (adesivo);</li>
-                    <li>O adesivo deve estar colado no para-brisa dianteiro, parte de baixo e no lado do carona;</li>
-                    <li>O colaborador que se cadastrar em "Solicite Carona" só precisa preencher os dados no site;</li>
-                    <li>Caso o colaborador não queira mais fazer parte do programa deve se descadastrar no próprio site clicando no seu nome no canto superior direito da tela. Após, deverá entregar no DHO o adesivo de indicação do programa (mesmo que danificado);</li>
+                    <li>Caso o colaborador não queira mais fazer parte do programa deve se descadastrar no próprio site clicando no seu nome no canto superior direito da tela;</li>
                     <li>O colaborador que já tiver com o carro lotado ou com carona deve indicar clicando no ícone correspondente. Evitando assim, que pessoas entrem em contato sem necessidade.</li>
                 </ul>
                 <div class="alert alert-warning">Caso o colaborador erre a senha por três vezes o login poderá ser bloqueado. Para desbloquear deverá entrar em contato com a Infra.</div>
@@ -390,7 +441,6 @@
                 <ul>
                     <li>Todas as ações de gerenciamento do programa são de responsabilidade do DHO;</li>
                     <li>O gerenciamento do site;</li>
-                    <li>A entrega dos ADESIVOS para os colaboradores que se cadastrarem em "Oferece Carona";</li>
                     <li>A exclusão dos colaboradores que saírem da empresa e/ou do programa.</li>
                 </ul>
                 <strong>Colaborador</strong>
@@ -423,7 +473,7 @@
             </div>
             
             <div role="main" class="ui-content" style="padding: 0px 1em 0px 1em; margin-top: -10px;">
-                <button class="ui-btn ui-corner-all ui-mini" onclick="app.abreCarona('todos');" style="background-color: #628DBA; color: #FFF; border-radius: 0px;">COMEÇAR</button>
+                <button class="ui-btn ui-corner-all ui-mini" onclick="app.carregaEscolhaCidadeCarona();" style="background-color: #628DBA; color: #FFF; border-radius: 0px;">COMEÇAR</button>
             </div>
             
             <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
@@ -442,6 +492,28 @@
                         <img src="img/ic-span-home.svg" width="100%"/>
                     </span>
                 </a>
+            </div>
+                        
+        </div>
+        
+        <div class="app" data-role="page" data-theme="a" id="cidadeCarona">
+            
+            <div class="header" data-role="header" data-position="fixed" data-tap-toggle="false">
+                <h1>Carona Amiga</h1>
+            </div>
+            
+            <div role="main" class="ui-content" style="padding: 0px 1em 0px 1em; margin-top: -10px;">
+                
+                <div style="padding: 20px; text-align: center;">
+                    <h5>Para começar selecione a cidade que você está alocado:</h5>
+                    <select onchange="app.abreCarona($(this).val(), true, null);">
+                        <option value="">Selecione...</option>
+                        <option value="florianopolis">Florianópolis</option>
+                        <option value="palhoca">Palhoça</option>
+                        <option value="sao paulo">São Paulo</option>
+                    </select>
+                </div>
+                
             </div>
                         
         </div>
@@ -569,7 +641,7 @@
                 <div class="ui-panel-inner">
                     <ul data-role="listview" data-theme="b">
                         <li class="closeMenu" data-corners='false' data-icon='false'>
-                            <a href='#' data-rel='close' style="text-align: center; background-color: #606060;">
+                            <a href='#' data-rel='close' style="background-color: #606060;">
                                 MENU 
                                 <span class="ic">
                                     <img src="img/ic-span-menu.svg" width="100%"/>
@@ -833,7 +905,7 @@
             <div class="ui-panel-inner">
                 <ul data-role="listview" data-theme="b">
                     <li class="closeMenu" data-corners='false' data-icon='false'>
-                        <a href='#' data-rel='close' style="text-align: center; background-color: #606060;">
+                        <a href='#' data-rel='close' style="background-color: #606060;">
                             MENU 
                             <span class="ic">
                                 <img src="img/ic-span-menu.svg" width="100%"/>
@@ -1132,7 +1204,7 @@
             <div class="ui-panel-inner">
                 <ul data-role="listview" data-theme="b">
                     <li class="closeMenu" data-corners='false' data-icon='false'>
-                        <a href='#' data-rel='close' style="text-align: center; background-color: #606060;">
+                        <a href='#' data-rel='close' style="background-color: #606060;">
                             MENU 
                             <span class="ic">
                                 <img src="img/ic-span-menu.svg" width="100%"/>
@@ -1158,7 +1230,7 @@
                 <div id="searchCallback">
                     <div style="margin: 0 auto; width: 90%;">
                         <div class="ui-field-contain">
-                            <input type="search" id="inputSearchCallback" value="" placeholder="Procurar..."/>
+                            <input type="search" id="inputSearchCallback" value="" placeholder="Procurar..." onkeyup="app.filtrarCrt($(this).val());" onchange="app.filtrarCrt($(this).val());"/>
                         </div>
                     </div>
                 </div>
@@ -1166,7 +1238,7 @@
             
             <div role="main" class="ui-content" style="padding-top: 75px;">
                 
-                <ul id="ulRamaisCallback" data-role="listview" data-split-icon="plus" data-theme="a" data-split-theme="a"></ul>
+                <ul id="ulRamaisCallback" data-role="listview" data-theme="a" data-split-theme="a"></ul>
                 
             </div>
             
@@ -1186,6 +1258,30 @@
                         <img src="img/ic-span-home.svg" width="100%"/>
                     </span>
                 </a>
+            </div>
+            
+        </div>
+        
+        <div class="app" data-role="page" data-theme="a" id="dadosCallbackRamal">
+            
+            <div class="header" data-role="header" data-position="fixed" data-tap-toggle="false">
+                <a href="#" class="f-left ic-back ui-btn-left" data-rel="back" data-direction="reverse">
+                    <span class="ic">
+                        <img src="img/ic-span-back.svg" width="100%"/>
+                    </span>
+                </a>
+                <h1>CRT</h1>
+            </div>
+            
+            <div role="main" class="ui-content">
+                
+                <div id="dados" style="  margin-bottom: 30px;">
+                    <h2></h2>
+                    <span></span>
+                </div>
+                <ul id="ulOpcoes" data-role="listview" data-theme="a" data-split-theme="a"></ul>
+                <h6 style="color: orange;" id="callbac_desabilitado">Atenção: o seu número não está habilitado para uso da central telefônica da Softplan.</h6>
+                
             </div>
             
         </div>
@@ -1258,7 +1354,7 @@
             
         </div>
         
-        <script type="text/javascript" src="phonegap.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
         <script src="js/glide/jquery.glide.min.js"></script>
         <script src="js/jquery.maskedinput.js"></script>
         <script src="js/maps.js"></script> <!-- Original: http://maps.googleapis.com/maps/api/js?sensor=false -->
