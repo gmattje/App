@@ -111,11 +111,6 @@ var app = {
         //    $("body").addClass("ios7");
         //    $('<div>').prependTo('#body').attr('id','ios7statusbar');
         //}
-        $("document").on("pagecreate","callback-crt",function(event){
-            $('#callback-crt .ui-content').bind('verticalDistanceThreshold',function(){
-                navigator.notification.alert('TESTE', function(){}, 'Atenção', 'Ok');
-            });
-        })
         navigator.splashscreen.hide();
         StatusBar.hide();
     },
@@ -769,7 +764,7 @@ var app = {
     },
     ManualRSParte: function(idParte){
         $('.ui-responsive-panel').panel("close");
-        $.mobile.silentScroll($('#' + idParte).offset().top);
+        $.mobile.silentScroll($('#' + idParte).offset().top-100);
     },
     confereVersaoEditorialSoftnews: function(){
         //busca destaques Softnews
@@ -1822,6 +1817,15 @@ var app = {
             });
             app.loading(false);
         },1000);
+    },
+    correCrt: function(letra){
+        $('#ulRamaisCallback li').find('h2').each(function() {
+            var arrayTexto = $(this).text().split("");
+            if(arrayTexto[0] == letra) {
+                $.mobile.silentScroll($(this).offset().top-150);
+                return false;
+            }
+        });
     },
     abreContatoCrt: function(nome, projeto, ramal, celular, email){
         $.mobile.changePage("#dadosCallbackRamal", { changeHash: true });
