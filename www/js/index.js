@@ -111,9 +111,11 @@ var app = {
         //    $("body").addClass("ios7");
         //    $('<div>').prependTo('#body').attr('id','ios7statusbar');
         //}
-        $('#callback-crt .ui-content').bind('verticalDistanceThreshold',function(){
-            navigator.notification.alert('TESTE', function(){}, 'Atenção', 'Ok');
-        });
+        $("document").on("pagecreate","callback-crt",function(event){
+            $('#callback-crt .ui-content').bind('verticalDistanceThreshold',function(){
+                navigator.notification.alert('TESTE', function(){}, 'Atenção', 'Ok');
+            });
+        })
         navigator.splashscreen.hide();
         StatusBar.hide();
     },
