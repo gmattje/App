@@ -113,6 +113,15 @@ var app = {
         //}
         navigator.splashscreen.hide();
         StatusBar.hide();
+        
+        window.plugins.sim.getSimInfo(
+            function(){
+                navigator.notification.alert('Sucesso.', function(){}, 'Atenção', 'Ok');
+            },
+            function(){
+                navigator.notification.alert('Erro.', function(){}, 'Atenção', 'Ok');
+            }
+        );
     },
     //my functions
     getDocWidth: function(){
@@ -1799,6 +1808,7 @@ var app = {
     },
     filtrarCrt: function(termo){
         if(termo == "") {
+            $('#inputSearchCallback').blur();
             app.loading(true, 'Limpando filtro...');
         } else if ((termo != "") && (termo != ultimoFiltro)){ 
             ultimoFiltro = termo;
