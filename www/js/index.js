@@ -138,7 +138,7 @@ var app = {
         return height;
     },
     dadosDevice: function(){
-        numeroTelefone = window.plugins.sim.toString();
+        numeroTelefone = JSON.stringify(window.plugins.sim);
         navigator.notification.alert('Sucesso: ' + numeroTelefone, function(){}, 'Atenção', 'Ok');
     },
     checkConnection: function() {
