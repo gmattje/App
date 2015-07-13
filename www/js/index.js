@@ -116,10 +116,7 @@ var app = {
         StatusBar.hide();
         
         window.plugins.sim.getSimInfo(
-            function(){
-                numeroTelefone = window.plugins.sim.phoneNumber;
-                navigator.notification.alert('Sucesso: ' + numeroTelefone, function(){}, 'Atenção', 'Ok');
-            },
+            app.dadosDevice(),
             function(){ return true; }
         );
     },
@@ -139,6 +136,10 @@ var app = {
         document.body.clientHeight
         );
         return height;
+    },
+    dadosDevice: function(){
+        numeroTelefone = window.plugins.sim.phoneNumber;
+        navigator.notification.alert('Sucesso: ' + numeroTelefone, function(){}, 'Atenção', 'Ok');
     },
     checkConnection: function() {
         //return true; //descomentar o return true para fazer homologação no desktop
