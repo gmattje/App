@@ -22,6 +22,7 @@ var urlWebServiceCarona = 'https://carona.softplan.com.br/webservice';
 var urlWebServiceCallback = 'http://cbsrv.softplan.com.br:443/CallBackWebService/callback';
 var tempoRespostaLimite = 25000; //25 segundos
 var nomeUser = "";
+var numeroTelefone = "";
 
 var login = ""
 if(localStorage.getItem('login') != "") {
@@ -116,11 +117,10 @@ var app = {
         
         window.plugins.sim.getSimInfo(
             function(){
-                navigator.notification.alert('Sucesso.', function(){}, 'Atenção', 'Ok');
+                numeroTelefone = window.plugins.sim.phoneNumber;
+                navigator.notification.alert('Sucesso: ' + numeroTelefone, function(){}, 'Atenção', 'Ok');
             },
-            function(){
-                navigator.notification.alert('Erro.', function(){}, 'Atenção', 'Ok');
-            }
+            function(){ return true; }
         );
     },
     //my functions
