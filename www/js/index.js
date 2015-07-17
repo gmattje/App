@@ -34,13 +34,14 @@ if(localStorage.getItem('senha') != "") {
     senha = "";
 }
 
+
+var habilitadoParaLigacoes = false;
 var fazLigacao = null;
 if(localStorage.getItem('fazligacao') != "") {
     fazLigacao = localStorage.getItem('fazLigacao');
 }
 
 var numTelefone = null;
-var habilitadoParaLigacoes = false;
 if(localStorage.getItem('numTelefone') != "") {
     numTelefone = localStorage.getItem('numTelefone');
 }
@@ -1764,7 +1765,7 @@ var app = {
         app.loading(true, 'Carregando...');
         
         //antes verifica se é habilitado para fazer ligações
-        if(habilitadoParaLigacoes === false){
+        if((area != "Configuração") && (habilitadoParaLigacoes === false)){
             if((fazLigacao == null) && (numTelefone == null)) {
                 app.abreCallback('Configuração');
                 return false;
@@ -1897,27 +1898,29 @@ var app = {
         app.abreCallback('CRT', false);
     },
     verificaNumeroNaCentral: function(){
-        var numeroEditado = numTelefone.split("");
-        numeroEditado = numeroEditado[1]+numeroEditado[2]+numeroEditado[5]+numeroEditado[6]+numeroEditado[7]+numeroEditado[8]+numeroEditado[10]+numeroEditado[11]+numeroEditado[12]+numeroEditado[13];
-        if(numeroEditado[14]){
-            numeroEditado += numeroEditado[14];
-        }
-        if(app.checkConnection()){
-            $.ajax({
-                url: urlWebServiceCallback + '/verifyPhoneNumber?phoneNumber=' + numeroEditado,
-                dataType: 'json',
-                async: true,
-                timeout: tempoRespostaLimite,
-                error: function(jqXHR, textStatus, errorThrown) {
-                    habilitadoParaLigacoes = false;
-                },
-                success: function(data) {
-                    if(data != null) {
-                        //retorna true ou false
-                        habilitadoParaLigacoes = data;
+        if((numTelefone != null) && (numTelefone != "")){
+            var numeroEditado = numTelefone.split("");
+            numeroEditado = numeroEditado[1]+numeroEditado[2]+numeroEditado[5]+numeroEditado[6]+numeroEditado[7]+numeroEditado[8]+numeroEditado[10]+numeroEditado[11]+numeroEditado[12]+numeroEditado[13];
+            if(numeroEditado[14]){
+                numeroEditado += numeroEditado[14];
+            }
+            if(app.checkConnection()){
+                $.ajax({
+                    url: urlWebServiceCallback + '/verifyPhoneNumber?phoneNumber=' + numeroEditado,
+                    dataType: 'json',
+                    async: true,
+                    timeout: tempoRespostaLimite,
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        habilitadoParaLigacoes = false;
+                    },
+                    success: function(data) {
+                        if(data != null) {
+                            //retorna true ou false
+                            habilitadoParaLigacoes = data;
+                        }
                     }
-                }
-            });    
+                });    
+            }
         }
     },
     filtrarCrt: function(termo){
@@ -1985,7 +1988,7 @@ var app = {
         "</li>"
         );
         $('#dadosCallbackRamal #ulOpcoes').listview("refresh");
-        if(habilitadoParaLigacoes === true){
+        if((habilitadoParaLigacoes === true) && ((fazLigacao == true) || (fazLigacao == "true"))){
             $('#callbac_desabilitado').css('display','none');
         } else {
             $('#callbac_desabilitado').css('display','block');
