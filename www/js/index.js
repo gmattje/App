@@ -1906,12 +1906,10 @@ var app = {
             $.ajax({
                 url: urlWebServiceCallback + '/verifyPhoneNumber?phoneNumber=' + numeroEditado,
                 dataType: 'json',
+                async: true,
                 timeout: tempoRespostaLimite,
                 error: function(jqXHR, textStatus, errorThrown) {
-                    app.loading(false);
-                    if(textStatus==="timeout") {
-                        return app.semRespostaServidor();
-                    }
+                    habilitadoParaLigacoes = false;
                 },
                 success: function(data) {
                     if(data != null) {
