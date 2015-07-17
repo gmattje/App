@@ -1212,8 +1212,9 @@
                         </a>
                     </li>
                     <li data-icon='false'><a href="#" onclick="app.abreCallback('CRT'); $('.ui-responsive-panel').panel('close');">Ramais (CRT)</a></li>
-                    <li data-icon='false'><a href="#" onclick="app.abreCallback('Agenda'); $('.ui-responsive-panel').panel('close');">Minha Agenda</a></li>
+                    <li data-icon='false' id="linkAgendaCallback"><a href="#" onclick="app.abreCallback('Agenda'); $('.ui-responsive-panel').panel('close');">Minha Agenda</a></li>
                     <li data-icon='false'><a href="#" onclick="app.abreCallback('Telefone'); $('.ui-responsive-panel').panel('close');">Ligação Direta</a></li>
+                    <li data-icon='false'><a href="#" onclick="app.abreCallback('Configuração'); $('.ui-responsive-panel').panel('close');">Configuração</a></li>
                 </ul>
             </div>
         </div>
@@ -1308,7 +1309,7 @@
                     <span></span>
                 </div>
                 <ul id="ulOpcoes" data-role="listview" data-theme="a" data-split-theme="a"></ul>
-                <h6 style="color: orange;" id="callbac_desabilitado">Atenção: o seu número não está habilitado para uso da central telefônica da Softplan.</h6>
+                <h6 id="callbac_desabilitado" style="padding: 20px; text-align: center; color: orange;">Atenção: o seu aparelho/número não está habilitado para uso da central telefônica da Softplan.</h6>
                 
             </div>
             
@@ -1336,6 +1337,61 @@
                 
                 <ul id="ulAgendaCallback" data-role="listview" data-split-icon="plus" data-theme="a" data-split-theme="a"></ul>
                 
+            </div>
+            
+            <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+                <a href="#" class="f-left ic-back" data-rel="back" data-direction="reverse">
+                    <span class="ic">
+                        <img src="img/ic-span-back.svg" width="100%"/>
+                    </span>
+                </a>
+                <a href="#" class="f-right ic-config" onclick="app.abreConfigs();">
+                    <span class="ic">
+                        <img src="img/ic-span-engine.svg" width="100%"/>
+                    </span>
+                </a>
+                <a href="#" class="f-right ic-home" onclick="app.abreMenuInicial();">
+                    <span class="ic">
+                        <img src="img/ic-span-home.svg" width="100%"/>
+                    </span>
+                </a>
+            </div>
+            
+        </div>
+        
+        <div class="app" data-role="page" data-theme="a" id="callback-configs">
+            
+            <div class="header" data-role="header" data-position="fixed" data-tap-toggle="false" style="overflow:initial;">
+                <h1>Callback - Configurações</h1>
+                <a href="#menuCallback" class="f-right ic-menu ui-btn-right" data-rel="back" data-direction="reverse" style="height: 42px;">
+                    <span class="ic">
+                        <img src="img/ic-span-menu.svg" width="100%"/>
+                    </span>
+                </a>
+            </div>
+            
+            <div role="main" class="ui-content" style="background-color: #E6E6E6;">
+                <p style="margin: 0px;"><span id="nomePerfil" style="font-weight: bolder;"></span>, antes de continuar preencha os dados:</p>
+            </div>
+            
+            <div role="main" class="ui-content">
+                <label for="fazLigacoes">Este aparelho faz ligações?</label>
+                <fieldset data-role="controlgroup">
+                    <input type="radio" name="fazLigacoes" id="fazligacao" value="fazligacao" onclick="app.numTelefoneShow(true);">
+                    <label for="fazligacao">Sim</label>
+                    <input type="radio" name="fazLigacoes" id="naofazligacao" value="naofazligacao" onclick="app.numTelefoneShow(false);">
+                    <label for="naofazligacao">Não</label>
+                </fieldset>
+            </div>
+            
+            <div role="main" class="ui-content" id="inputNumTelefone" style="display: none;">
+                <label for="numeroTelefone">Número do telefone:</label>
+                <input id="numeroTelefone" type="text" name="numeroTelefone" class="maskTelefone" value="" style="border: 1px solid #E6E6E6;">
+            </div>
+            
+            <div role="main" class="ui-content">
+                <button id="btnSalvarDadosConfigsCallback" class="ui-btn ui-corner-all ui-mini" onclick="app.gravaDadosConfigsCallback();" style="background-color: #628DBA; color: #FFF; border-radius: 0px;">SALVAR e CONTINUAR</button>
+                <a class="ui-btn ui-corner-all ui-mini" href="#" data-rel="back" data-direction="reverse" style="background-color: #CCCCCC; color: #FFF; border-radius: 0px;">CANCELAR</a>
             </div>
             
             <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">

@@ -22,7 +22,6 @@ var urlWebServiceCarona = 'https://carona.softplan.com.br/webservice';
 var urlWebServiceCallback = 'http://cbsrv.softplan.com.br:443/CallBackWebService/callback';
 var tempoRespostaLimite = 25000; //25 segundos
 var nomeUser = "";
-var numeroTelefone = "";
 
 var login = ""
 if(localStorage.getItem('login') != "") {
@@ -33,6 +32,17 @@ var senha = ""
 if(localStorage.getItem('senha') != "") {
     localStorage.setItem('senha', "");
     senha = "";
+}
+
+var fazLigacao = null;
+if(localStorage.getItem('fazligacao') != "") {
+    fazLigacao = localStorage.getItem('fazLigacao');
+}
+
+var numTelefone = null;
+var habilitadoParaLigacoes = false;
+if(localStorage.getItem('numTelefone') != "") {
+    numTelefone = localStorage.getItem('numTelefone');
 }
 
 //variáveis softnews
@@ -114,13 +124,6 @@ var app = {
         //}
         navigator.splashscreen.hide();
         StatusBar.hide();
-        
-        window.plugins.sim.getSimInfo(
-            function(){
-                navigator.notification.alert('Sucesso: ' + this.phoneNumber + ' - ' + this.carrierName, function(){}, 'Atenção', 'Ok');
-            },
-            function(){ return true; }
-        );
     },
     //my functions
     getDocWidth: function(){
@@ -167,6 +170,15 @@ var app = {
             $.mobile.loading("show", { text: texto, textVisible: true });
         } else {
             $.mobile.loading("hide");
+        }
+    },
+    checkCampoTelefone: function(telefone){
+        //formatos que vão aceitar: (00) 0000-0000 ou (00) 0000-00000
+	var reDigits = /^(\([1-9][0-9]\) [1-9][0-9]{3}-[0-9]{4})|(\([1-9][0-9]\) [1-9][0-9]{3}-[0-9]{5})$/;
+	if (!reDigits.test(telefone)){
+            return false;
+	} else {
+            return true;
         }
     },
     abreLogin: function(){
@@ -593,6 +605,12 @@ var app = {
             //valida tipo
             if(tipo == null) {
                 navigator.notification.alert('Você deve escolher entre solicitar ou oferecer carona.', function(){}, 'Atenção', 'Ok');
+                return false;
+            }
+            //valida telefone
+            if((fone != "") && (!app.checkCampoTelefone(fone))) {
+                navigator.notification.alert('Você deve informar um telefone válido ou não cadastrar nenhum.', function(){}, 'Atenção', 'Ok');
+                return false;
             }
             //validacao endereço
             if(latitude != "" && longitude != "") {
@@ -1743,66 +1761,165 @@ var app = {
         $.mobile.changePage("#politicaMural", { role: 'dialog', changeHash: true });
     },
     abreCallback: function(area, forceRefresh){
-        if(app.checkConnection()){
-            app.loading(true, 'Carregando...');
+        app.loading(true, 'Carregando...');
+        
+        //antes verifica se é habilitado para fazer ligações
+        if(habilitadoParaLigacoes === false){
+            if((fazLigacao == null) && (numTelefone == null)) {
+                app.abreCallback('Configuração');
+                return false;
+            } else {
+                app.verificaNumeroNaCentral();
+            }
+        }
+        
+        if((fazLigacao == "true") || (fazLigacao == true)) {
+            $('#menuCallback #linkAgendaCallback').css('display','block');
+        } else {
+            $('#menuCallback #linkAgendaCallback').css('display','none');
+        }
+        
+        if(area == "CRT") {
             //só faz requisição se ainda não tiver sido feita
             if(($("#ulRamaisCallback > li").size() < 2) || (forceRefresh == true)) {
-                //limpa ul
-                $('#ulRamaisCallback').empty();
-                //busca ramais
-                $.ajax({
-                    url: urlWebServiceCallback + '/crtContact',
-                    dataType: 'json',
-                    timeout: tempoRespostaLimite,
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        app.loading(false);
-                        if(textStatus==="timeout") {
-                            return app.semRespostaServidor();
-                        }
-                    },
-                    success: function(data) {
-                        if(data == null) {
-                            app.loginError();
-                        } else {
-                            //lendo todo Json ramais
-                            for (i = 1; i < data.length; i++) {
-                                var nome = data[i].nome.toString().toUpperCase();
-                                var projeto = "não cadastrado";
-                                var ramal = "não cadastrado";
-                                var celular = "não cadastrado";
-                                var email = "não cadastrado";
-                                if(data[i].projeto){
-                                    projeto = data[i].projeto.toString().toUpperCase();
-                                }
-                                if(data[i].numero){
-                                    ramal = data[i].numero.toString();
-                                }
-                                if(data[i].celular){
-                                    celular = data[i].celular.toString();
-                                }
-                                if(data[i].email){
-                                    email = data[i].email.toString();
-                                }
-                                $('#ulRamaisCallback').append(
-                                "<li data-icon='false'>" +   
-                                "<a href='#Ramal' onclick=\"app.abreContatoCrt('" + nome + "', '" + projeto + "', '" + ramal + "', '" + celular + "', '" + email + "')\">" +
-                                "<h2 style='color: #000038 !important;'>" + nome + "</h2>" +
-                                "<p class='ui-li-aside'><strong>" + projeto + "</strong></p>" +
-                                "</a>" +
-                                "</li>"
-                                );
-                            }
-                            
-                            $.mobile.changePage("#callback-crt", { changeHash: true });
-                            $('#callback-crt #ulRamaisCallback').listview("refresh");
+                if(app.checkConnection()){
+                    //limpa ul
+                    $('#ulRamaisCallback').empty();
+                    //busca ramais
+                    $.ajax({
+                        url: urlWebServiceCallback + '/crtContact',
+                        dataType: 'json',
+                        timeout: tempoRespostaLimite,
+                        error: function(jqXHR, textStatus, errorThrown) {
                             app.loading(false);
+                            if(textStatus==="timeout") {
+                                return app.semRespostaServidor();
+                            }
+                        },
+                        success: function(data) {
+                            if(data == null) {
+                                app.loginError();
+                            } else {
+                                //lendo todo Json ramais
+                                for (i = 1; i < data.length; i++) {
+                                    var nome = data[i].nome.toString().toUpperCase();
+                                    var projeto = "não cadastrado";
+                                    var ramal = "não cadastrado";
+                                    var celular = "não cadastrado";
+                                    var email = "não cadastrado";
+                                    if(data[i].projeto){
+                                        projeto = data[i].projeto.toString().toUpperCase();
+                                    }
+                                    if(data[i].numero){
+                                        ramal = data[i].numero.toString();
+                                    }
+                                    if(data[i].celular){
+                                        celular = data[i].celular.toString();
+                                    }
+                                    if(data[i].email){
+                                        email = data[i].email.toString();
+                                    }
+                                    $('#ulRamaisCallback').append(
+                                    "<li data-icon='false'>" +   
+                                    "<a href='#Ramal' onclick=\"app.abreContatoCrt('" + nome + "', '" + projeto + "', '" + ramal + "', '" + celular + "', '" + email + "')\">" +
+                                    "<h2 style='color: #000038 !important; width: 95% !important;'>" + nome + "</h2>" +
+                                    "<p class='ui-li-aside'><strong>" + projeto + "</strong></p>" +
+                                    "</a>" +
+                                    "</li>"
+                                    );
+                                }
+
+                                $.mobile.changePage("#callback-crt", { changeHash: true });
+                                $('#callback-crt #ulRamaisCallback').listview("refresh");
+                                app.loading(false);
+                            }
                         }
-                    }
-                });             
+                    });    
+                }
             } else {
                 $.mobile.changePage("#callback-crt", { changeHash: true });
                 app.loading(false);
             }
+        }
+        
+        if(area == "Configuração") {
+            //mascaras
+            $(".maskTelefone").mask("(99) 9999-9999?9");
+            
+            var radios = $('input:radio[name=fazLigacoes]');
+            if((fazLigacao != null) && ((fazLigacao == "true") || (fazLigacao == true))){
+                app.numTelefoneShow(true);
+                radios.filter('[value=fazligacao]').prop('checked', true);
+            } else if((fazLigacao != null) && ((fazLigacao == "false") || (fazLigacao == false))){
+                app.numTelefoneShow(false);
+                radios.filter('[value=naofazligacao]').prop('checked', true);
+            }
+            $('#callback-configs #numeroTelefone').val(numTelefone);
+            
+            $.mobile.changePage("#callback-configs", { changeHash: true });
+            
+            var primeiroNome = nomeUser.split(' ');
+            $('#callback-configs #nomePerfil').html(primeiroNome[0]);
+            
+            app.loading(false);           
+        }
+    },
+    numTelefoneShow: function(tipo){
+        if(tipo == true){
+            $('#inputNumTelefone').css('display','block');
+        } else {
+            $('#inputNumTelefone').css('display','none');
+        }
+    },
+    gravaDadosConfigsCallback: function(){
+        var valfazligacao = $('#callback-configs input:radio[name=fazLigacoes]:checked').val();
+        var valnumtelefone = $('#callback-configs #numeroTelefone').val();
+        //valida form
+        if(valfazligacao === undefined){
+            navigator.notification.alert('Você deve informar se o aparelho faz ligações ou não.', function(){}, 'Atenção', 'Ok');
+        } else if((valfazligacao === "fazligacao") && (valnumtelefone === "")){
+            navigator.notification.alert('Você deve informar o número do telefone para continuar.', function(){}, 'Atenção', 'Ok');
+            return false;
+        } else if((valfazligacao === "fazligacao") && (valnumtelefone != "") && (!app.checkCampoTelefone(valnumtelefone))){ 
+            navigator.notification.alert('Você deve informar o número válido do telefone para continuar.', function(){}, 'Atenção', 'Ok');
+            return false;
+        } else if((valfazligacao === "fazligacao") && (valnumtelefone != "") && (app.checkCampoTelefone(valnumtelefone))){
+            localStorage.setItem('fazLigacao', true);
+            fazLigacao = true;
+            localStorage.setItem('numTelefone', valnumtelefone);
+            numTelefone = valnumtelefone;
+        } else if(valfazligacao === "naofazligacao") {
+            localStorage.setItem('fazLigacao', false);
+            fazLigacao = false;
+        }
+        //continua
+        app.verificaNumeroNaCentral();
+        app.abreCallback('CRT', false);
+    },
+    verificaNumeroNaCentral: function(){
+        var numeroEditado = numTelefone.split("");
+        numeroEditado = numeroEditado[1]+numeroEditado[2]+numeroEditado[5]+numeroEditado[6]+numeroEditado[7]+numeroEditado[8]+numeroEditado[10]+numeroEditado[11]+numeroEditado[12]+numeroEditado[13];
+        if(numeroEditado[14]){
+            numeroEditado += numeroEditado[14];
+        }
+        if(app.checkConnection()){
+            $.ajax({
+                url: urlWebServiceCallback + '/verifyPhoneNumber?phoneNumber=' + numeroEditado,
+                dataType: 'json',
+                timeout: tempoRespostaLimite,
+                error: function(jqXHR, textStatus, errorThrown) {
+                    app.loading(false);
+                    if(textStatus==="timeout") {
+                        return app.semRespostaServidor();
+                    }
+                },
+                success: function(data) {
+                    if(data != null) {
+                        //retorna true ou false
+                        habilitadoParaLigacoes = data;
+                    }
+                }
+            });    
         }
     },
     filtrarCrt: function(termo){
@@ -1841,9 +1958,11 @@ var app = {
         $("#dadosCallbackRamal #dados h2").html(nome);
         $("#dadosCallbackRamal #dados span").html(projeto);
         $('#dadosCallbackRamal #ulOpcoes').empty();
+        var ramalEditado = ramal.split('/');
+        ramalEditado = ramalEditado[0];
         $('#dadosCallbackRamal #ulOpcoes').append(
         "<li>" +   
-        "<a class='ui-btn ui-btn-icon-right ui-icon-phone' href='#Ramal' onclick=\"app.ramalCrt('" + ramal + "')\">" +
+        "<a class='ui-btn ui-btn-icon-right ui-icon-phone' href='#Ramal' onclick=\"app.ramalCrt('" + ramalEditado + "')\">" +
         "<h2 style='color: #000038 !important;'>" + ramal + "</h2>" +
         "<p class='ui-li-aside'><strong>RAMAL</strong></p>" +
         "</a>" +
@@ -1857,15 +1976,22 @@ var app = {
         "</a>" +
         "</li>"
         );
+        var emailEditado = email.split('@');
+        emailEditado = emailEditado[0].toLowerCase() + "@softplan.com.br";
         $('#dadosCallbackRamal #ulOpcoes').append(
         "<li>" +   
-        "<a class='ui-btn ui-btn-icon-right ui-icon-mail' href='mailto:" + email + "'>" +
-        "<h2 style='color: #000038 !important;'>" + email + "</h2>" +
+        "<a class='ui-btn ui-btn-icon-right ui-icon-mail' href='mailto:" + emailEditado + "'>" +
+        "<h2 style='color: #000038 !important;'>" + emailEditado + "</h2>" +
         "<p class='ui-li-aside'><strong>E-MAIL</strong></p>" +
         "</a>" +
         "</li>"
         );
         $('#dadosCallbackRamal #ulOpcoes').listview("refresh");
+        if(habilitadoParaLigacoes === true){
+            $('#callbac_desabilitado').css('display','none');
+        } else {
+            $('#callbac_desabilitado').css('display','block');
+        }
     },
     abreConfigs: function(){
         $.mobile.changePage("#configs", { changeHash: true });
