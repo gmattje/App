@@ -34,12 +34,12 @@ if(localStorage.getItem('senha') != "") {
     senha = "";
 }
 
-
-var habilitadoParaLigacoes = false;
-var fazLigacao = null;
-if(localStorage.getItem('fazligacao') != "") {
-    fazLigacao = localStorage.getItem('fazLigacao');
-}
+var habilitadoParaLigacoes = true; //quando callback estiver todo implementado trocar para false
+var fazLigacao = true; //quando callback estiver todo implementado trocar para null
+//DESABILITADO POR ENQUANTO
+//if(localStorage.getItem('fazligacao') != "") {
+//    fazLigacao = localStorage.getItem('fazLigacao');
+//}
 
 var numTelefone = null;
 if(localStorage.getItem('numTelefone') != "") {
@@ -53,6 +53,11 @@ var arrayIdsAnuncios = new Array();
 var arrayIdsMeusAnuncios = new Array();
 
 //variáveis carona
+var map = new L.Map('mapa',{zoomControl: false});
+var markers = new L.FeatureGroup();
+var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+var osmAttrib='Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+var osm = new L.TileLayer(osmUrl, {minZoom: 1, maxZoom: 19, attribution: osmAttrib});
 var mapaIniciado = false;
 var latFlorianopolis        = -27.571134;
 var longFlorianopolis       = -48.508458;
@@ -71,6 +76,10 @@ var cidadeAtual = "";
 if(localStorage.getItem('alocado') != null) {
     cidadeAtual = localStorage.getItem('alocado');
 }
+
+//variáveis mural
+var ultimaPesquisa = "";
+var timerMural;
 
 //variáveis callback
 var ultimoFiltro = "";
@@ -239,45 +248,36 @@ var app = {
             $('.btnFiltro span.ic').css('display','none');
             $('.btnFiltro.' + tiposPontos + ' span.ic').css('display','block');
             
-            if (navigator.userAgent.match(/(iPad.*|iPhone.*|iPod.*)/i)) {
-                var sx = 35;
-                var sy = 55;
-            } else {
-                var sx = 110;
-                var sy = 55;
-            }
-            
-            var iconSoftplan = {
-                url: "img/ic-softplan-mapa.svg",
-                scaledSize: new google.maps.Size(sx, sy)
-            };
+            var myIconSoftplan = L.icon({
+                iconUrl: 'img/ic-softplan-mapa.svg',
+                iconSize: [30, 42],
+                iconAnchor: [20, 41],
+                popupAnchor: [-3, -35]
+            });
             
             app.checkConnection();
             app.loading(true, 'Carregando...');
             $.mobile.changePage("#carona", { changeHash: true });
+            $('.ui-responsive-panel').panel('close');
             if(mapaIniciado == false) {
                 mapaIniciado = true;
-                $('#carona .ui-content').gmap3({
-                    map:{
-                    options:{
-                      center:[centerLat,centerLong],
-                      zoom: 11,
-                      zoomControl: false
-                    }
-                  },
-                  marker:{
-                    values:[{latLng:[latCidade, longCidade], options:{icon: iconSoftplan}}],
-                    callback: function(){
-                      app.loadMarkers(apenasVisualizar, tiposPontos);
-                    },
-                    options:{
-                      draggable: false
-                    }
-                  }
-                });
+                
+                // start the map in South-East England
+                map.setView(new L.LatLng(centerLat,centerLong),11);
+                map.addLayer(osm);
+                
+                var marker = L.marker([latCidade,longCidade],{icon: myIconSoftplan});
+                markers.addLayer(marker);  
+
+                map.addLayer(markers);
+                
+                map.whenReady(
+                    app.loadMarkers(apenasVisualizar, tiposPontos)
+                );
+                
             } else {
                 //destroy mapa atual
-                $('#carona .ui-content').gmap3('destroy');
+                markers.clearLayers();
                 mapaIniciado = false;
                 app.abreCarona(null, apenasVisualizar, tiposPontos);
             }
@@ -285,30 +285,21 @@ var app = {
     },
     addMarker: function(id, tipo, lat, long){
          
-        if (navigator.userAgent.match(/(iPad.*|iPhone.*|iPod.*)/i)) {
-            var sx = 35;
-            var sy = 55;
-        } else {
-            var sx = 90;
-            var sy = 45;
-        }       
-                
-        var icone = {
-            url: "img/ic-carona-" + tipo + "-mapa.svg",
-            scaledSize: new google.maps.Size(sx, sy)
-        };
-        
-        $("#carona .ui-content").gmap3({
-            marker: {
-                latLng:[lat, long],
-                events:{ 
-                    click:function(){ app.carregaDadosInscrito(id); }
-                },
-                options:{
-                    icon: icone
-                }
-            }
+        var myIcon = L.icon({
+            iconUrl: "img/ic-carona-" + tipo + "-mapa.svg",
+            iconSize: [30, 42],
+            iconAnchor: [20, 41],
+            popupAnchor: [-3, -35]
         });
+        
+        var marker = L.marker([lat,long],{icon: myIcon})
+            .on('click', function(e) {
+                app.carregaDadosInscrito(id);
+            });
+        markers.addLayer(marker); 
+
+        map.addLayer(markers);
+        
     },
     loadMarkers: function(apenasVisualizar, tiposPontos){
         if(app.checkConnection()){
@@ -581,7 +572,7 @@ var app = {
                                 $("#logradouro").focus();
                                 $("#latitude").empty();
                                 $("#longitude").empty();
-                                navigator.notification.alert('Seu endereço não foi localizado.', function(){}, 'Erro', 'Tentar novamente');
+                                navigator.notification.alert('Seu endereço não foi localizado. Você pode fazer seu cadastro pela versão desktop do Carona', function(){}, 'Erro', 'Tentar novamente');
                             }
                         }
                     }
@@ -1293,11 +1284,11 @@ var app = {
                 if(data != null) {
                     var idUltimoAnuncioAtual = data.ultimo_anuncio.id;
                     if(arrayIdsAnuncios.indexOf(idUltimoAnuncioAtual) == "-1") {
-                        $("#btnRefreshMuralDisable").css('display','none');
-                        $("#btnRefreshMural").css('display','block');
+                        $("#btnRefreshMuralDisable").css({display: 'none'});
+                        $("#btnRefreshMural").css({display: 'block', height: '42px'});
                     } else {
-                        $("#btnRefreshMuralDisable").css('display','block');
-                        $("#btnRefreshMural").css('display','none');
+                        $("#btnRefreshMuralDisable").css({display: 'block', height: '42px'});
+                        $("#btnRefreshMural").css({display: 'none'});
                     }                    
                 }
             }
@@ -1336,6 +1327,22 @@ var app = {
             }
         }
     },
+    buscarMural: function(termo){
+        if(termo == "") {
+            $('#inputSearchMural').blur();
+            ultimaPesquisa = "";
+            app.loading(true, 'Limpando filtro...');
+            app.abreMural(true, 0);
+        } else if ((termo != "") && (termo != ultimaPesquisa)){ 
+            ultimaPesquisa = $.trim(termo);
+            app.loading(true, 'Filtrando...');
+            clearTimeout(timerMural);
+            timerMural = setTimeout(function validate(){
+                app.abreMural(true, 0);
+                app.loading(false);
+            },1000);
+        }
+    },
     carregaUltimosAnuncios: function(ateId){
         if(app.checkConnection()){
             app.loading(true, 'Carregando...');
@@ -1351,7 +1358,7 @@ var app = {
             }
 
             $.ajax({
-                url: urlWebServiceSoftnews + '/web_service.php?car=snm_anuncios&login=' + login + '&senha=' + senha + '&dados=' + ateId + '_[x]_'  + quantidadeAnuncios + '&callback=?',
+                url: urlWebServiceSoftnews + '/web_service.php?car=snm_anuncios&login=' + login + '&senha=' + senha + '&dados=' + ateId + '_[x]_'  + quantidadeAnuncios + '_[x]_' + ultimaPesquisa + '&callback=?',
                 dataType: 'json',
                 timeout: tempoRespostaLimite,
                 error: function(jqXHR, textStatus, errorThrown) {
@@ -1370,24 +1377,43 @@ var app = {
                         }
                         //lendo todo Json
                         if(data.anuncio != null){
-                            for (i = 0; i < data.anuncio.length; i++) {
-                                if(arrayIdsAnuncios.indexOf(data.anuncio[i].id) == "-1") {
-                                    var html = "<li data-icon='false'>";        
-                                    html += "<a href='#Anuncio' onclick=\"app.carregaAnuncio('" + data.anuncio[i].id + "')\">";
-                                    html += "<h2 style='color: #000038 !important;'>" + data.anuncio[i].titulo.replace(/\u00c3\u00a0/g,'\u00e0') + "</h2>";
-                                    html += "<p class='ui-li-aside'><strong>" + data.anuncio[i].categoria + " | ";
-                                    if(data.anuncio[i].data_edicao !== data.anuncio[i].data_publicacao) {
-                                        html += "Editado: " + data.anuncio[i].data_edicao;
-                                    } else {
-                                        html += data.anuncio[i].data_publicacao;
+                            console.log(data.anuncio.length);
+                            if(data.anuncio.length != null) {
+                                for (i = 0; i < data.anuncio.length; i++) {
+                                    if(arrayIdsAnuncios.indexOf(data.anuncio[i].id) == "-1") {
+                                        var html = "<li data-icon='false'>";        
+                                        html += "<a href='#Anuncio' onclick=\"app.carregaAnuncio('" + data.anuncio[i].id + "')\">";
+                                        html += "<h2 style='color: #000038 !important;'>" + data.anuncio[i].titulo.replace(/\u00c3\u00a0/g,'\u00e0') + "</h2>";
+                                        html += "<p class='ui-li-aside'><strong>" + data.anuncio[i].categoria + " | ";
+                                        if(data.anuncio[i].data_edicao !== data.anuncio[i].data_publicacao) {
+                                            html += "Editado: " + data.anuncio[i].data_edicao;
+                                        } else {
+                                            html += data.anuncio[i].data_publicacao;
+                                        }
+                                        html += "</strong></p>";
+                                        html += "</a>";
+                                        html += "</li>";
+                                        $('#ulMural').append(html);
+                                        ultimoId = data.anuncio[i].id;
+                                        arrayIdsAnuncios[arrayIdsAnuncios.length] = data.anuncio[i].id;
                                     }
-                                    html += "</strong></p>";
-                                    html += "</a>";
-                                    html += "</li>";
-                                    $('#ulMural').append(html);
-                                    ultimoId = data.anuncio[i].id;
-                                    arrayIdsAnuncios[arrayIdsAnuncios.length] = data.anuncio[i].id;
                                 }
+                            } else {
+                                var html = "<li data-icon='false'>";        
+                                html += "<a href='#Anuncio' onclick=\"app.carregaAnuncio('" + data.anuncio.id + "')\">";
+                                html += "<h2 style='color: #000038 !important;'>" + data.anuncio.titulo.replace(/\u00c3\u00a0/g,'\u00e0') + "</h2>";
+                                html += "<p class='ui-li-aside'><strong>" + data.anuncio.categoria + " | ";
+                                if(data.anuncio.data_edicao !== data.anuncio.data_publicacao) {
+                                    html += "Editado: " + data.anuncio.data_edicao;
+                                } else {
+                                    html += data.anuncio.data_publicacao;
+                                }
+                                html += "</strong></p>";
+                                html += "</a>";
+                                html += "</li>";
+                                $('#ulMural').append(html);
+                                ultimoId = data.anuncio.id;
+                                arrayIdsAnuncios[arrayIdsAnuncios.length] = data.anuncio.id;
                             }
                             //se veio menos que o solicitado
                             if(data.anuncio.length >= quantidadeAnuncios) {
@@ -1400,7 +1426,9 @@ var app = {
                             $('#mural #maisAnuncios').css('display','none');
                         }
                         $('#mural #ulMural').listview("refresh");
-                        app.confereVersaoMural();
+                        if(ultimaPesquisa === "") {
+                            app.confereVersaoMural();
+                        }
                         app.loading(false);
                     }
                 }
@@ -1481,7 +1509,9 @@ var app = {
                             }
                             app.loading(false);
                             //confere se não há outra atualização de edição (em segundo plano)
-                            app.confereVersaoMural();
+                            if(ultimaPesquisa === "") {
+                                app.confereVersaoMural();
+                            }
                         
                         //se for para editar o anúncio
                         } else {
@@ -1764,15 +1794,15 @@ var app = {
     abreCallback: function(area, forceRefresh){
         app.loading(true, 'Carregando...');
         
-        //antes verifica se é habilitado para fazer ligações
-        if((area != "Configuração") && (habilitadoParaLigacoes === false)){
-            if((fazLigacao == null) && (numTelefone == null)) {
-                app.abreCallback('Configuração');
-                return false;
-            } else {
-                app.verificaNumeroNaCentral();
-            }
-        }
+        //antes verifica se é habilitado para fazer ligações - DESABILITADO POR ENQUANTO
+//        if((area != "Configuração") && (habilitadoParaLigacoes === false)){
+//            if((fazLigacao == null) && (numTelefone == null)) {
+//                app.abreCallback('Configuração');
+//                return false;
+//            } else {
+//                app.verificaNumeroNaCentral();
+//            }
+//        }
         
         if((fazLigacao == "true") || (fazLigacao == true)) {
             $('#menuCallback #linkAgendaCallback').css('display','block');
@@ -1823,7 +1853,7 @@ var app = {
                                     $('#ulRamaisCallback').append(
                                     "<li data-icon='false'>" +   
                                     "<a href='#Ramal' onclick=\"app.abreContatoCrt('" + nome + "', '" + projeto + "', '" + ramal + "', '" + celular + "', '" + email + "')\">" +
-                                    "<h2 style='color: #000038 !important; width: 95% !important;'>" + nome + "</h2>" +
+                                    "<h2 style='color: #000038 !important; width: 88% !important;'>" + nome + "</h2>" +
                                     "<p class='ui-li-aside'><strong>" + projeto + "</strong></p>" +
                                     "</a>" +
                                     "</li>"
@@ -1963,7 +1993,7 @@ var app = {
         ramalEditado = ramalEditado[0];
         $('#dadosCallbackRamal #ulOpcoes').append(
         "<li>" +   
-        "<a class='ui-btn ui-btn-icon-right ui-icon-phone' href='#Ramal' onclick=\"app.ramalCrt('" + ramalEditado + "')\">" +
+        "<a class='ui-btn ui-btn-icon-right ui-icon-phone' href='#Ramal'>" +
         "<h2 style='color: #000038 !important;'>" + ramal + "</h2>" +
         "<p class='ui-li-aside'><strong>RAMAL</strong></p>" +
         "</a>" +
@@ -1971,14 +2001,14 @@ var app = {
         );
         $('#dadosCallbackRamal #ulOpcoes').append(
         "<li>" +   
-        "<a class='ui-btn ui-btn-icon-right ui-icon-phone' href='#Ramal' onclick=\"app.ramalCrt('" + celular + "')\">" +
+        "<a class='ui-btn ui-btn-icon-right ui-icon-phone' href='tel:" + celular + "'>" +
         "<h2 style='color: #000038 !important;'>" + celular + "</h2>" +
         "<p class='ui-li-aside'><strong>CELULAR</strong></p>" +
         "</a>" +
         "</li>"
         );
-        var emailEditado = email.split('@');
-        emailEditado = emailEditado[0].toLowerCase() + "@softplan.com.br";
+        var emailEditado = email.toLowerCase();
+        //emailEditado = emailEditado[0].toLowerCase() + "@softplan.com.br";
         $('#dadosCallbackRamal #ulOpcoes').append(
         "<li>" +   
         "<a class='ui-btn ui-btn-icon-right ui-icon-mail' href='mailto:" + emailEditado + "'>" +

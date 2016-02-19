@@ -115,9 +115,9 @@ h1 {
 
 a.btn-inicial {
     width: 100%;
-    height: 146px;
+    height: 134px;
     display: block;
-    margin-bottom: 25px;
+    margin-bottom: 12px;
     text-align: center;
     text-decoration: none;
     font-size: 0.8em;
@@ -125,9 +125,9 @@ a.btn-inicial {
 }
 
 a.btn-inicial span.ic {
-    width: 100px;
-    height: 100px;
-    margin: 0 auto 16px;
+    width: 76px;
+    height: 76px;
+    margin: 0 5px 10px;
     display: block;
 }
 
@@ -254,7 +254,7 @@ a.btn-inicial span.ic {
     right: -54px;    
 }
 
-#searchCallback {
+.searchHeader {
     position: relative;
     width: 100%;
     margin-top: 4px;
@@ -262,15 +262,15 @@ a.btn-inicial span.ic {
     border-bottom: 1px solid #CCC;
 }
 
-#searchCallback .ui-field-contain {
+.searchHeader .ui-field-contain {
     padding: 10px 0;
 }
 
-#searchCallback .ui-field-contain .ui-input-search {
+.searchHeader .ui-field-contain .ui-input-search {
     margin: 0;
 }
 
-#searchCallback .ui-field-contain a.ui-input-clear {
+.searchHeader .ui-field-contain a.ui-input-clear {
     width: 38px;
     height: 30px;
 }
@@ -312,6 +312,12 @@ a.btn-inicial span.ic {
     background-color: rgba(255, 255, 255, 0.5);
     width: 25px;
     font-size: 8pt;
+}
+
+@media screen and (max-height : 550px) {
+    #alfabeto {
+        width: 50px;
+    }
 }
 
 #alfabeto li {

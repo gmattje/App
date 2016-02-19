@@ -27,6 +27,7 @@
         <link rel="stylesheet" href="jquerymobile/css/themes/jquery.mobile.icons.min.css" />
         <link rel="stylesheet" href="jquerymobile/jquery.mobile.structure-1.4.2.min.css" />
         <link rel="stylesheet" href="js/glide/glide.css" />
+        <link rel="stylesheet" href="js/leaflet/leaflet.css" />
         <link rel="stylesheet" href="css/index.css" />
         <script src="js/jquery-1.9.1.min.js"></script>
         <script src="jquerymobile/jquery.mobile-1.4.2.min.js"></script>     
@@ -38,7 +39,7 @@
         <!-- Inicial -->
         <div class="app" data-role="page" data-theme="a" id="inicial" style="background-image: url(img/background.jpg); background-position: 100% 140%; background-repeat: no-repeat; background-size: 100%; background-color: #FFF;">
             
-            <div style="margin-top: 10%; text-align: center;">
+            <div style="margin: 10% 0 5%; text-align: center;">
                 <img src="img/logoSoftplan.png" style="max-width: 100%;"/><br/>
             </div>    
                 
@@ -74,6 +75,24 @@
                             </a>
                         </td>
                         <td>
+                            <a href="#" onclick="app.abreMural();" class="btn-inicial ic-mural">
+                                <span class="ic">
+                                    <img src="img/ic-inicial-mural.svg" width="100%"/>
+                                </span>
+                                MURAL
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" onclick="app.abreCallback('CRT');" class="btn-inicial ic-manual">
+                                <span class="ic">
+                                    <img src="img/ic-inicial-crt.svg" width="100%"/>
+                                </span>
+                                CRT
+                            </a>
+                        </td>
+                    </tr> 
+                    <tr>
+                        <td>
                             <a href="#" onclick="app.abreCarona(null, false, 'todos');" class="btn-inicial ic-carona">
                                 <span class="ic">
                                     <img src="img/ic-inicial-carona.svg" width="100%"/>
@@ -81,8 +100,6 @@
                                 CARONA AMIGA
                             </a>
                         </td>
-                    </tr> 
-                    <tr>
                         <td>
                             <a href="#" onclick="app.abreManualRS();" class="btn-inicial ic-manual">
                                 <span class="ic">
@@ -91,21 +108,7 @@
                                 MANUAL REDES SOCIAIS
                             </a>
                         </td>
-                        <td>
-                            <a href="#" onclick="app.abreMural();" class="btn-inicial ic-mural">
-                                <span class="ic">
-                                    <img src="img/ic-inicial-mural.svg" width="100%"/>
-                                </span>
-                                MURAL
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <a href="#" onclick="app.abreCallback('CRT');" class="btn-inicial ic-callback">
-                                CALLBACK
-                            </a>
-                        </td>
+                        <td></td>
                     </tr>
                 </table>
             </div>
@@ -298,11 +301,11 @@
                             </span>
                         </a>
                     </li>
-                    <li data-icon='false'><a href="#" onclick="app.abreCarona(null, false, 'todos'); $('.ui-responsive-panel').panel('close');">Home Carona</a></li>
-                    <li data-icon='false' class="btnPerfilCriado"><a href="#" onclick="app.carregaDadosPessoais(); $('.ui-responsive-panel').panel('close');">Meu perfil</a></li>
-                    <li data-icon='false' class="btnCriarPerfil"><a href="#" onclick="app.carregaDadosPessoais(); $('.ui-responsive-panel').panel('close');" style="color: #FFB800;">CRIAR PERFIL</a></li>
-                    <li data-icon='false'><a href="#" onclick="app.carregaTutorialCarona(true); $('.ui-responsive-panel').panel('close');">Tutorial</a></li>
-                    <li data-icon='false'><a href="#" onclick="app.politicaDeUsoCarona(); $('.ui-responsive-panel').panel('close');">Política de uso</a></li>
+                    <li data-icon='false'><a href="#" onclick="app.abreCarona(null, false, 'todos');">Home Carona</a></li>
+                    <li data-icon='false' class="btnPerfilCriado"><a href="#" onclick="app.carregaDadosPessoais();">Meu perfil</a></li>
+                    <li data-icon='false' class="btnCriarPerfil"><a href="#" onclick="app.carregaDadosPessoais();" style="color: #FFB800;">CRIAR PERFIL</a></li>
+                    <li data-icon='false'><a href="#" onclick="app.carregaTutorialCarona(true);">Tutorial</a></li>
+                    <li data-icon='false'><a href="#" onclick="app.politicaDeUsoCarona();">Política de uso</a></li>
                     <li class="closeMenu" data-corners='false' data-icon='false'>
                         <a href='#' style="background-color: #606060;">
                             FILTROS
@@ -312,7 +315,7 @@
                         </a>
                     </li>
                     <li data-icon='false'>
-                        <a href="#" class="btnFiltro oferece" onclick="app.abreCarona(null, true, 'oferece'); $('.ui-responsive-panel').panel('close');">
+                        <a href="#" class="btnFiltro oferece" onclick="app.abreCarona(null, true, 'oferece');">
                             Apenas ofertantes
                             <span class="ic" style="top: 13px; right: 12px; position: absolute;">
                                 <img src="img/ic-span-checked.svg" width="15px"/>
@@ -320,7 +323,7 @@
                         </a>
                     </li>
                     <li data-icon='false'>
-                        <a href="#" class="btnFiltro solicita" onclick="app.abreCarona(null, true, 'solicita'); $('.ui-responsive-panel').panel('close');">
+                        <a href="#" class="btnFiltro solicita" onclick="app.abreCarona(null, true, 'solicita');">
                             Apenas solicitantes
                             <span class="ic" style="top: 13px; right: 12px; position: absolute;">
                                 <img src="img/ic-span-checked.svg" width="15px"/>
@@ -328,7 +331,7 @@
                         </a>
                     </li>
                     <li data-icon='false'>
-                        <a href="#" class="btnFiltro todos" onclick="app.abreCarona(null, true, 'todos'); $('.ui-responsive-panel').panel('close');">
+                        <a href="#" class="btnFiltro todos" onclick="app.abreCarona(null, true, 'todos');">
                             Todos cadastrados
                             <span class="ic" style="top: 13px; right: 12px; position: absolute;">
                                 <img src="img/ic-span-checked.svg" width="15px"/>
@@ -344,7 +347,7 @@
                         </a>
                     </li>
                     <li data-icon='false'>
-                        <a href="#" class="btnCidade florianopolis" onclick="app.abreCarona('florianopolis', true, null); $('.ui-responsive-panel').panel('close');">
+                        <a href="#" class="btnCidade florianopolis" onclick="app.abreCarona('florianopolis', true, null);">
                             Florianópolis
                             <span class="ic" style="top: 13px; right: 12px; position: absolute;">
                                 <img src="img/ic-span-checked.svg" width="15px"/>
@@ -352,7 +355,7 @@
                         </a>
                     </li>
                     <li data-icon='false'>
-                        <a href="#" class="btnCidade palhoca" onclick="app.abreCarona('palhoca', true, null); $('.ui-responsive-panel').panel('close');">
+                        <a href="#" class="btnCidade palhoca" onclick="app.abreCarona('palhoca', true, null);">
                             Palhoça
                             <span class="ic" style="top: 13px; right: 12px; position: absolute;">
                                 <img src="img/ic-span-checked.svg" width="15px"/>
@@ -360,7 +363,7 @@
                         </a>
                     </li>
                     <li data-icon='false'>
-                        <a href="#" class="btnCidade saopaulo" onclick="app.abreCarona('sao paulo', true, null); $('.ui-responsive-panel').panel('close');">
+                        <a href="#" class="btnCidade saopaulo" onclick="app.abreCarona('sao paulo', true, null);">
                             São Paulo
                             <span class="ic" style="top: 13px; right: 12px; position: absolute;">
                                 <img src="img/ic-span-checked.svg" width="15px"/>
@@ -384,7 +387,7 @@
                 </a>
             </div>
             
-            <div role="main" class="ui-content">
+            <div role="main" id="mapa" class="ui-content">
             </div>
             
             <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
@@ -922,26 +925,33 @@
         
         <div class="app" data-role="page" data-theme="a" id="mural">
             
-            <div class="header" data-role="header" data-position="fixed" data-tap-toggle="false">
+            <div class="header" data-role="header" data-position="fixed" data-tap-toggle="false" style="overflow:initial;">
                 <a href="#" id="btnRefreshMuralDisable" class="f-left ui-btn-left">
                     <span class="ic">
                         <img src="img/ic-span-refresh-disable.svg" width="100%"/>
                     </span>
                 </a>
-                <a href="#" id="btnRefreshMural" class="f-left ui-btn-left" onclick="app.abreMural(true);" style="display: none;">
+                <a href="#" id="btnRefreshMural" class="f-left ui-btn-left" onclick="app.abreMural(true);" style="height: 42px; display: none;">
                     <span class="ic">
                         <img src="img/ic-span-refresh-active.svg" width="100%"/>
                     </span>
                 </a>
                 <h1>Mural</h1>
-                <a href="#menuMural" class="f-right ic-menu ui-btn-right" data-rel="back" data-direction="reverse">
+                <a href="#menuMural" class="f-right ic-menu ui-btn-right" data-rel="back" data-direction="reverse" style="height: 42px;">
                     <span class="ic">
                         <img src="img/ic-span-menu.svg" width="100%"/>
                     </span>
                 </a>
+                <div class="searchHeader">
+                    <div style="margin: 0 auto; width: 90%;">
+                        <div class="ui-field-contain">
+                            <input type="search" id="inputSearchMural" value="" placeholder="Procurar..." onkeyup="app.buscarMural($(this).val());" onchange="app.buscarMural($(this).val());"/>
+                        </div>
+                    </div>
+                </div>
             </div>
             
-            <div role="main" class="ui-content">
+            <div role="main" class="ui-content" style="padding-top: 75px;">
                 <ul id="ulMural" data-role="listview" data-theme="a"></ul>
                 <a href="#" id="maisAnuncios" data-role="button" style="display: none; margin-top: 32px;">Carregar Mais Anúncios...</a>
             </div>
@@ -1080,7 +1090,7 @@
             
             <div role="main" class="ui-content">
                 <label for="ramal">Número de seu ramal na empresa:</label>
-                <input id="ramal" type="text" name="ramal" class="maskRamal" value="" style="border: 1px solid #E6E6E6;">
+                <input id="ramal" type="number" name="ramal" class="maskRamal" value="" style="border: 1px solid #E6E6E6;">
             </div>            
             
             <div role="main" class="ui-content" style="background-color: #E6E6E6;">
@@ -1223,12 +1233,12 @@
             
             <div class="header" data-role="header" data-position="fixed" data-tap-toggle="false" style="overflow:initial;">
                 <h1>CRT</h1>
-                <a href="#menuCallback" class="f-right ic-menu ui-btn-right" data-rel="back" data-direction="reverse" style="height: 42px;">
+                <!--<a href="#menuCallback" class="f-right ic-menu ui-btn-right" data-rel="back" data-direction="reverse" style="height: 42px;">
                     <span class="ic">
                         <img src="img/ic-span-menu.svg" width="100%"/>
                     </span>
-                </a>
-                <div id="searchCallback">
+                </a>-->
+                <div class="searchHeader">
                     <div style="margin: 0 auto; width: 90%;">
                         <div class="ui-field-contain">
                             <input type="search" id="inputSearchCallback" value="" placeholder="Procurar..." onkeyup="app.filtrarCrt($(this).val());" onchange="app.filtrarCrt($(this).val());"/>
@@ -1438,11 +1448,10 @@
             
         </div>
         
-        <script type="text/javascript" src="cordova.js"></script>
+        <!--<script type="text/javascript" src="cordova.js"></script>-->
         <script src="js/glide/jquery.glide.min.js"></script>
+        <script src="js/leaflet/leaflet.js"></script>
         <script src="js/jquery.maskedinput.js"></script>
-        <script src="js/maps.js"></script> <!-- Original: http://maps.googleapis.com/maps/api/js?sensor=false -->
-        <script src="js/gmap3v5.1.1/gmap3.js"></script>
         <script src="js/cidades-estados.js"></script> <!-- Original: http://cidades-estados-js.googlecode.com/files/cidades-estados-1.2-utf8.js -->
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
