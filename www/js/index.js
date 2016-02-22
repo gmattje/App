@@ -153,7 +153,7 @@ var app = {
         return height;
     },
     checkConnection: function() {
-        //return true; //descomentar o return true para fazer homologação no desktop
+        return true; //descomentar o return true para fazer homologação no desktop
         var networkState = navigator.connection.type;
         var states = {};
         states[Connection.UNKNOWN]  = 'Unknown connection';
@@ -1377,7 +1377,6 @@ var app = {
                         }
                         //lendo todo Json
                         if(data.anuncio != null){
-                            console.log(data.anuncio.length);
                             if(data.anuncio.length != null) {
                                 for (i = 0; i < data.anuncio.length; i++) {
                                     if(arrayIdsAnuncios.indexOf(data.anuncio[i].id) == "-1") {
