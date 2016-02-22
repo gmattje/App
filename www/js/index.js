@@ -153,7 +153,7 @@ var app = {
         return height;
     },
     checkConnection: function() {
-        return true; //descomentar o return true para fazer homologação no desktop
+        //return true; //descomentar o return true para fazer homologação no desktop
         var networkState = navigator.connection.type;
         var states = {};
         states[Connection.UNKNOWN]  = 'Unknown connection';
