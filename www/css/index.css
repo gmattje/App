@@ -107,10 +107,11 @@ h1 {
 
 #menuInicial table {
     margin: 0 auto;
+    width: 284px;
 }
 
 #menuInicial table td {
-    width: 50%;
+    width: 33%;
 }
 
 a.btn-inicial {
