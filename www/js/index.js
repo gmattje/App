@@ -21,6 +21,7 @@ var urlWebServiceSoftnews = 'https://design.softplan.com.br/webserviceSoftnews';
 var urlWebServiceCarona = 'https://carona.softplan.com.br/webservice';
 var urlWebServiceCallback = 'http://cbsrv.softplan.com.br:443/CallBackWebService/callback';
 var tempoRespostaLimite = 25000; //25 segundos
+var tempoRespostaLimiteCRT = 60000; //60 segundos
 var nomeUser = "";
 
 var login = ""
@@ -173,7 +174,7 @@ var app = {
         }
     },
     semRespostaServidor: function() {
-        navigator.notification.alert('Servidor não responde. Confira conexão com a internet.', function(){}, 'Atenção', 'Ok');
+        navigator.notification.alert('Servidor não responde. Confira sua conexão com a internet.', function(){}, 'Atenção', 'Ok');
     },
     loading: function(acao, texto){
         if(acao == true) {
@@ -1502,6 +1503,7 @@ var app = {
                             }
                             $('#muralAnuncio #dados_anunciante').html("\r\nAutor: " + data.anuncio.nome_anunciante + "<br/>" + data.anuncio.email_anunciante + "<br/> Ramal: " + data.anuncio.ramal_anunciante);
                             $('#muralAnuncio #enviaEmail').attr('href','mailto:' + data.anuncio.email_anunciante);
+                            $('#muralAnuncio #btnDenunciaAnuncio').attr('onclick','app.denunciarAnuncio(' + idAnuncio + ', \'' + data.anuncio.titulo.replace(/\u00c3\u00a0/g,'\u00e0') + '\', \'' + data.anuncio.nome_anunciante + '\')');
                             $.mobile.changePage("#muralAnuncio", { changeHash: true });
                             if(iniciaGliderMural == true){
                                 $('#ulFotosAnuncio').glide();
@@ -1661,7 +1663,7 @@ var app = {
             var foto = elem.get(0).files[0];
             elem.parent().find('span').html(foto.name);
         } else {
-            elem.parent().find('span').html('Selecine foto');
+            elem.parent().find('span').html('Selecione foto');
         }
     },
     alterarImg: function(elem, elemParaAlterar){
@@ -1768,24 +1770,86 @@ var app = {
             });
         }
     },
+    denunciarAnuncio: function(idAnuncio, tituloAnuncio, nomeAnunciante){
+        if(app.checkConnection()){
+            app.loading(true, 'Carregando...');
+            app.zeraFormAnuncio();
+            
+            var primeiroNome = nomeUser.split(' ');
+            $('#denunciaAnuncio #nomePerfil').html(primeiroNome[0]);
+            $.mobile.changePage("#denunciaAnuncio", { changeHash: true });
+            app.loading(false);
+            if(idAnuncio != null) {
+                $('#btnDenunciarAnuncio').attr('onclick','app.gravaDenunciaAnuncio(' + idAnuncio + ', \'' + tituloAnuncio + '\', \'' + nomeAnunciante + '\');');
+            }
+        }
+    },
+    gravaDenunciaAnuncio: function(idAnuncio, tituloAnuncio, nomeAnunciante) {
+        if(app.checkConnection()){
+            
+            var motivo = $('#denunciaAnuncio input:radio[name=motivoDenuncia]:checked').val();
+            var detalhes = encodeURIComponent($('#denunciaAnuncio #detalhesDenuncia').val());
+            //valida motivo
+            if(motivo == null){
+                navigator.notification.alert('Você deve escolher um motivo pelo qual você quer denunciar.', function(){}, 'Atenção', 'Ok');
+                return false;
+            }
+            if(detalhes == ""){
+                navigator.notification.alert('Você deve detalhar sua denúncia.', function(){}, 'Atenção', 'Ok');
+                return false;
+            }
+            
+            app.loading(true, 'Enviando denúncia...');
+                        
+            $.ajax({
+                url: urlWebServiceSoftnews + '/web_service.php?car=snm_denuncia&login=' + login + '&senha=' + senha + '&dados=' + idAnuncio + '_[x]_' + tituloAnuncio + '_[x]_' + nomeAnunciante + '_[x]_' + motivo + '_[x]_' + detalhes + '&callback=?',
+                dataType: 'json',
+                timeout: 10000,
+                error: function(jqXHR, textStatus, errorThrown) {
+                    app.loading(false);
+                    if(textStatus==="timeout") {
+                        return app.semRespostaServidor();
+                    }
+                },
+                success: function(data) {
+                    if(data == null) {
+                        app.loginError();
+                    } else {
+                        //lendo todo Json
+                        app.loading(false);
+                        if(data.denuncia != null){
+                            var retornoDenuncia = data.denuncia.retorno;
+                            if(retornoDenuncia == "Ok") {
+                                app.abreMural(true);
+                                navigator.notification.alert('Sua denúncia foi enviada para validação.', function(){}, 'Obrigado', 'Ok');
+                            } else {
+                                navigator.notification.alert('Um erro ocorreu e sua denúncia não foi enviada.', function(){}, 'Atenção', 'Ok');
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    },
     zeraFormAnuncio: function(){
-        //zerar form       
+        //zerar form cadastro/edição  
         $('#cadastroAnuncio #ramal').val("");
-        $("#cadastroAnuncio input[name='categoria']").prop('checked', false);
-        $("#cadastroAnuncio .ui-radio-on").removeClass('ui-radio-on').addClass('ui-radio-off');
         $('#cadastroAnuncio #titulo').val("");
         $('#cadastroAnuncio #detalhes').val("");
         $("#cadastroAnuncio #detalhes").css("height","auto");
         $('#cadastroAnuncio .fotoCadastrada').css("display","none");
         $('#cadastroAnuncio .fileinput-button').css("display","block");
         for(var i=1; i<=4; i++){
-            $('input#foto' + i).parent().find('span').html('Selecine foto ' + i);
+            $('input#foto' + i).parent().find('span').html('Selecione foto ' + i);
             $('input#foto' + i).val("");
         }
         $('#btnSalvarAnuncio').attr('onclick','app.gravaDadosAnuncio(0);');
         $('#btnExcluirAnuncio').attr('onclick','app.excluiAnuncio(0);');
         $('#btnExcluirAnuncio').css('display','none');
-
+        //zerar form denuncia
+        $('#denunciaAnuncio #detalhesDenuncia').val("");
+        $("#denunciaAnuncio #detalhesDenuncia").css("height","auto");
+        $('#btnDenunciarAnuncio').attr('onclick','app.gravaDenunciaAnuncio(0);');
     },
     politicaDeUsoMural: function(){
         $.mobile.changePage("#politicaMural", { role: 'dialog', changeHash: true });
@@ -1819,7 +1883,7 @@ var app = {
                     $.ajax({
                         url: urlWebServiceCallback + '/crtContact',
                         dataType: 'json',
-                        timeout: tempoRespostaLimite,
+                        timeout: tempoRespostaLimiteCRT,
                         error: function(jqXHR, textStatus, errorThrown) {
                             app.loading(false);
                             if(textStatus==="timeout") {

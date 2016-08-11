@@ -50,7 +50,7 @@
                 <form action="#" method="post" onsubmit="app.fazerLogin(); return false;">
                     <input id="login" type="text" name="login" placeholder="LOGIN" value="" style="border: none; background-color: #E9E9E9; border-radius: 0px; color: #000;">
                     <input id="senha" type="password" name="senha" placeholder="SENHA" value="" style="border: none; background-color: #E9E9E9; border-radius: 0px; color: #000;">
-                    <button id="btnLogin" class="ui-btn ui-corner-all ui-mini" style="background-color: #628DBA; color: #FFF; border-radius: 0px;">ENTRAR</button>
+                    <button id="btnLogin" class="ui-btn ui-corner-all" style="background-color: #628DBA; color: #FFF; border-radius: 0px;">ENTRAR</button>
                 </form>
             </div>
             
@@ -83,11 +83,12 @@
                             </a>
                         </td>
                         <td>
-                            <a href="#" onclick="app.abreCallback('CRT');" class="btn-inicial ic-manual">
+                            <a href="#" onclick="//app.abreCallback('CRT');" class="btn-inicial ic-crt">
                                 <span class="ic">
-                                    <img src="img/ic-inicial-crt.svg" width="100%"/>
+                                    <img src="img/ic-inicial-crt.svg" width="100%" style="opacity: 0.5;"/>
                                 </span>
-                                CRT
+                                CRT<br/>
+                                <span style="font-size: 7pt; color: #ff2500;">Temporariamente Indisponível</span>
                             </a>
                         </td>
                     </tr> 
@@ -284,7 +285,7 @@
                 <ul style="margin-top: 0px !important; margin-bottom: 0px !important;" id="ulComentariosSoftnews" data-role="listview" data-divider-theme="c"></ul>
                 <h3>Comente:</h3>
                 <textarea cols="40" rows="8" name="comentario" id="textareaComentario" style="border: 1px solid #E6E6E6;"></textarea>
-                <button id="enviarComent" class="ui-btn ui-corner-all ui-mini">Enviar</button>
+                <button id="enviarComent" class="ui-btn ui-corner-all">Enviar</button>
             </div>
             
         </div>
@@ -476,7 +477,7 @@
             </div>
             
             <div role="main" class="ui-content" style="padding: 0px 1em 0px 1em; margin-top: -10px;">
-                <button class="ui-btn ui-corner-all ui-mini" onclick="app.carregaEscolhaCidadeCarona();" style="background-color: #628DBA; color: #FFF; border-radius: 0px;">COMEÇAR</button>
+                <button class="ui-btn ui-corner-all" onclick="app.carregaEscolhaCidadeCarona();" style="background-color: #628DBA; color: #FFF; border-radius: 0px;">COMEÇAR</button>
             </div>
             
             <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
@@ -543,7 +544,7 @@
              
             <div role="main" class="ui-content">
                 <fieldset data-role="controlgroup">
-                    <input type="radio" name="tipo" id="solicita" value="solicita" onclick="app.numVagasShow(false);">
+                    <input type="radio" name="tipo" id="solicita" value="solicita" checked="checked" onclick="app.numVagasShow(false);">
                     <label for="solicita">Solicitar carona</label>
                     <input type="radio" name="tipo" id="oferece" value="oferece" onclick="app.numVagasShow(true);">
                     <label for="oferece">Oferecer carona</label>
@@ -631,8 +632,8 @@
             
             <div role="main" class="ui-content">
                 <p>Ao se cadastrar você está de acordo com a <a href="#" onclick="app.politicaDeUsoCarona();">Política de uso</a></p>
-                <button class="ui-btn ui-corner-all ui-mini" onclick="app.gravaDadosPessoais();" style="background-color: #628DBA; color: #FFF; border-radius: 0px;">SALVAR</button>
-                <button class="ui-btn ui-corner-all ui-mini" onclick="app.gravaDescadastroCarona();" style="background-color: #CCCCCC; color: #FFF; border-radius: 0px;">DESABILITAR PERFIL</button>
+                <button class="ui-btn ui-corner-all" onclick="app.gravaDadosPessoais();" style="background-color: #628DBA; color: #FFF; border-radius: 0px; margin: 1em 0;">SALVAR</button>
+                <button class="ui-btn ui-corner-all" onclick="app.gravaDescadastroCarona();" style="background-color: #CCCCCC; color: #FFF; border-radius: 0px; margin: 1em 0;">DESABILITAR PERFIL</button>
             </div>
             
         </div>
@@ -1045,7 +1046,8 @@
                 <h1 id="titulo_anuncio" style="text-align: left; margin-top: 0px !important; color: #000038 !important;"></h1>
                 <p id="conteudo_anuncio"></p>
                 <p id="dados_anunciante" style="margin: 0px !important; color: #666 !important; font-size: 9pt !important; padding-top: 15px; border-top: 1px solid;"></p>
-                <a id="enviaEmail" href="#" class="ui-btn ui-corner-all ui-mini" style="background-color: #628DBA; color: #FFF; border-radius: 0px;">ENVIAR E-MAIL</a>
+                <a id="enviaEmail" href="#" class="ui-btn ui-corner-all" style="background-color: #628DBA; color: #FFF; border-radius: 0px; margin: 1em 0;">ENVIAR E-MAIL</a>
+                <a id="btnDenunciaAnuncio" href="#" class="ui-btn ui-corner-all" onclick="app.denunciarAnuncio();" style="background-color: #f9f9f9;color: #628DBA;border: none;margin: 1em 0;text-decoration: underline !important;outline: none;">DENUNCIAR</a>
             </div>
             
             <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
@@ -1100,7 +1102,7 @@
             <div role="main" class="ui-content">
                 <label for="categoria">Categoria:</label>
                 <fieldset data-role="controlgroup">
-                    <input type="radio" name="categoria" id="venda" value="venda">
+                    <input type="radio" name="categoria" id="venda" value="venda" checked="checked">
                     <label for="venda">Venda</label>
                     <input type="radio" name="categoria" id="compra" value="compra">
                     <label for="compra">Compra</label>
@@ -1162,9 +1164,55 @@
             
             <div role="main" class="ui-content">
                 <p>Ao cadastrar/editar você está de acordo com a <a href="#" onclick="app.politicaDeUsoMural();">Política de uso</a></p>
-                <button id="btnSalvarAnuncio" class="ui-btn ui-corner-all ui-mini" onclick="app.gravaDadosAnuncio();" style="background-color: #628DBA; color: #FFF; border-radius: 0px;">SALVAR e PUBLICAR</button>
-                <button id="btnExcluirAnuncio" class="ui-btn ui-corner-all ui-mini" onclick="app.excluiAnuncio();" style="background-color: #BA6262; color: #FFF; border-radius: 0px; display: none;">EXCLUIR ANÚNCIO</button>
-                <a class="ui-btn ui-corner-all ui-mini" href="#" data-rel="back" data-direction="reverse" style="background-color: #CCCCCC; color: #FFF; border-radius: 0px;">CANCELAR</a>
+                <button id="btnSalvarAnuncio" class="ui-btn ui-corner-all" onclick="app.gravaDadosAnuncio();" style="background-color: #628DBA; color: #FFF; border-radius: 0px; margin: 1em 0;">SALVAR e PUBLICAR</button>
+                <button id="btnExcluirAnuncio" class="ui-btn ui-corner-all" onclick="app.excluiAnuncio();" style="background-color: #BA6262; color: #FFF; border-radius: 0px; margin: 1em 0; display: none;">EXCLUIR ANÚNCIO</button>
+                <a class="ui-btn ui-corner-all" href="#" data-rel="back" data-direction="reverse" style="background-color: #CCCCCC; color: #FFF; border-radius: 0px; margin: 1em 0;">CANCELAR</a>
+            </div>
+            
+        </div>
+        
+        <div class="app" data-role="page" data-theme="a" id="denunciaAnuncio">
+            
+            <div class="header" data-role="header" data-position="fixed" data-tap-toggle="false">
+                <a href="#" class="f-left ic-back ui-btn-left" data-rel="back" data-direction="reverse">
+                    <span class="ic">
+                        <img src="img/ic-span-back.svg" width="100%"/>
+                    </span>
+                </a>
+		<h1>Denúncia</h1>
+                <a href="#menuMural" class="f-right ic-menu ui-btn-right" data-rel="back" data-direction="reverse">
+                    <span class="ic">
+                        <img src="img/ic-span-menu.svg" width="100%"/>
+                    </span>
+                </a>
+            </div>
+            
+            <div role="main" class="ui-content" style="background-color: #E6E6E6;">
+                <p style="margin: 0px;"><span id="nomePerfil" style="font-weight: bolder;"></span>, por que você quer denunciar esse anúncio?</p>
+            </div>
+            
+            <div role="main" class="ui-content">
+                <fieldset data-role="controlgroup">
+                    <input type="radio" name="motivoDenuncia" id="desacordo" value="desacordo com política" checked="checked">
+                    <label for="desacordo">Esse anúncio não está de acordo com a Política/Termos de Uso do mural do Softnews</label>
+                    <p style="background-color: #f6f6f6; padding: 0px 20px 10px 43px; margin: 0; border-left: 1px solid #ddd; border-right: 1px solid #ddd;">
+                        <a href="#" onclick="app.politicaDeUsoMural();">Ler a Política de Uso/Termos de Uso</a>
+                    </p>
+                    <input type="radio" name="motivoDenuncia" id="ilegal" value="viola as leis">
+                    <label for="ilegal">É um produto proibido que viola a legislação vigente</label>
+                    <input type="radio" name="motivoDenuncia" id="outro" value="outro motivo">
+                    <label for="outro">Outro</label>
+                </fieldset>
+            </div>
+            
+            <div role="main" class="ui-content" style="background-color: #E6E6E6;">
+                <p style="margin: 0px;">Dê mais detalhes sobre a sua denúncia:</p>
+            </div>
+            
+            <div role="main" class="ui-content">
+                <textarea id="detalhesDenuncia" name="detalhesDenuncia" style="border: 1px solid #E6E6E6;"></textarea>
+                <button id="btnDenunciarAnuncio" class="ui-btn ui-corner-all" onclick="app.gravaDenunciaAnuncio();" style="background-color: #628DBA; color: #FFF; border-radius: 0px; margin: 1em 0;">DENUNCIAR</button>
+                <a class="ui-btn ui-corner-all" href="#" data-rel="back" data-direction="reverse" style="background-color: #CCCCCC; color: #FFF; border-radius: 0px; margin: 1em 0;">CANCELAR</a>
             </div>
             
         </div>
@@ -1190,7 +1238,7 @@
                         Não é permitido anúncio de venda ou oferta de produtos, bens ou serviços que sejam proibidos de acordo com as leis brasileiras;
                     </li>
                     <li>
-                        Os administradores do Mural reservam-se ao direito exclusivo de decidir se o anúncio se encontra de acordo com estas regras e, se for o caso, excluí-lo;
+                        Os administradores do Mural reservam-se o direito exclusivo de decidir se o anúncio está ou não em conformidade com as regras estabelecidas e, em caso negativo, excluí-lo;
                     </li>
                     <li>
                         O Mural é um espaço exclusivo para venda de produtos, serviços e indicações de profissionais. Outros assuntos deverão ser tratados fora desse local;
@@ -1400,8 +1448,8 @@
             </div>
             
             <div role="main" class="ui-content">
-                <button id="btnSalvarDadosConfigsCallback" class="ui-btn ui-corner-all ui-mini" onclick="app.gravaDadosConfigsCallback();" style="background-color: #628DBA; color: #FFF; border-radius: 0px;">SALVAR e CONTINUAR</button>
-                <a class="ui-btn ui-corner-all ui-mini" href="#" data-rel="back" data-direction="reverse" style="background-color: #CCCCCC; color: #FFF; border-radius: 0px;">CANCELAR</a>
+                <button id="btnSalvarDadosConfigsCallback" class="ui-btn ui-corner-all" onclick="app.gravaDadosConfigsCallback();" style="background-color: #628DBA; color: #FFF; border-radius: 0px; margin: 1em 0;">SALVAR e CONTINUAR</button>
+                <a class="ui-btn ui-corner-all" href="#" data-rel="back" data-direction="reverse" style="background-color: #CCCCCC; color: #FFF; border-radius: 0px; margin: 1em 0;">CANCELAR</a>
             </div>
             
             <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
@@ -1433,8 +1481,8 @@
             
             <div role="main" class="ui-content">
                 
-                <a id="btnLogout" class="ui-btn ui-corner-all ui-mini" onclick="app.fazerLogout();" style="display: none;">SAIR</a>
-                <a class="ui-btn ui-corner-all ui-mini" href="mailto:marketing@softplan.com.br">DÚVIDAS / SUGESTÕES</a>
+                <a id="btnLogout" class="ui-btn ui-corner-all" onclick="app.fazerLogout();" style="margin: 1em 0; display: none;">SAIR</a>
+                <a class="ui-btn ui-corner-all" href="mailto:marketing@softplan.com.br" style="margin: 1em 0;">DÚVIDAS / SUGESTÕES</a>
                 
             </div>
             

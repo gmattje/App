@@ -70,6 +70,11 @@ h1 {
     display:none;
 }
 
+.ui-btn-custom {
+    margin: 1em 0;
+    padding: 1.6em 1em;
+}
+
 .ui-listview .ui-li-aside {
     top: 0.6em;
     left: 1.5em;
