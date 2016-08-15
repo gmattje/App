@@ -19,7 +19,7 @@
 //variáveis gerais
 var urlWebServiceSoftnews = 'https://design.softplan.com.br/webserviceSoftnews';
 var urlWebServiceCarona = 'https://carona.softplan.com.br/webservice';
-var urlWebServiceCallback = 'http://cbsrv.softplan.com.br:443/CallBackWebService/callback';
+var urlWebServiceCallback = 'http://crtsrv.softplan.com.br/cbcrt';
 var tempoRespostaLimite = 25000; //25 segundos
 var tempoRespostaLimiteCRT = 60000; //60 segundos
 var nomeUser = "";
@@ -1854,6 +1854,23 @@ var app = {
     politicaDeUsoMural: function(){
         $.mobile.changePage("#politicaMural", { role: 'dialog', changeHash: true });
     },
+    csvJSON: function(csv){
+        var lines = csv.split("\r\n");
+        var result = [];
+        for(var i=1;i<lines.length;i++){
+            var obj = {};
+            var currentline=lines[i].split(";");
+            obj['nome'] = currentline[0];
+            obj['projeto'] = currentline[2];
+            obj['numero'] = currentline[1];
+            obj['celular'] = currentline[4];
+            obj['email'] = currentline[3];
+            result.push(obj);
+        }
+        //return result; //JavaScript object
+        var json = JSON.stringify(result); //JSON
+        return JSON.parse(json);
+    },
     abreCallback: function(area, forceRefresh){
         app.loading(true, 'Carregando...');
         
@@ -1881,8 +1898,8 @@ var app = {
                     $('#ulRamaisCallback').empty();
                     //busca ramais
                     $.ajax({
-                        url: urlWebServiceCallback + '/crtContact',
-                        dataType: 'json',
+                        url: urlWebServiceCallback + '/DadosUsuarioCRT.txt',
+                        dataType: 'text',
                         timeout: tempoRespostaLimiteCRT,
                         error: function(jqXHR, textStatus, errorThrown) {
                             app.loading(false);
@@ -1895,32 +1912,35 @@ var app = {
                                 app.loginError();
                             } else {
                                 //lendo todo Json ramais
-                                for (i = 1; i < data.length; i++) {
-                                    var nome = data[i].nome.toString().toUpperCase();
+                                var dataJson = app.csvJSON(data);
+                                for (i = 0; i < dataJson.length; i++) {
+                                    var nome = dataJson[i].nome.toString().toUpperCase();
                                     var projeto = "não cadastrado";
                                     var ramal = "não cadastrado";
                                     var celular = "não cadastrado";
                                     var email = "não cadastrado";
-                                    if(data[i].projeto){
-                                        projeto = data[i].projeto.toString().toUpperCase();
+                                    if(dataJson[i].projeto){
+                                        projeto = dataJson[i].projeto.toString().toUpperCase();
                                     }
-                                    if(data[i].numero){
-                                        ramal = data[i].numero.toString();
+                                    if(dataJson[i].numero){
+                                        ramal = dataJson[i].numero.toString();
                                     }
-                                    if(data[i].celular){
-                                        celular = data[i].celular.toString();
+                                    if(dataJson[i].celular){
+                                        celular = dataJson[i].celular.toString();
                                     }
-                                    if(data[i].email){
-                                        email = data[i].email.toString();
+                                    if(dataJson[i].email){
+                                        email = dataJson[i].email.toString();
                                     }
-                                    $('#ulRamaisCallback').append(
-                                    "<li data-icon='false'>" +   
-                                    "<a href='#Ramal' onclick=\"app.abreContatoCrt('" + nome + "', '" + projeto + "', '" + ramal + "', '" + celular + "', '" + email + "')\">" +
-                                    "<h2 style='color: #000038 !important; width: 88% !important;'>" + nome + "</h2>" +
-                                    "<p class='ui-li-aside'><strong>" + projeto + "</strong></p>" +
-                                    "</a>" +
-                                    "</li>"
-                                    );
+                                    if(nome != "") {
+                                        $('#ulRamaisCallback').append(
+                                        "<li data-icon='false'>" +   
+                                        "<a href='#Ramal' onclick=\"app.abreContatoCrt('" + nome + "', '" + projeto + "', '" + ramal + "', '" + celular + "', '" + email + "')\">" +
+                                        "<h2 style='color: #000038 !important; width: 88% !important;'>" + nome + "</h2>" +
+                                        "<p class='ui-li-aside'><strong>" + projeto + "</strong></p>" +
+                                        "</a>" +
+                                        "</li>"
+                                        );
+                                    }
                                 }
 
                                 $.mobile.changePage("#callback-crt", { changeHash: true });

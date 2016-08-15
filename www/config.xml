@@ -19,6 +19,7 @@
     <plugin name="cordova-plugin-splashscreen" spec="2.1.0" source="pgb" />
     <plugin name="org.apache.cordova.statusbar" spec="0.1.4" source="pgb" />
     <plugin name="org.apache.cordova.network-information" spec="0.2.15" source="pgb" />
+    <plugin name="com.logilite.vision.camera" spec="0.2.11" source="pgb" />
     <!--<gap:plugin name="org.apache.cordova.dialogs" version="0.2.10" />-->
     <plugin name="com.developersanddesigners.phonegapdialogs" spec="1.1.1" source="pgb" />
     <plugin name="org.apache.cordova.inappbrowser" spec="0.6.0" source="pgb" />
