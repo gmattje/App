@@ -17,16 +17,16 @@
         Softplan
     </author>
     
-    <plugin name="cordova-plugin-splashscreen" spec="2.1.1" source="pgb" />
-    <plugin name="org.apache.cordova.statusbar" spec="0.1.4" source="pgb" />
-    <plugin name="org.apache.cordova.network-information" spec="0.2.15" source="pgb" />
-    <plugin name="com.logilite.vision.camera" spec="0.2.11" source="pgb" />
+    <plugin name="cordova-plugin-splashscreen" spec="2.1.1" source="npm" />
+    <plugin name="org.apache.cordova.statusbar" spec="0.1.4" source="npm" />
+    <plugin name="org.apache.cordova.network-information" spec="0.2.15" source="npm" />
+    <plugin name="com.logilite.vision.camera" spec="0.2.11" source="npm" />
     <!--<gap:plugin name="org.apache.cordova.dialogs" version="0.2.10" />-->
-    <plugin name="com.developersanddesigners.phonegapdialogs" spec="1.1.1" source="pgb" />
-    <plugin name="org.apache.cordova.inappbrowser" spec="0.6.0" source="pgb" />
-    <plugin name="org.apache.cordova.file" spec="1.3.3" source="pgb" />
-    <plugin name="org.apache.cordova.globalization" spec="0.3.4" source="pgb" />
-    <plugin name="org.apache.cordova.contacts" spec="0.2.16" source="pgb" />
+    <plugin name="com.developersanddesigners.phonegapdialogs" spec="1.1.1" source="npm" />
+    <plugin name="org.apache.cordova.inappbrowser" spec="0.6.0" source="npm" />
+    <plugin name="org.apache.cordova.file" spec="1.3.3" source="npm" />
+    <plugin name="org.apache.cordova.globalization" spec="0.3.4" source="npm" />
+    <plugin name="org.apache.cordova.contacts" spec="0.2.16" source="npm" />
     <gap:plugin name="cordova-plugin-whitelist" source="npm" />
     <!--<gap:plugin name="com.phonegap.plugins.childbrowser" version="5.0.0" />-->
 
