@@ -4,8 +4,8 @@
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "com.phonegap.softplan-in"
-        version   = "2.1.0"
-        android-versionCode = "903" >
+        version   = "2.1.1"
+        android-versionCode = "904" >
 
     <name>Softplan in</name>
 
@@ -17,7 +17,7 @@
         Softplan
     </author>
     
-    <plugin name="cordova-plugin-splashscreen" spec="2.1.0" source="pgb" />
+    <plugin name="cordova-plugin-splashscreen" spec="2.1.1" source="pgb" />
     <plugin name="org.apache.cordova.statusbar" spec="0.1.4" source="pgb" />
     <plugin name="org.apache.cordova.network-information" spec="0.2.15" source="pgb" />
     <plugin name="com.logilite.vision.camera" spec="0.2.11" source="pgb" />
