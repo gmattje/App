@@ -17,7 +17,7 @@
         Softplan
     </author>
     
-    <plugin name="cordova-plugin-splashscreen" spec="2.1.1" source="npm" />
+    <plugin name="cordova-plugin-splashscreen" spec="4.0.0" source="npm" />
     <plugin name="org.apache.cordova.statusbar" spec="0.1.4" source="npm" />
     <plugin name="org.apache.cordova.network-information" spec="0.2.15" source="npm" />
     <plugin name="com.logilite.vision.camera" spec="0.2.11" source="npm" />
