@@ -25,12 +25,12 @@
         <meta name="viewport" content="initial-scale=1" />
         <link rel="stylesheet" href="jquerymobile/css/themes/softplan.css" />
         <link rel="stylesheet" href="jquerymobile/css/themes/jquery.mobile.icons.min.css" />
-        <link rel="stylesheet" href="jquerymobile/jquery.mobile.structure-1.4.2.min.css" />
+        <link rel="stylesheet" href="jquerymobile/jquery.mobile.structure-1.4.5.min.css" />
         <link rel="stylesheet" href="js/glide/glide.css" />
         <link rel="stylesheet" href="js/leaflet/leaflet.css" />
         <link rel="stylesheet" href="css/index.css" />
         <script src="js/jquery-1.9.1.min.js"></script>
-        <script src="jquerymobile/jquery.mobile-1.4.2.min.js"></script>     
+        <script src="jquerymobile/jquery.mobile-1.4.5.min.js"></script>     
         <script src="js/he.js"></script>
         <title>Softplan in</title>
     </head>
@@ -654,6 +654,7 @@
                         <li data-icon='false'><a href="#" onclick="app.ManualRSParte('mrs-introducao');">Introdução</a></li>
                         <li data-icon='false'><a href="#" onclick="app.ManualRSParte('mrs-nossasredes');">Nossas Redes Sociais</a></li>
                         <li data-icon='false'><a href="#" onclick="app.ManualRSParte('mrs-boaspraticas');">Boas Práticas</a></li>
+                        <li data-icon='false'><a href="#" onclick="app.ManualRSParte('mrs-boaspraticas-yammer');">Boas Práticas Yammer</a></li>
                         <li data-icon='false'><a href="#" onclick="app.ManualRSParte('mrs-consideracoes');">Considerações Finais</a></li>
                     </ul>
                 </div>    
@@ -677,63 +678,53 @@
                 </p>
                 <hr/>
                 <h3 id="mrs-introducao" style="color: #000038 !important;">INTRODUÇÃO</h3>
-                <div class="ui-grid-a ui-responsive">
-                    <div class="ui-block-a">
-                        <div class="ui-body" style="padding: 0.5em !important;">
-                            <p style="font-style: italic !important; color: #000038 !important; background-color: #B7C9D3 !important; padding: 10px !important;">
-                                "Muitas vezes, publicar determinado conteúdo em uma rede social é como falar em praça pública."
-                            </p>                    
-                            <p>
-                                As redes sociais estão aí e são muitas. Algumas são mais populares, outras focadas em assuntos específicos.
-                                De tempos em tempos, novas ferramentas surgem e se tornam “a queridinha” do momento. As ultrapassadas morrem,
-                                são desativadas e perfis muitas vezes são abandonados.
-                            </p>
-                            <p>
-                                Mas a participação em uma rede social merece cuidado. A atenção com o que se escreve na internet deve ser redobrada.
-                                Muitas vezes, publicar determinado conteúdo em uma rede social é como falar em praça pública. E mesmo se você postou
-                                um conteúdo e depois o deletou, isso não garante que ele deixará de existir. A internet é veloz. Alguém pode ter copiado,
-                                compartilhado com outras pessoas, que, por sua vez, fizeram o mesmo com outras e assim por diante. O alcance da rede
-                                mundial é muito grande!
-                            </p> 
-                            <p>
-                                Você já deve ter notado que, antes um território sem lei, a cada dia a internet vem conquistando seu espaço. Agora muitos
-                                países já possuem uma legislação específica. E, nestes casos, o conteúdo de uma página pode servir até mesmo como prova
-                                documental em um processo jurídico. O fenômeno virou “papo de gente grande”. E o que queremos é aproveitar o que ela tem de melhor.
-                            </p>
-                            <p>
-                               Em teoria, Rede Social é um grupo de pessoas ou empresas conectadas através da internet e com um interesse comum.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="ui-block-b">
-                        <div class="ui-body" style="padding: 0.5em !important;">
-                            <p>
-                                Visa basicamente a troca de informações, a ampliação das amizades ou relacionamentos profissionais, promover o reencontro
-                                de pessoas, o compartilhamento de ideias e outros assuntos como forma de entretenimento. 
-                             </p>
-                             <p>
-                                Estima-se, segundo o Centro de Estudo sobre as Tecnologias da Informação e da Comunicação (Cetic.br), que o Brasil
-                                tenha 80,9 milhões de usuários de internet. Um outro estudo da ComStore,  líder global em medições e análises digitais,
-                                diz que 90,8% de usuários da internet acessam as redes sociais. A ComStore diz ainda que esses sites capturam a maior
-                                porcentagem do tempo dos usuários de internet no Brasil, com 36% na média. 
-                             </p>
-                             <p>
-                                 Mas você deve estar se perguntando: “se o perfil é pessoal, por que um Manual de Boas Práticas disponibilizado pela empresa
-                                 em que trabalho”? A resposta é simples: quando um usuário informa seu local de trabalho em seu perfil, estes passam a ter,
-                                 invariavelmente, também um teor profissional. O que significa que, a partir deste momento, há algumas práticas simples que
-                                 devem ser seguidas.
-                             </p>
-                             <p>
-                                 Nosso objetivo com esse Manual de Conduta é ajudar você a se comportar da melhor maneira possível nessas Redes Sociais,
-                                 seja qual for a sua escolhida. Além disso, queremos ter você ao nosso lado em nossas redes, representando e nos orgulhando
-                                 de nosso maior patrimônio: nossos colaboradores.
-                             </p>
-                             <p style="font-style: italic !important; color: #000038 !important; background-color: #B7C9D3 !important; padding: 10px !important;">
-                                 "Se o perfil é pessoal, por que um Manual de Boas Práticas disponibilizado pela empresa em que trabalho?"
-                             </p>
-                         </div>
-                    </div>
-                </div>
+                <p style="font-style: italic !important; color: #000038 !important; background-color: #B7C9D3 !important; padding: 10px !important;">
+                    "Muitas vezes, publicar determinado conteúdo em uma rede social é como falar em praça pública."
+                </p>                    
+                <p>
+                    As redes sociais estão aí e são muitas. Algumas são mais populares, outras focadas em assuntos específicos.
+                    De tempos em tempos, novas ferramentas surgem e se tornam “a queridinha” do momento. As ultrapassadas morrem,
+                    são desativadas e perfis muitas vezes são abandonados.
+                </p>
+                <p>
+                    Mas a participação em uma rede social merece cuidado. A atenção com o que se escreve na internet deve ser redobrada.
+                    Muitas vezes, publicar determinado conteúdo em uma rede social é como falar em praça pública. E mesmo se você postou
+                    um conteúdo e depois o deletou, isso não garante que ele deixará de existir. A internet é veloz. Alguém pode ter copiado,
+                    compartilhado com outras pessoas, que, por sua vez, fizeram o mesmo com outras e assim por diante. O alcance da rede
+                    mundial é muito grande!
+                </p> 
+                <p>
+                    Você já deve ter notado que, antes um território sem lei, a cada dia a internet vem conquistando seu espaço. Agora muitos
+                    países já possuem uma legislação específica. E, nestes casos, o conteúdo de uma página pode servir até mesmo como prova
+                    documental em um processo jurídico. O fenômeno virou “papo de gente grande”. E o que queremos é aproveitar o que ela tem de melhor.
+                </p>
+                <p>
+                    Em teoria, Rede Social é um grupo de pessoas ou empresas conectadas através da internet e com um interesse comum.
+                </p>
+                <p>
+                    Visa basicamente a troca de informações, a ampliação das amizades ou relacionamentos profissionais, promover o reencontro
+                    de pessoas, o compartilhamento de ideias e outros assuntos como forma de entretenimento. 
+                </p>
+                <p>
+                    Estima-se, segundo o Centro de Estudo sobre as Tecnologias da Informação e da Comunicação (Cetic.br), que o Brasil
+                    tenha 80,9 milhões de usuários de internet. Um outro estudo da ComStore,  líder global em medições e análises digitais,
+                    diz que 90,8% de usuários da internet acessam as redes sociais. A ComStore diz ainda que esses sites capturam a maior
+                    porcentagem do tempo dos usuários de internet no Brasil, com 36% na média. 
+                </p>
+                <p>
+                    Mas você deve estar se perguntando: “se o perfil é pessoal, por que um Manual de Boas Práticas disponibilizado pela empresa
+                    em que trabalho”? A resposta é simples: quando um usuário informa seu local de trabalho em seu perfil, estes passam a ter,
+                    invariavelmente, também um teor profissional. O que significa que, a partir deste momento, há algumas práticas simples que
+                    devem ser seguidas.
+                </p>
+                <p>
+                    Nosso objetivo com esse Manual de Conduta é ajudar você a se comportar da melhor maneira possível nessas Redes Sociais,
+                    seja qual for a sua escolhida. Além disso, queremos ter você ao nosso lado em nossas redes, representando e nos orgulhando
+                    de nosso maior patrimônio: nossos colaboradores.
+                </p>
+                <p style="font-style: italic !important; color: #000038 !important; background-color: #B7C9D3 !important; padding: 10px !important;">
+                    "Se o perfil é pessoal, por que um Manual de Boas Práticas disponibilizado pela empresa em que trabalho?"
+                </p>
                 <hr/>
                 <h3 id="mrs-nossasredes" style="color: #000038 !important;">NOSSAS REDES SOCIAIS</h3>
                 <img src="img/mrs2.jpg" style="max-width: 100%;"/>
@@ -743,76 +734,77 @@
                     ambiente de trabalho, em horário de expediente. Isso não significa que você não possa fazê-lo em seus momentos de lazer.
                     Afinal, esperamos que a leitura de seu conteúdo não seja uma obrigação profissional e sim um prazer pessoal.
                 </p>
-                <div class="ui-grid-a ui-responsive" style="word-wrap: break-word !important;">
-                    <div class="ui-block-a">
-                        <div class="ui-body" style="padding: 0.5em !important;">
-                            <h4>FACEBOOK</h4>
-                            <p>
-                                É a maior plataforma de rede social no mundo na atualidade. Funciona da mesma maneira que sua antecessora, o Orkut.
-                                Surgiu em 2004, originalmente foi criada de maneira restrita para os alunos do Harvard College. Depois foi, aos poucos,
-                                sendo aberta a empresários por meio de convites.
-                            </p>
-                            <p>
-                                Nosso endereço no facebook (curta nossa fan page) é:<br/> 
-                                <a href='#' onclick="app.carregaNavegador($(this), 'http://www.facebook.com/softplanonline', '_system');">http://www.facebook.com/softplanonline</a>
-                            </p>
-                            <h4>YOUTUBE</h4>
-                            <p>
-                                É um site de compartilhamento de vídeos enviados pelos usuários através da internet. A ideia é idêntica a da televisão,
-                                em que há vários canais disponíveis. A diferença é que esses canais são criados pelos próprios usuários, que podem compartilhar
-                                vídeos sobre os mais variados temas.
-                            </p>
-                            <p>
-                                Nosso canal no youtube (Acompanhe nosso canal) é:<br/> 
-                                <a href='#' onclick="app.carregaNavegador($(this), 'http://www.youtube.com/SoftplanPoligraph', '_system');">http://www.youtube.com/SoftplanPoligraph</a>
-                            </p>
-                            <h4>INSTAGRAM</h4>
-                            <p>
-                                É uma rede social que permite tirar fotos, aplicar efeitos e compartilhar com seus amigos. O App também permite o compartilhamento
-                                de mídias através do modo história, que ficam no ar por 24 horas. Além de curtir e comentar as publicações, o Instagram permite
-                                que os usuários utilizem hashtags (#) para encontrar imagens relacionadas ao tema.
-                            </p>
-                            <p>
-                                Nosso endereço no Instagram (siga nosso perfil) é:<br/> 
-                                <a href='#' onclick="app.carregaNavegador($(this), 'https://instagram.com/softplan/', '_system');">https://instagram.com/softplan/</a>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="ui-block-b">
-                        <div class="ui-body" style="padding: 0.5em !important;">
-                            <h4>TWITTER</h4>
-                            <p>
-                                A grande característica do Twitter é definida pela sua simplicidade. Por ser baseado em mensagens curtas, a transmissão
-                                é rápida e objetiva. Chamado de microblog, se baseia em um espaço de 140 caracteres em que o usuário posta o conteúdo de
-                                sua preferência.
-                            </p>
-                            <p>
-                                Nosso endereço no twitter (siga nosso perfil) é:<br/>
-                                <a href='#' onclick="app.carregaNavegador($(this), 'https://twitter.com/softplanonline', '_system');">https://twitter.com/softplanonline</a>
-                            </p>
-                            <h4>LINKEDIN</h4>
-                            <p>
-                                O LinkedIn é uma rede social para contatos profissionais. Seu perfil é composto por informações básicas,
-                                histórico profissional/escolar e habilidades profissionais. 
-                            </p>
-                            <p>
-                                Nosso endereço no linkedin (Acompanhe nosso perfil) é:<br/>
-                                <a href="#" onclick="app.carregaNavegador($(this), 'http://www.linkedin.com/company/670986?trk=tyah', '_system');">http://www.linkedin.com/company/670986?trk=tyah</a> 
-                            </p>
-                            <h4>GOOGLE +</h4>
-                            <p>
-                                O Google Plus é uma rede social onde os usuários do Google podem conectar-se com seus amigos (e organizá-los em círculos), fazer parte
-                                de comunidades, compartilhar fotos em tamanho real e fazer comentários, criar eventos, fazer videoconferências, acessar a canais do
-                                Youtube, entre outros. Muitos dizem que essa será a rede social mais acessada no futuro. São muitas as funcionalidades possíveis
-                                dentro da rede social do gigante das buscas na internet.
-                            </p>
-                            <p>
-                                Nosso endereço no Google + (siga nosso perfil) é:<br/> 
-                                <a href='#' onclick="app.carregaNavegador($(this), 'https://plus.google.com/+SoftplanBr', '_system');">https://plus.google.com/+SoftplanBr</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <h4>FACEBOOK</h4>
+                <p>
+                    É a maior plataforma de rede social no mundo na atualidade. Funciona da mesma maneira que sua antecessora, o Orkut.
+                    Surgiu em 2004, originalmente foi criada de maneira restrita para os alunos do Harvard College. Depois foi, aos poucos,
+                    sendo aberta a empresários por meio de convites.
+                </p>
+                <p>
+                    Nosso endereço no facebook (curta nossa fan page) é:<br/> 
+                    <a href='#' onclick="app.carregaNavegador($(this), 'http://www.facebook.com/softplanonline', '_system');">http://www.facebook.com/softplanonline</a>
+                </p>
+                <h4>YOUTUBE</h4>
+                <p>
+                    É um site de compartilhamento de vídeos enviados pelos usuários através da internet. A ideia é idêntica a da televisão,
+                    em que há vários canais disponíveis. A diferença é que esses canais são criados pelos próprios usuários, que podem compartilhar
+                    vídeos sobre os mais variados temas.
+                </p>
+                <p>
+                    Nosso canal no youtube (Acompanhe nosso canal) é:<br/> 
+                    <a href='#' onclick="app.carregaNavegador($(this), 'http://www.youtube.com/SoftplanPoligraph', '_system');">http://www.youtube.com/SoftplanPoligraph</a>
+                </p>
+                <h4>INSTAGRAM</h4>
+                <p>
+                    É uma rede social que permite tirar fotos, aplicar efeitos e compartilhar com seus amigos. O App também permite o compartilhamento
+                    de mídias através do modo história, que ficam no ar por 24 horas. Além de curtir e comentar as publicações, o Instagram permite
+                    que os usuários utilizem hashtags (#) para encontrar imagens relacionadas ao tema.
+                </p>
+                <p>
+                    Nosso endereço no Instagram (siga nosso perfil) é:<br/> 
+                    <a href='#' onclick="app.carregaNavegador($(this), 'https://instagram.com/softplan/', '_system');">https://instagram.com/softplan/</a>
+                </p>
+                <h4>TWITTER</h4>
+                <p>
+                    A grande característica do Twitter é definida pela sua simplicidade. Por ser baseado em mensagens curtas, a transmissão
+                    é rápida e objetiva. Chamado de microblog, se baseia em um espaço de 140 caracteres em que o usuário posta o conteúdo de
+                    sua preferência.
+                </p>
+                <p>
+                    Nosso endereço no twitter (siga nosso perfil) é:<br/>
+                    <a href='#' onclick="app.carregaNavegador($(this), 'https://twitter.com/softplanonline', '_system');">https://twitter.com/softplanonline</a>
+                </p>
+                <h4>LINKEDIN</h4>
+                <p>
+                    O LinkedIn é uma rede social para contatos profissionais. Seu perfil é composto por informações básicas,
+                    histórico profissional/escolar e habilidades profissionais. 
+                </p>
+                <p>
+                    Nosso endereço no linkedin (Acompanhe nosso perfil) é:<br/>
+                    <a href="#" onclick="app.carregaNavegador($(this), 'http://www.linkedin.com/company/670986?trk=tyah', '_system');">http://www.linkedin.com/company/670986?trk=tyah</a> 
+                </p>
+                <h4>GOOGLE +</h4>
+                <p>
+                    O Google Plus é uma rede social onde os usuários do Google podem conectar-se com seus amigos (e organizá-los em círculos), fazer parte
+                    de comunidades, compartilhar fotos em tamanho real e fazer comentários, criar eventos, fazer videoconferências, acessar a canais do
+                    Youtube, entre outros. Muitos dizem que essa será a rede social mais acessada no futuro. São muitas as funcionalidades possíveis
+                    dentro da rede social do gigante das buscas na internet.
+                </p>
+                <p>
+                    Nosso endereço no Google + (siga nosso perfil) é:<br/> 
+                    <a href='#' onclick="app.carregaNavegador($(this), 'https://plus.google.com/+SoftplanBr', '_system');">https://plus.google.com/+SoftplanBr</a>
+                </p>
+                <h4>YAMMER</h4>
+                <p>
+                    O Yammer é uma rede social corporativa, segura e privada. Ele permite que os funcionários sejam mais produtivos e bem sucedidos, deixando
+                    que colaborem com facilidade, tomem decisões mais rapidamente e se auto organizem em equipes para enfrentarem os desafios. A rede traz um
+                    novo modo de trabalhar que conduz naturalmente ao alinhamento e a agilidade, reduz os tempos de ciclo, engaja os funcionários e melhora
+                    as relações entre todos.
+                </p>
+                <p>
+                    Nosso endereço no Yammer é:<br/> 
+                    <a href='#' onclick="app.carregaNavegador($(this), 'https://www.yammer.com/softplan.com.br/', '_system');">https://www.yammer.com/softplan.com.br/</a>
+                </p>
                 <hr/>
                 <h3 id="mrs-boaspraticas" style="color: #000038 !important;">BOAS PRÁTICAS</h3>
                 <img src="img/mrs3.jpg" style="max-width: 100%;"/>
@@ -826,63 +818,87 @@
                 </p>
                 <h4>1 - INFORMAÇÕES PESSOAIS E PERFIL</h4>
                 <ul>
-                    <li>Não crie perfis falsos nem esconda sua identidade nas redes sociais.</li>
-                    <li>Quando for se cadastrar em uma rede social, crie uma identidade própria. Não utilize nomes que o liguem à empresa, como por exemplo: Maria_Softplan. </li>
-                    <li>É permitido e desejável que você mencione em seu perfil que trabalha ou faz estágio na Softplan.</li>
-                    <li>Use senhas diferentes para o trabalho e para as contas de rede social. Senhas fortes são importantes para que sua conta não seja clonada. Não aumente o risco usando a mesma senha para a sua rede corporativa.</li>
-                    <li>Use senhas que só você tenha conhecimento e troque-as perio­dicamente. Utilize uma senha diferente para cada site e evite uti­lizar itens óbvios, como nomes próprios, datas importantes e outros.</li>
-                    <li>Ao sair de uma rede social, sempre faça log off. Isso evita que qualquer pessoa mal intencionada possa publicar conteúdo por meio de sua página ou modificar as informações de seu perfil na tentativa de difamar ou fazer brincadeiras indiscretas.</li>
-                    <li> Lembre-se que não é permitido aos colaboradores da Softplan, abrir contas nas redes sociais usando o e-mail institucional da empresa.</li>
+                    <li><p>Não crie perfis falsos nem esconda sua identidade nas redes sociais.</p></li>
+                    <li><p>Quando for se cadastrar em uma rede social, crie uma identidade própria. Não utilize nomes que o liguem à empresa, como por exemplo: Maria_Softplan. </p></li>
+                    <li><p>É permitido e desejável que você mencione em seu perfil que trabalha ou faz estágio na Softplan.</p></li>
+                    <li><p>Use senhas diferentes para o trabalho e para as contas de rede social. Senhas fortes são importantes para que sua conta não seja clonada. Não aumente o risco usando a mesma senha para a sua rede corporativa.</p></li>
+                    <li><p>Use senhas que só você tenha conhecimento e troque-as perio­dicamente. Utilize uma senha diferente para cada site e evite uti­lizar itens óbvios, como nomes próprios, datas importantes e outros.</p></li>
+                    <li><p>Ao sair de uma rede social, sempre faça log off. Isso evita que qualquer pessoa mal intencionada possa publicar conteúdo por meio de sua página ou modificar as informações de seu perfil na tentativa de difamar ou fazer brincadeiras indiscretas.</p></li>
+                    <li><p> Lembre-se que não é permitido aos colaboradores da Softplan, abrir contas nas redes sociais usando o e-mail institucional da empresa.</p></li>
                 </ul>
                 <h4>2 - MENÇÕES À SOFTPLAN</h4>
                 <ul>
-                    <li>Qualquer informação postada em redes sociais é de total responsa­bilidade do colaborador, ficando a empresa isenta de responder civil ou criminalmente pelos danos causados por ele, salvo quando a postagem for autorizada formalmente (por escrito) pela empresa.</li>
-                    <li>Respeite os valores da empresa. Conheça e vivencie sua missão, sua visão e seus valores. O seu com­portamento nas redes sociais deverá refletir todos eles.</li>
-                    <li>Seus seguidores/ amigos vão confundir o seu “eu” pessoal com o seu “eu” profissional. Você pode não ser o porta voz oficial do seu local de trabalho, mas, a partir do momento que torná-lo público, será visto pelos demais usuários como alguém que fala em nome da empresa. Por isso evite postar qualquer coisa que possa gerar danos à organização em que atua.</li>
-                    <li>Separe os assuntos pessoais dos profissionais. Não participe de conversas especulativas e/ou sobre posiciona­mentos de sua empresa. Não compartilhe boatos e rumores sobre a Softplan.</li>
-                    <li>Não comente assuntos confidenciais que você tenha tomado conhecimento devido à natureza do seu trabalho.</li>
-                    <li>Ao falar sobre seu trabalho, atente para que não sejam divul­gadas informações de uso interno ou confidencial e rotinas de trabalho, em função do risco de quebra de sigilo profissional.</li>
-                    <li>Não exponha problemas profissionais em conversas abertas. Cuidado com comentários implícitos ou explícitos que sejam ofensivos e passíveis vínculos com a empresa.</li>
-                    <li>Não faça comentários ofensivos ou agressivos sobre empresas concorren­tes, parceiros de negócios ou colegas de trabalho.</li>
-                    <li>Não compartilhe piadas internas, nem divulgue fotos de seu am­biente de trabalho ou de colegas sem a devida permissão. Lembre-se que fotos e men­sagens podem ser apagadas, mas isso não significa que elas desaparecerão da rede.</li>
-                    <li>Jamais publique uma informação sobre a qual você não tem conhecimento ou certeza.</li>
-                    <li>Nunca publique conteúdos, comentários ou informações relacionados a estratégias, mercado, clientes, fornecedores, faturamento ou lucratividade da Softplan.</li>
-                    <li>Fale em nome da Softplan somente se for designado para isso. Se não estiver autorizado a fazê-lo, busque direcionar a comunicação para o responsável por aquele assunto.</li>
-                    <li>Se identificar uma polêmica ou crítica envolvendo as atividades da Softplan, informe a área de Marketing. Não se envolva em discussões para as quais não tenha informação técnica ou se não for autorizado a fazê-lo.</li>
-                    <li>Não formalize contratos ou propostas através das redes sociais.</li>
-                    <li>Deixe a divulgação de novos produtos da empresa para a área responsável.</li>
-                    <li>Regras básicas de boa convivência e de educação adotadas dentro da empresa são válidas para ambientes online também. Respeite para ser respeitado e trate o outro como você gostaria de ser tratado.</li>
-                    <li>Valorize os perfis oficiais da Softplan e interaja com eles. Se gostou, clique no botão “curtir”, e recomende a leitura para quem tem interesse no tema, especialmente aqueles que querem trabalhar conosco.</li>
-                    <li>Você não deixa de ser um colaborador da Softplan quando utiliza as mídias sociais com propósitos pessoais. Evite publicar conteúdo ofensivo, que tenha conotação sexual, racial ou religiosa.</li>
-                    <li>As comunidades das quais você faz parte podem ser vistas por seus amigos. Portanto, evite participar de comunidades tais quais “Eu odeio meu chefe”, “Minha empresa é muito chata” ou “Não gosto de acordar cedo”. Mesmo que seja verdade, isso pode gerar problemas para você.</li>
-                    <li>Não crie perfis ou comunidades que façam menção à Softplan ou a alguma de suas Unidades de Negócio sem estar autorizado formalmente pela empresa.</li>
-                    <li>Não é permitido usar a logomarca da Softplan ou de seus produtos em perfis pessoais ou profissionais sem autorização formal emitida pelo Marketing da empresa. Lembre-se que as marcas são ativos da empresa e seu uso não autorizado constitui crime.</li>
-                    <li>Comunique a área de Marketing da Softplan sobre a divulgação indevida de informações relevantes para a empresa, especialmente se considerá-las sigilosas.</li>
-                    <li>Se você tem críticas à estrutura ou a processos da Softplan, discuta e resolva essa questão internamente. Procure seu chefe imediato e converse com ele. Ou se assim preferir, entre em contato com o DHO.</li>
+                    <li><p>Qualquer informação postada em redes sociais é de total responsa­bilidade do colaborador, ficando a empresa isenta de responder civil ou criminalmente pelos danos causados por ele, salvo quando a postagem for autorizada formalmente (por escrito) pela empresa.</p></li>
+                    <li><p>Respeite os valores da empresa. Conheça e vivencie sua missão, sua visão e seus valores. O seu com­portamento nas redes sociais deverá refletir todos eles.</p></li>
+                    <li><p>Seus seguidores/ amigos vão confundir o seu “eu” pessoal com o seu “eu” profissional. Você pode não ser o porta voz oficial do seu local de trabalho, mas, a partir do momento que torná-lo público, será visto pelos demais usuários como alguém que fala em nome da empresa. Por isso evite postar qualquer coisa que possa gerar danos à organização em que atua.</p></li>
+                    <li><p>Separe os assuntos pessoais dos profissionais. Não participe de conversas especulativas e/ou sobre posiciona­mentos de sua empresa. Não compartilhe boatos e rumores sobre a Softplan.</p></li>
+                    <li><p>Não comente assuntos confidenciais que você tenha tomado conhecimento devido à natureza do seu trabalho.</p></li>
+                    <li><p>Ao falar sobre seu trabalho, atente para que não sejam divul­gadas informações de uso interno ou confidencial e rotinas de trabalho, em função do risco de quebra de sigilo profissional.</p></li>
+                    <li><p>Não exponha problemas profissionais em conversas abertas. Cuidado com comentários implícitos ou explícitos que sejam ofensivos e passíveis vínculos com a empresa.</p></li>
+                    <li><p>Não faça comentários ofensivos ou agressivos sobre empresas concorren­tes, parceiros de negócios ou colegas de trabalho.</p></li>
+                    <li><p>Não compartilhe piadas internas, nem divulgue fotos de seu am­biente de trabalho ou de colegas sem a devida permissão. Lembre-se que fotos e men­sagens podem ser apagadas, mas isso não significa que elas desaparecerão da rede.</p></li>
+                    <li><p>Jamais publique uma informação sobre a qual você não tem conhecimento ou certeza.</p></li>
+                    <li><p>Nunca publique conteúdos, comentários ou informações relacionados a estratégias, mercado, clientes, fornecedores, faturamento ou lucratividade da Softplan.</p></li>
+                    <li><p>Fale em nome da Softplan somente se for designado para isso. Se não estiver autorizado a fazê-lo, busque direcionar a comunicação para o responsável por aquele assunto.</p></li>
+                    <li><p>Se identificar uma polêmica ou crítica envolvendo as atividades da Softplan, informe a área de Marketing. Não se envolva em discussões para as quais não tenha informação técnica ou se não for autorizado a fazê-lo.</p></li>
+                    <li><p>Não formalize contratos ou propostas através das redes sociais.</p></li>
+                    <li><p>Deixe a divulgação de novos produtos da empresa para a área responsável.</p></li>
+                    <li><p>Regras básicas de boa convivência e de educação adotadas dentro da empresa são válidas para ambientes online também. Respeite para ser respeitado e trate o outro como você gostaria de ser tratado.</p></li>
+                    <li><p>Valorize os perfis oficiais da Softplan e interaja com eles. Se gostou, clique no botão “curtir”, e recomende a leitura para quem tem interesse no tema, especialmente aqueles que querem trabalhar conosco.</p></li>
+                    <li><p>Você não deixa de ser um colaborador da Softplan quando utiliza as mídias sociais com propósitos pessoais. Evite publicar conteúdo ofensivo, que tenha conotação sexual, racial ou religiosa.</p></li>
+                    <li><p>As comunidades das quais você faz parte podem ser vistas por seus amigos. Portanto, evite participar de comunidades tais quais “Eu odeio meu chefe”, “Minha empresa é muito chata” ou “Não gosto de acordar cedo”. Mesmo que seja verdade, isso pode gerar problemas para você.</p></li>
+                    <li><p>Não crie perfis ou comunidades que façam menção à Softplan ou a alguma de suas Unidades de Negócio sem estar autorizado formalmente pela empresa.</p></li>
+                    <li><p>Não é permitido usar a logomarca da Softplan ou de seus produtos em perfis pessoais ou profissionais sem autorização formal emitida pelo Marketing da empresa. Lembre-se que as marcas são ativos da empresa e seu uso não autorizado constitui crime.</p></li>
+                    <li><p>Comunique a área de Marketing da Softplan sobre a divulgação indevida de informações relevantes para a empresa, especialmente se considerá-las sigilosas.</p></li>
+                    <li><p>Se você tem críticas à estrutura ou a processos da Softplan, discuta e resolva essa questão internamente. Procure seu chefe imediato e converse com ele. Ou se assim preferir, entre em contato com o DHO.</p></li>
                 </ul>
                 <h4>3 - LÍNGUA PORTUGUESA</h4>
                 <ul>
-                    <li>Cuide para que seus textos sejam escritos corretamente, sem erros de ortografia ou de concordância, e evite o excesso de abreviações. A linguagem das redes é mais informal, mas um português ruim denota desconhecimento ou falta de zelo.</li>
-                    <li>Evite gírias e linguagem imprópria. Prefira o uso de uma linguagem simples, mas correta.</li>
-                    <li>Jamais use palavras grosseiras e cuide para que sua participação, escrevendo ou  comentando, nunca contenha qualquer tipo de discriminação quanto a raça, credo, orientação sexual, posição social ou qualquer outra forma de preconceito.</li>
+                    <li><p>Cuide para que seus textos sejam escritos corretamente, sem erros de ortografia ou de concordância, e evite o excesso de abreviações. A linguagem das redes é mais informal, mas um português ruim denota desconhecimento ou falta de zelo.</p></li>
+                    <li><p>Evite gírias e linguagem imprópria. Prefira o uso de uma linguagem simples, mas correta.</p></li>
+                    <li><p>Jamais use palavras grosseiras e cuide para que sua participação, escrevendo ou  comentando, nunca contenha qualquer tipo de discriminação quanto a raça, credo, orientação sexual, posição social ou qualquer outra forma de preconceito.</p></li>
                 </ul>
                 <h4>4 - GERANDO CONTEÚDO NA INTERNET</h4>
                 <ul>
-                    <li>Ao assumir a postura de gerador de conteúdos nas Redes Sociais, tome cuidado para não infringir direitos autorais e de propriedade intelectual.</li>
-                    <li>Na internet, você é uma pessoa pública. Sempre que postar algo nas redes sociais, entenda que o conteúdo da sua mensagem será visto por colegas, chefes, clientes, fornecedores, parceiros de negócio, amigos e familiares.</li>
-                    <li>Nunca poste nada que possa ser usado contra você na esfera profissional.</li>
-                    <li>Isso não significa que você não possa ter opinião! Nunca deixe de ser você. Como qualquer cidadão, você é livre para pensar e se expressar da forma que desejar. Mas, como qualquer pessoa pública deve fazê-lo, lembre-se o que você postar provavelmente trará consequências, sejam estas positivas ou negativas.</li>
-                    <li>Pense no que você compartilha e com quem. Não é aconselhável postar na web qualquer coisa que você não gostaria de ver em um jornal. Toda informação divulgada na internet passa a ser de domínio público e, desde que citada a fonte, pode ser replicada em qualquer outro veículo.</li>
-                    <li>É falsa a impressão de que nas mídias sociais é permitido falar de tudo, de qualquer maneira, sobre qualquer pessoa ou empresa, sem haver consequências ou penalidades. Participar das redes sociais é um ato de caráter público.  Você será responsável por tudo o que publicar, assim como é pelo que faz no dia-a-dia, com uma importante diferença: geralmente não há provas do que você fala em uma mesa de bar, mas na internet tudo fica registrado.</li>
-                    <li>Nunca responda de forma grosseira, mesmo que usem de grosseria contra você. Pessoas inteligentes privilegiam os argumentos contra a falta deles. Quando a pessoa não merecer sua atenção por falta de modos, simplesmente a ignore.</li>
-                    <li>Evite escrever demais em um único post. Os textos para internet devem ser curtos e objetivos. Escolha títulos atraentes e inicie o texto de forma a mantê-lo interessante.</li>
-                    <li>Assuntos delicados e polêmicos devem ser tratados em particular. Existe uma máxima sobre as redes sociais que diz “se não pode ser dito em público, não pode ser publicado”.</li>
-                    <li>Você está em um ambiente público e falar demais pode ser um risco. Evite fazer comentários sobre sua vida profissional, compra de bens, datas de viagens, promoções profissionais e ende­reços. Expor demais seus dados pode ser perigoso.</li>
-                    <li>Evite a publicação de fotos de qualquer autoria que comprometam ou potencialmente prejudiquem sua imagem ou de sua empresa.</li>
+                    <li><p>Ao assumir a postura de gerador de conteúdos nas Redes Sociais, tome cuidado para não infringir direitos autorais e de propriedade intelectual.</p></li>
+                    <li><p>Na internet, você é uma pessoa pública. Sempre que postar algo nas redes sociais, entenda que o conteúdo da sua mensagem será visto por colegas, chefes, clientes, fornecedores, parceiros de negócio, amigos e familiares.</p></li>
+                    <li><p>Nunca poste nada que possa ser usado contra você na esfera profissional.</p></li>
+                    <li><p>Isso não significa que você não possa ter opinião! Nunca deixe de ser você. Como qualquer cidadão, você é livre para pensar e se expressar da forma que desejar. Mas, como qualquer pessoa pública deve fazê-lo, lembre-se o que você postar provavelmente trará consequências, sejam estas positivas ou negativas.</p></li>
+                    <li><p>Pense no que você compartilha e com quem. Não é aconselhável postar na web qualquer coisa que você não gostaria de ver em um jornal. Toda informação divulgada na internet passa a ser de domínio público e, desde que citada a fonte, pode ser replicada em qualquer outro veículo.</p></li>
+                    <li><p>É falsa a impressão de que nas mídias sociais é permitido falar de tudo, de qualquer maneira, sobre qualquer pessoa ou empresa, sem haver consequências ou penalidades. Participar das redes sociais é um ato de caráter público.  Você será responsável por tudo o que publicar, assim como é pelo que faz no dia-a-dia, com uma importante diferença: geralmente não há provas do que você fala em uma mesa de bar, mas na internet tudo fica registrado.</p></li>
+                    <li><p>Nunca responda de forma grosseira, mesmo que usem de grosseria contra você. Pessoas inteligentes privilegiam os argumentos contra a falta deles. Quando a pessoa não merecer sua atenção por falta de modos, simplesmente a ignore.</p></li>
+                    <li><p>Evite escrever demais em um único post. Os textos para internet devem ser curtos e objetivos. Escolha títulos atraentes e inicie o texto de forma a mantê-lo interessante.</p></li>
+                    <li><p>Assuntos delicados e polêmicos devem ser tratados em particular. Existe uma máxima sobre as redes sociais que diz “se não pode ser dito em público, não pode ser publicado”.</p></li>
+                    <li><p>Você está em um ambiente público e falar demais pode ser um risco. Evite fazer comentários sobre sua vida profissional, compra de bens, datas de viagens, promoções profissionais e ende­reços. Expor demais seus dados pode ser perigoso.</p></li>
+                    <li><p>Evite a publicação de fotos de qualquer autoria que comprometam ou potencialmente prejudiquem sua imagem ou de sua empresa.</p></li>
                 </ul>
                 <hr/>
-                <h3 id="mrs-consideracoes" style="color: #000038 !important;">CONSIDERAÇÕES FINAIS</h3>
+                <h3 id="mrs-boaspraticas-yammer" style="color: #000038 !important;">BOAS PRÁTICAS YAMMER</h3>
                 <img src="img/mrs4.jpg" style="max-width: 100%;"/>
+                <ul>
+                    <li><p>Use uma linguagem correta e apropriada e trate os colegas com respeito. Vale lembrar que, ainda que estejamos em um ambiente virtual, você está na presença de outras pessoas. O Yammer é um local corporativo e você é responsável pelo conteúdo que compartilha. <strong>Bom-senso é a palavra-chave!</strong></p></li>
+                    <li><p>Como rede social colaborativa, <strong>incentivamos o compartilhamento de ideias e boas práticas de ferramentas e métodos de trabalho.</strong> Seja aquele bom exemplo que adora compartilhar seu conhecimento! :)</p></li>
+                    <li><p>Ao criar um grupo, verifique se ele ou algum tema parecido já não existe. Para isso, use o campo de busca. A ideia é <strong>evitarmos a criação de muitos grupos e, principalmente, grupos com informações duplicadas.</strong></p></li>
+                    <li><p>Te desafiamos a <strong>agregar valor ao conteúdo da nossa rede</strong>, tanto em postagens como em comentários. (Lembre-se do feed das suas redes sociais pessoais: não se agrega valor com mensagens de bom dia/boa tarde, fotos de balada ou das férias... Pense nisso!)</p></li>
+                    <li><p>É muito importante que você <strong>verifique a veracidade das informações postadas.</strong> Embora o Yammer seja uma ferramenta de comunicação, a Softplan possui canais específicos para registro de sugestões/reclamações pontuais.</p></li>
+                    <li><p>Esse é um espaço de intercâmbio e troca de informações. A sua dúvida pode ser a dúvida de outro colaborador. <strong>Por isso trate todos com educação, sem desqualificar dúvidas ou comentários de outras pessoas.</strong> Um assunto que é muito claro para você nem sempre é da mesma maneira para outro colega.</p></li>
+                    <li><p>Não publique ou abra discussões de teor <strong>preconceituoso, pejorativo ou ofensivo</strong> de qualquer maneira. <strong>Sem negociação!</strong></p></li>
+                    <li><p>Não publique assuntos políticos ou religiosos. Temos na empresa diversas opiniões e posicionamentos e todos são respeitados. <strong>Lembra do nosso valor Relações duradouras?</strong></p></li>
+                    <li><p>Não publique material publicitário ou de vendas. Para esse fim, possuímos o <strong>mural do Softnews.</strong></p></li>
+                    <li><p>Essa é uma rede social da Softplan, por isso tenha muito <strong>cuidado ao replicar as discussões e conteúdos postados aqui em meios públicos</strong> (Não podemos repostar o conteúdo em Facebook ou outra página de visualização pública, por exemplo).</p></li>
+                </ul> 
+                <p>
+                    Para o bom uso da rede social, quando considerarmos que alguma publicação viola a política acima, a empresa reserva-se no direito de excluir,
+                    sem direito a réplica, qualquer colaboração que considere ilegal, desrespeitosa, ameaçadora, infundada, caluniosa, imprópria, ética ou
+                    socialmente discriminatória ou profissionalmente reprovável ou que, de alguma forma, possa ocasionar danos e prejuízos materiais ou morais à
+                    Softplan, aos seus colaboradores ou terceiros.
+                </p>
+                <p>
+                    Ao completar seu cadastro no Yammer, entendemos que você aceita todas as condições de utilização estabelecidas pela política da nossa rede social.
+                </p>
+                <hr/>    
+                <h3 id="mrs-consideracoes" style="color: #000038 !important;">CONSIDERAÇÕES FINAIS</h3>
+                <img src="img/mrs5.jpg" style="max-width: 100%;"/>
                 <p>
                     Temos uma máxima que não deve ser esquecida: “todos têm, e devem continuar tendo, liberdade de opinião”. No entanto,
                     esta liberdade deve ser usada com bom senso. Imagine um executivo de contas de uma rede de televisão que fala mal dos
