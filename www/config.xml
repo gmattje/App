@@ -79,16 +79,16 @@
     <icon src="res/icon/android/icon-48-mdpi.png"   gap:platform="android"    gap:density="mdpi" />
     <icon src="res/icon/android/icon-72-hdpi.png"   gap:platform="android"    gap:density="hdpi" />
     <icon src="res/icon/android/icon-96-xhdpi.png"  gap:platform="android"    gap:density="xhdpi" />
-    <icon src="res/icon/ios/icon-57.png"            gap:platform="ios"        width="57" height="57" />
-    <icon src="res/icon/ios/icon-58.png"            gap:platform="ios"        width="58" height="58" />
-    <icon src="res/icon/ios/icon-72.png"            gap:platform="ios"        width="72" height="72" />
-    <icon src="res/icon/ios/icon-87.png"            gap:platform="ios"        width="87" height="72" />
-    <icon src="res/icon/ios/icon-57-2x.png"         gap:platform="ios"        width="114" height="114" />
-    <icon src="res/icon/ios/icon-58-2x.png"         gap:platform="ios"        width="116" height="116" />
-    <icon src="res/icon/ios/icon-72-2x.png"         gap:platform="ios"        width="144" height="144" />
-    <icon src="res/icon/ios/icon-87-2x.png"         gap:platform="ios"        width="174" height="174" />
-    <icon src="res/icon/ios/icon-120.png"           gap:platform="ios"        width="120" height="120" />
-    <icon src="res/icon/ios/icon-120-2x.png"        gap:platform="ios"        width="240" height="240" />
+    <icon src="www/res/icon/ios/icon-57.png"            gap:platform="ios"        width="57" height="57" />
+    <icon src="www/res/icon/ios/icon-58.png"            gap:platform="ios"        width="58" height="58" />
+    <icon src="www/res/icon/ios/icon-72.png"            gap:platform="ios"        width="72" height="72" />
+    <icon src="www/res/icon/ios/icon-87.png"            gap:platform="ios"        width="87" height="72" />
+    <icon src="www/res/icon/ios/icon-57-2x.png"         gap:platform="ios"        width="114" height="114" />
+    <icon src="www/res/icon/ios/icon-58-2x.png"         gap:platform="ios"        width="116" height="116" />
+    <icon src="www/res/icon/ios/icon-72-2x.png"         gap:platform="ios"        width="144" height="144" />
+    <icon src="www/res/icon/ios/icon-87-2x.png"         gap:platform="ios"        width="174" height="174" />
+    <icon src="www/res/icon/ios/icon-120.png"           gap:platform="ios"        width="120" height="120" />
+    <icon src="www/res/icon/ios/icon-120-2x.png"        gap:platform="ios"        width="240" height="240" />
     
     <!-- Define app splash screen for each platform. -->
     <gap:splash src="res/screen/android/screen-ldpi-portrait.png"       gap:platform="android" gap:density="ldpi" />
