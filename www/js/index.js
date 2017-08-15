@@ -1919,16 +1919,16 @@ var app = {
                                         var ramal = "não cadastrado";
                                         var celular = "não cadastrado";
                                         var email = "não cadastrado";
-                                        if(data.crt[i].unid){
+                                        if(data.crt[i].unid != ""){
                                             projeto = data.crt[i].unid.toString().toUpperCase();
                                         }
-                                        if(data.crt[i].ramal){
+                                        if(data.crt[i].ramal != ""){
                                             ramal = data.crt[i].ramal;
                                         }
-                                        if(data.crt[i].fone){
+                                        if(data.crt[i].fone != ""){
                                             celular = data.crt[i].fone;
                                         }
-                                        if(data.crt[i].email){
+                                        if(data.crt[i].email != ""){
                                             email = data.crt[i].email;
                                         }
                                         if(nome != "") {
