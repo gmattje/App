@@ -4,8 +4,8 @@
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "com.phonegap.softplan-in"
-        version   = "2.3.1"
-        android-versionCode = "906" >
+        version   = "2.3.2"
+        android-versionCode = "907" >
 
     <name>Softplan in</name>
 

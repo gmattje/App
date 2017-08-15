@@ -19,7 +19,7 @@
 //variáveis gerais
 var urlWebServiceSoftnews = 'https://design.softplan.com.br/webserviceSoftnews';
 var urlWebServiceCarona = 'https://carona.softplan.com.br/webservice';
-var urlWebServiceCallback = 'http://crtsrv.softplan.com.br/cbcrt';
+var urlWebServiceCallback = 'https://design.softplan.com.br/webserviceSoftnews';
 var tempoRespostaLimite = 25000; //25 segundos
 var tempoRespostaLimiteCRT = 60000; //60 segundos
 var nomeUser = "";
@@ -1898,8 +1898,8 @@ var app = {
                     $('#ulRamaisCallback').empty();
                     //busca ramais
                     $.ajax({
-                        url: urlWebServiceCallback + '/DadosUsuarioCRT.txt',
-                        dataType: 'text',
+                        url: urlWebServiceCallback + '/web_service.php?car=crt_lista&login=' + login + '&senha=' + senha + '&callback=?',
+                        dataType: 'json',
                         timeout: tempoRespostaLimiteCRT,
                         error: function(jqXHR, textStatus, errorThrown) {
                             app.loading(false);
@@ -1911,38 +1911,38 @@ var app = {
                             if(data == null) {
                                 app.loginError();
                             } else {
-                                //lendo todo Json ramais
-                                var dataJson = app.csvJSON(data);
-                                for (i = 0; i < dataJson.length; i++) {
-                                    var nome = dataJson[i].nome.toString().toUpperCase();
-                                    var projeto = "não cadastrado";
-                                    var ramal = "não cadastrado";
-                                    var celular = "não cadastrado";
-                                    var email = "não cadastrado";
-                                    if(dataJson[i].projeto){
-                                        projeto = dataJson[i].projeto.toString().toUpperCase();
-                                    }
-                                    if(dataJson[i].numero){
-                                        ramal = dataJson[i].numero.toString();
-                                    }
-                                    if(dataJson[i].celular){
-                                        celular = dataJson[i].celular.toString();
-                                    }
-                                    if(dataJson[i].email){
-                                        email = dataJson[i].email.toString();
-                                    }
-                                    if(nome != "") {
-                                        $('#ulRamaisCallback').append(
-                                        "<li data-icon='false'>" +   
-                                        "<a href='#Ramal' onclick=\"app.abreContatoCrt('" + nome + "', '" + projeto + "', '" + ramal + "', '" + celular + "', '" + email + "')\">" +
-                                        "<h2 style='color: #000038 !important; width: 88% !important;'>" + nome + "</h2>" +
-                                        "<p class='ui-li-aside'><strong>" + projeto + "</strong></p>" +
-                                        "</a>" +
-                                        "</li>"
-                                        );
-                                    }
+                                //lendo todo Json
+                                if(data.crt != null){
+                                    for (i = 0; i < data.crt.length; i++) {
+                                        var nome = data.crt[i].nome.toString().toUpperCase();
+                                        var projeto = "não cadastrado";
+                                        var ramal = "não cadastrado";
+                                        var celular = "não cadastrado";
+                                        var email = "não cadastrado";
+                                        if(data.crt[i].unid){
+                                            projeto = data.crt[i].unid.toString().toUpperCase();
+                                        }
+                                        if(data.crt[i].ramal){
+                                            ramal = data.crt[i].ramal;
+                                        }
+                                        if(data.crt[i].fone){
+                                            celular = data.crt[i].fone;
+                                        }
+                                        if(data.crt[i].email){
+                                            email = data.crt[i].email;
+                                        }
+                                        if(nome != "") {
+                                            $('#ulRamaisCallback').append(
+                                            "<li data-icon='false'>" +   
+                                            "<a href='#Ramal' onclick=\"app.abreContatoCrt('" + nome + "', '" + projeto + "', '" + ramal + "', '" + celular + "', '" + email + "')\">" +
+                                            "<h2 style='color: #000038 !important; width: 88% !important;'>" + nome + "</h2>" +
+                                            "<p class='ui-li-aside'><strong>" + projeto + "</strong></p>" +
+                                            "</a>" +
+                                            "</li>"
+                                            );
+                                        }
+                                    }                                    
                                 }
-
                                 $.mobile.changePage("#callback-crt", { changeHash: true });
                                 $('#callback-crt #ulRamaisCallback').listview("refresh");
                                 app.loading(false);
