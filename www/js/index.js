@@ -785,6 +785,34 @@ var app = {
         $('.ui-responsive-panel').panel("close");
         $.mobile.silentScroll($('#' + idParte).offset().top-100);
     },
+    abreCodigoEtica: function(){
+        if(app.checkConnection()){
+            app.loading(true, 'Carregando...');
+            $.ajax({
+                url: urlWebServiceSoftnews + '/web_service.php?car=sn_login&login=' + login + '&senha=' + senha + '&callback=?',
+                dataType: 'json',
+                timeout: tempoRespostaLimite,
+                error: function(jqXHR, textStatus, errorThrown) {
+                    app.loading(false);
+                    if(textStatus==="timeout") {
+                        return app.semRespostaServidor();
+                    }
+                },
+                success: function(data) {
+                    app.loading(false);
+                    if((data != null) && (data.login.liberado === 'true')){
+                        $.mobile.changePage("#codigoetica", { changeHash: true });
+                    } else {
+                        return app.loginError();
+                    }
+                }
+            }); 
+        }
+    },
+    CodigoEticaParte: function(idParte){
+        $('.ui-responsive-panel').panel("close");
+        $.mobile.silentScroll($('#' + idParte).offset().top-100);
+    },
     confereVersaoEditorialSoftnews: function(){
         //busca destaques Softnews
         $.ajax({
