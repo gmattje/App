@@ -2153,7 +2153,8 @@ var app = {
 
             if($("#senha").val() !== "") {
                 senha = $("#senha").val();
-                senha = senha.replace(/#/g, '[jogovelha]');                
+                senha = senha.replace(/#/g, '[jogovelha]');   
+                senha = senha.replace(/&/g, '[ecomercial]');
                 senha = senha.replace(/ /g, '[espaco]');
             } else {
                 senha = localStorage.getItem('senha');
