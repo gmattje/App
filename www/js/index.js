@@ -813,17 +813,17 @@ var app = {
         $('.ui-responsive-panel').panel("close");
         $.mobile.silentScroll($('#' + idParte).offset().top-100);
     },
-    confereVersaoEditorialSoftnews: function(){
+    confereUltimaNoticiaSoftnews: function(){
         //busca destaques Softnews
         $.ajax({
-            url: urlWebServiceSoftnews + '/web_service.php?car=sn_edicao&login=' + login + '&senha=' + senha + '&dados=idEditorial&callback=?',
+            url: urlWebServiceSoftnews + '/web_service.php?car=sn_home&login=' + login + '&senha=' + senha + '&dados=idUltimaNoticia&callback=?',
             dataType: 'json',
             timeout: tempoRespostaLimite,
             success: function(data) {
                 if(data != null) {
-                    var idEditorialAtual = data.editorial.id;
-                    var idEditorialAtualInApp = sessionStorage.getItem('idEditorial');
-                    if(idEditorialAtual != idEditorialAtualInApp){
+                    var idUltimaNoticiaAtual = data.ultimanoticia.id;
+                    var idUltimaNoticiaInApp = sessionStorage.getItem('idUltimaNoticia');
+                    if(idUltimaNoticiaAtual != idUltimaNoticiaInApp){
                         $("#btnRefreshSoftnewsDisable").css('display','none');
                         $("#btnRefreshSoftnews").css('display','block');
                     } else {
@@ -847,7 +847,7 @@ var app = {
                 $('<ul>').prependTo('#softnews .slider').addClass('slides').attr('id','ulDestaquesSoftnews');
                 //busca destaques Softnews
                 $.ajax({
-                    url: urlWebServiceSoftnews + '/web_service.php?car=sn_edicao&login=' + login + '&senha=' + senha + '&callback=?',
+                    url: urlWebServiceSoftnews + '/web_service.php?car=sn_home&login=' + login + '&senha=' + senha + '&callback=?',
                     dataType: 'json',
                     timeout: tempoRespostaLimite,
                     error: function(jqXHR, textStatus, errorThrown) {
@@ -860,26 +860,12 @@ var app = {
                         if(data == null) {
                             app.loginError();
                         } else {
-                            idEditorial = data.editorial.id;
-                            sessionStorage.setItem('idEditorial', idEditorial);
-                            idTagEditorial = data.editorial.tag;
+                            idUltimaNoticia = data.ultimanoticia.id;
+                            sessionStorage.setItem('idUltimaNoticia', idUltimaNoticia);
                             //lendo todo Json destaques
                             if(data.destaques.destaque != null){
                                 iniciaGlider = true;
                                 for (i = 0; i < data.destaques.destaque.length; i++) {
-                                    //se for 2 elemento insere editorial, pois o bug no glider deixa ele correto
-                                    if(i == 1) {
-                                        //editorial
-                                        $('#ulDestaquesSoftnews').append(
-                                        "<li class='slide'>" +   
-                                        "<a href='#Noticia' onclick=\"app.carregaNoticia('" + data.editorial.id + "')\">" +
-                                        "<span style='width: " + (app.getDocWidth()-16) + "px;'>" + data.editorial.titulo.replace(/\u00c3\u00a0/g,'\u00e0') + "</span>" +
-                                        "<img src='" + data.editorial.imagem + "' width='" + app.getDocWidth() + "px' height='250px'>" +
-                                        "</a>" +
-                                        "</li>"
-                                        );
-                                    }
-
                                     $('#ulDestaquesSoftnews').append(
                                     "<li class='slide'>" +   
                                     "<a href='#Noticia' onclick=\"app.carregaNoticia('" + data.destaques.destaque[i].id + "')\">" +
@@ -889,33 +875,39 @@ var app = {
                                     "</li>"
                                     );
                                 }
-                            //coloca apenas editorial    
-                            } else {
-                                //editorial
-                                $('#ulDestaquesSoftnews').append(
-                                "<li class='slide'>" +   
-                                "<a href='#Noticia' onclick=\"app.carregaNoticia('" + data.editorial.id + "')\">" +
-                                "<span style='width: " + (app.getDocWidth()-16) + "px;'>" + data.editorial.titulo.replace(/\u00c3\u00a0/g,'\u00e0') + "</span>" +
-                                "<img src='" + data.editorial.imagem + "' width='" + app.getDocWidth() + "px' height='250px'>" +
-                                "</a>" +
-                                "</li>"
-                                );
                             }
-
+                            
+                            //lendo todo Json de artigos
+                            if(data.artigos.artigo != null){
+                                for (i = 0; i < data.artigos.artigo.length; i++) {
+                                    $('#ulNoticiasEditorialSoftnews').append(
+                                    "<li data-icon='false'>" +        
+                                    "<a href='#Noticia' onclick=\"app.carregaNoticia('" + data.artigos.artigo[i].id + "')\">" +
+                                    "<h2 style='color: #000038 !important;'>" + data.artigos.artigo[i].titulo.replace(/\u00c3\u00a0/g,'\u00e0') + "</h2>" +
+                                    "<p>" + he.decode(data.artigos.artigo[i].resumo.replace(/\u00c3\u00a0/g,'\u00e0')) + "</p>" +
+                                    "<p class='ui-li-aside'><strong>" + data.artigos.artigo[i].categoria + " | " + data.artigos.artigo[i].data + "</strong></p>" +
+                                    "</a>" +
+                                    "</li>"
+                                    );
+                                }
+                            }
+                            $('#softnews #ulNoticiasEditorialSoftnews').listview("refresh");
+                            
                             $.mobile.changePage("#softnews", { changeHash: true });
                             if(iniciaGlider == true){
                                 $('#ulDestaquesSoftnews').glide();
                             }
+                            
                             app.loading(false);
-                            app.carregaNoticiasEditorial(idEditorial, idTagEditorial, forceRefresh);
+                            app.confereUltimaNoticiaSoftnews();
+                            app.carregaCategorias(forceRefresh);
                         }
                     }
-                });             
+                }); 
             } else {
                 $.mobile.changePage("#softnews", { changeHash: true });
-                app.carregaNoticiasEditorial(idEditorial, idTagEditorial, forceRefresh);
                 //se já está carregado, confere se não há outra atualização (em segundo plano)
-                app.confereVersaoEditorialSoftnews();
+                app.confereUltimaNoticiaSoftnews();
             }
         }
     },
@@ -924,51 +916,6 @@ var app = {
     },
     abreNoticiaSoftnews: function(){
         $.mobile.changePage("#softnewsNoticia", { changeHash: true });
-    },
-    carregaNoticiasEditorial: function(idEditorial, idTagEditorial, forceRefresh){
-        if(($("#ulNoticiasEditorialSoftnews > li").size() < 2) || (forceRefresh == true)) {
-            if(app.checkConnection()){
-                $("#ulNoticiasEditorialSoftnews").empty();
-                app.loading(true, 'Carregando...');
-                $.ajax({
-                    url: urlWebServiceSoftnews + '/web_service.php?car=sn_noticias_tagueadas&login=' + login + '&senha=' + senha + '&dados=' + idEditorial + '_[x]_' + idTagEditorial + '&callback=?',
-                    dataType: 'json',
-                    timeout: tempoRespostaLimite,
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        app.loading(false);
-                        if(textStatus==="timeout") {
-                            return app.semRespostaServidor();
-                        }
-                    },
-                    success: function(data) {
-                        if(data == null) {
-                            app.loginError();
-                        } else {
-                            //lendo todo Json
-                            if(data.artigo != null){
-                                for (i = 0; i < data.artigo.length; i++) {
-                                    if(arrayIdsNoticias.indexOf(data.artigo[i].id) == "-1") {
-                                        $('#ulNoticiasEditorialSoftnews').append(
-                                        "<li data-icon='false'>" +        
-                                        "<a href='#Noticia' onclick=\"app.carregaNoticia('" + data.artigo[i].id + "')\">" +
-                                        "<h2 style='color: #000038 !important;'>" + data.artigo[i].titulo.replace(/\u00c3\u00a0/g,'\u00e0') + "</h2>" +
-                                        "<p>" + he.decode(data.artigo[i].resumo.replace(/\u00c3\u00a0/g,'\u00e0')) + "</p>" +
-                                        "<p class='ui-li-aside'><strong>" + data.artigo[i].categoria + " | " + data.artigo[i].data + "</strong></p>" +
-                                        "</a>" +
-                                        "</li>"
-                                        );
-                                    }
-                                }
-                            }
-                            $('#softnews #ulNoticiasEditorialSoftnews').listview("refresh");
-                            app.confereVersaoEditorialSoftnews();
-                            app.loading(false);
-                    }
-                }
-                });
-            }
-        }
-        app.carregaCategorias(forceRefresh);
     },
     carregaCategorias: function(forceRefresh){  
         //sÃ³ faz requisiÃ§Ã£o se ainda nÃ£o tiver sido feita
@@ -1056,7 +1003,7 @@ var app = {
                         $('.ui-responsive-panel').panel("close");
                         app.loading(false);
                         //confere se não há outra atualização de edição (em segundo plano)
-                        app.confereVersaoEditorialSoftnews();
+                        app.confereUltimaNoticiaSoftnews();
                 }
             }
             });
@@ -1127,7 +1074,7 @@ var app = {
                         $('.ui-responsive-panel').panel("close");
                         app.loading(false);
                         //confere se não há outra atualização de edição (em segundo plano)
-                        app.confereVersaoEditorialSoftnews();
+                        app.confereUltimaNoticiaSoftnews();
                     }
                 }
             });  
@@ -1178,7 +1125,7 @@ var app = {
                         $('#softnewsNoticia #ulCatsSoftnews').listview("refresh");
                         app.loading(false);
                         //confere se não há outra atualização de edição (em segundo plano)
-                        app.confereVersaoEditorialSoftnews();
+                        app.confereUltimaNoticiaSoftnews();
                     }
                 }
             });
