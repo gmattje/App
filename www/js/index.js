@@ -866,6 +866,7 @@ var app = {
                             if(data.destaques.destaque != null){
                                 iniciaGlider = true;
                                 for (i = 0; i < data.destaques.destaque.length; i++) {
+                                    //se for 2 elemento insere editorial, pois o bug no glider deixa ele correto
                                     $('#ulDestaquesSoftnews').append(
                                     "<li class='slide'>" +   
                                     "<a href='#Noticia' onclick=\"app.carregaNoticia('" + data.destaques.destaque[i].id + "')\">" +
@@ -875,6 +876,11 @@ var app = {
                                     "</li>"
                                     );
                                 }
+                            }
+                            
+                            $.mobile.changePage("#softnews", { changeHash: true });
+                            if(iniciaGlider == true){
+                                $('#ulDestaquesSoftnews').glide();
                             }
                             
                             //lendo todo Json de artigos
@@ -892,11 +898,6 @@ var app = {
                                 }
                             }
                             $('#softnews #ulNoticiasEditorialSoftnews').listview("refresh");
-                            
-                            $.mobile.changePage("#softnews", { changeHash: true });
-                            if(iniciaGlider == true){
-                                $('#ulDestaquesSoftnews').glide();
-                            }
                             
                             app.loading(false);
                             app.confereUltimaNoticiaSoftnews();
